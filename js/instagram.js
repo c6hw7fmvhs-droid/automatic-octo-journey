@@ -97,8 +97,19 @@
         var stories=el("div","igstories"); ["내 스토리","yubamabm","jubini","chaeyeon4"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
         body.append(stories); posts.forEach(function(p){body.append(card(p));});
       } else if(which==="reels"){
-        var rh=el("div","igmodehead","릴스"); body.append(rh); posts.forEach(function(p){var r=el("button","igreel");SP.pic(r,slides(p)[0]);r.append(el("b","",p.user),el("span","",p.caption||""));r.onclick=function(){openPost(p);};body.append(r);});
-        if(!posts.length)body.append(el("p","igempty","아직 볼 릴스가 없어."));
+        var rh=el("div","igmodehead","릴스");
+        var reel=el("div","igreel-player");
+        var video=el("video","igreel-video");
+        video.src="assets/videos/instagram-reel.mp4";
+        video.poster="assets/videos/instagram-reel-poster.jpg";
+        video.controls=true;
+        video.playsInline=true;
+        video.preload="metadata";
+        video.setAttribute("aria-label","릴스 영상 재생");
+        reel.append(video);
+        var caption=el("div","igreel-caption");
+        caption.append(el("b","","Stonelee"),el("span","","릴스"));
+        body.append(rh,reel,caption);
       } else if(which==="search"){
         var sh=el("div","igsearchwrap"), input=el("input","igsearch");input.placeholder="검색";sh.append(input);var results=el("div","tgrid");function filter(){results.innerHTML="";posts.filter(function(p){return !input.value||((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(input.value.toLowerCase());}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});}input.addEventListener("input",filter);filter();body.append(sh,results);setTimeout(function(){input.focus();},50);
       } else if(which==="send"){
