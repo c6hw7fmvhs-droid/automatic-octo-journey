@@ -14,7 +14,7 @@
   ];
   function userName(){return SP.profile&&SP.profile.getName?SP.profile.getName():'';}
   function callName(){var n=userName(); if(!n)return ''; var last=n.slice(-1); return /[가-힣]/.test(last)?n+(/[은는이가을를과와로]$/.test(last)?'':'아'):n;}
-  function avatar(cls){var a=document.createElement('div');a.className=cls+' kakao-avatar';a.textContent='';return a;}
+  function avatar(cls){var a=document.createElement('div');a.className=cls+' kakao-avatar';a.innerHTML='<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="16" r="8"/><path d="M8 40c0-9 6-14 16-14s16 5 16 14v2H8z"/></svg>';return a;}
   function drawList(){
     var host=$('#kakao-list');host.innerHTML='';
     names.forEach(function(item,i){
@@ -23,7 +23,7 @@
       if(item[0]==='가족단톡방' || item[0]==='2026 총학') b.classList.add('same-group-avatar');
       b.innerHTML=(groupRoom
         ? '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>'
-        : '<div class="kakao-avatar profile-'+i+'"></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
+        : '<div class="kakao-avatar profile-'+i+'"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="16" r="8"/><path d="M8 40c0-9 6-14 16-14s16 5 16 14v2H8z"/></svg></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
       b.dataset.room = item[0];
       b.querySelector('b').textContent=item[0];
       if(item[0]==='가족단톡방' || item[0]==='2026 총학'){var count=document.createElement('small');count.className='kakao-room-count';count.textContent=item[0]==='가족단톡방'?'4':'12';b.querySelector('b').appendChild(count);}

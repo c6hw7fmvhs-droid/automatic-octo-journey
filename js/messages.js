@@ -73,23 +73,24 @@
         top.append(time);
         var previewText = it.last && (it.last.text || it.last.content || it.last.message) || "메시지";
         row.append(top, el("div", "rowprev", String(previewText).replace(/\s+/g," ").trim()));
-        row.onclick = function () { if (it.ch.id === "jiwoo") openChat(it.ch.id); };
+        row.onclick = function () { openChat(it.ch.id); };
         ul.append(row);
       });
     [
-      ["+82 010-8282-배달기사","고객님께서 주문하신 상품이 문 앞에 배달되었습니다. 감사합니다.","오후 8:03"],
-      ["+82 010-8282-배달간다","주문하신 음식이 문 앞에 도착했습니다. 맛있게 드세요.","오전 11:40"],
-      ["+82 010-8282-배달달인","고객님이 요청하신 장소에 상품을 놓아두었습니다. 확인 부탁드립니다.","어제"],
-      ["+82 010-8282-배달왔다","배달이 완료되었습니다. 이용해 주셔서 감사합니다.","화요일"],
-      ["+82 010-8282-배달천사","[배달 완료] 주문하신 상품이 현관문 앞에 놓여 있습니다.","월요일"],
-      ["+82 010-8282-총알배송","고객님 안녕하세요. 배달 기사입니다. 요청하신 장소에 상품 두고 갑니다.","일요일"],
-      ["+82 010-8282-퀵퀵배달","주문하신 상품이 경비실에 맡겨졌습니다. 확인 부탁드립니다.","2026. 10. 16."],
-      ["+82 010-8282-배달의신","주문 상품이 문 앞에 배달되었습니다. 좋은 하루 보내세요.","2026. 10. 14."]
+      ["+82 010-8282-배달기사","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","오후 8:03"],
+      ["+82 010-8282-배달간다","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","오전 11:40"],
+      ["+82 010-8282-배달달인","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","어제"],
+      ["+82 010-8282-배달왔다","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","화요일"],
+      ["+82 010-8282-배달천사","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","월요일"],
+      ["+82 010-8282-총알배송","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","일요일"],
+      ["+82 010-8282-퀵퀵배달","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","2026. 10. 16."],
+      ["+82 010-8282-배달의신","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","2026. 10. 14."]
     ].forEach(function (item) {
       var row = el("button", "row readonly-row"), top = el("div", "rowtop");
       top.append(el("b", "", item[0]), el("span", "rowtime", item[2]));
       row.append(top, el("div", "rowprev", item[1]));
-      row.onclick = function () { return; };
+      row.classList.remove("readonly-row");
+      row.onclick = function () { openDeliveryChat(item[0], item[2]); };
       ul.append(row);
     });
   }
@@ -120,6 +121,13 @@
 
   function renderChat() {
     var box = $("#chat-body"); box.innerHTML = "";
+    if (current && current.indexOf("delivery:") === 0) {
+      var name = current.slice(9);
+      box.append(el("div", "sep", "10월 24일 (토) 오후 8:03"));
+      var wrap = el("div", "mw them"), bubbleBox = el("div", "bubble");
+      bubbleBox.textContent = "고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.";
+      wrap.append(bubbleBox, el("div", "mtime", "오후 8:03")); box.append(wrap); return;
+    }
     var list = convs[current] || [], prev = 0, lastMine = -1;
     list.forEach(function (m, i) { if (m.from === "me") lastMine = i; });
     list.forEach(function (m, i) {
@@ -154,6 +162,12 @@
     $("#msg-listview").hidden = true; $("#msg-chatview").hidden = false;
     $("#msg-input").value = drafts[id] || ""; syncInput(); renderChat();
   }
+  function openDeliveryChat(name, time) {
+    current = "delivery:" + name;
+    $("#chat-name").textContent = name;
+    $("#msg-listview").hidden = true; $("#msg-chatview").hidden = false;
+    $("#msg-input").value = ""; syncInput(); renderChat();
+  }
   function showList() {
     current = null; $("#msg-chatview").hidden = true; $("#msg-listview").hidden = false; renderList();
   }
@@ -176,7 +190,7 @@
 
   function send() {
     var inp = $("#msg-input"), text = inp.value.trim();
-    if (!text || !current) return;                   // 빈 메시지 차단
+    if (!text || !current || current.indexOf("delivery:") === 0) return; // 배달 안내 대화는 읽기 전용
     inp.value = ""; delete drafts[current]; saveDrafts(); syncInput();
     sendMsg({ type: HASURL.test(text) ? "link" : "text", text: text });
   }
