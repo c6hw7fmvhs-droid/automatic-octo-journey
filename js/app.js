@@ -19,12 +19,12 @@
   };
   var GRID = [
     { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모" },
-    { id: "photos", label: "사진" }, { id: "safari", label: "Safari" },
-    { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정", mod: "settings" }, { id: "clock", label: "시계" }, { id: "kakao", label: "카카오톡", screen: "kakao", mod: "kakao" }
+    { id: "photos", label: "사진" }, { id: "safari", label: "Safari" }, { id: "instagram", label: "Instagram", screen: "instagram", mod: "instagram" },
+    { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정", mod: "settings" }, { id: "clock", label: "시계" }
   ];
   var DOCK = [
     { id: "phone", label: "전화", screen: "phone-app", mod: "phone" }, { id: "messages", label: "메시지", screen: "messages" },
-    { id: "mail", label: "메일" }, { id: "instagram", label: "Instagram", screen: "instagram", mod: "instagram" }
+    { id: "mail", label: "메일" }, { id: "kakao", label: "카카오톡", screen: "kakao", mod: "kakao" }
   ];
 
   function iconHtml(id) {

@@ -66,7 +66,7 @@
     nm.innerHTML = S.lock; nm.append(document.createTextNode(" " + (P.user || "") + " ⌄"));
     top.append(ic("plus"), nm, ic("menu"));
     var body = el("div", "body"), head = el("div", "ighead"), ring = el("div", "ring");
-    var av = el("div", "igav", P.avatar ? "" : String(P.user || "?").charAt(0).toUpperCase());
+    var av = el("div", "igav", "");
     SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); ring.append(av, el("i", "plusb", "+"));
     var stats = el("div", "stats");
     [["게시물", posts.length], ["팔로워", P.followers || 0], ["팔로잉", P.following || 0]].forEach(function (s) {
