@@ -492,3 +492,17 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
   .kakao-room{padding:8px 12px}
   .kakao-avatar{width:40px;height:40px}
 }
+
+
+/* v7: fix home-screen icons that overflowed the dock on narrow mobile viewports.
+   Keep the outer phone frame dimensions unchanged. */
+#phone{--ic:clamp(34px, 10vw, 42px)}
+#home{padding-top:70px}
+#home-grid{gap:14px 0;padding:0 12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.app-icon{min-width:0;gap:4px;font-size:10px;min-height:32px}
+.app-icon .ic{width:var(--ic);height:var(--ic);max-width:100%;border-radius:22%}
+#dock{width:calc(100% - 18px);margin: auto 9px 18px;padding:7px 5px;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;box-sizing:border-box}
+#dock .app-icon{width:100%;min-width:0}
+#dock .app-icon .ic{width:var(--ic);height:var(--ic)}
+#dock .app-icon .label{font-size:9px}
+.bdg{top:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:10px;line-height:16px}
