@@ -63,11 +63,12 @@
     var root = document.getElementById("instagram"); root.innerHTML = "";
     var P = prof(), posts = sorted();
     var view = el("div", "view"), top = el("div", "igtop"), nm = el("span", "igname");
-    nm.innerHTML = S.lock; nm.append(document.createTextNode(" " + (P.user || "") + " ⌄"));
+    nm.append(document.createTextNode(" " + (P.user || "")));
     top.append(ic("plus"), nm, ic("menu"));
     var body = el("div", "body"), head = el("div", "ighead"), ring = el("div", "ring");
     var av = el("div", "igav", "");
-    if (P.avatar) { SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); } else { av.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="13" fill="#858c99"/><path d="M8 59c1-15 10-23 24-23s23 8 24 23" fill="#858c99"/></svg>'; }
+    av.style.background = "#eceef2";
+    av.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="12" fill="#858c99"/><path d="M9 58c1-14 10-22 23-22s22 8 23 22" fill="#858c99"/></svg>';
     ring.append(av, el("i", "plusb", "+"));
     var stats = el("div", "stats");
     [["게시물", posts.length], ["팔로워", P.followers || 0], ["팔로잉", P.following || 0]].forEach(function (s) {
@@ -86,13 +87,13 @@
       if (sl.length > 1) { var m = el("span", "multi"); m.innerHTML = S.multi; t.append(m); }
       t.onclick = function () { openPost(p); }; grid.append(t);
     });
-    body.append(head, btns, hls, tabs, grid);
+    body.append(head, btns, tabs, grid);
     var nav = el("div", "ignav"), navItems = [];
     ["home", "reels", "send", "search"].forEach(function (n) { var item=ic(n); item.setAttribute("role","button"); item.tabIndex=0; navItems.push(item); nav.append(item); });
     var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
     function mode(which){
       body.innerHTML="";
-      if(which==="profile"){ body.append(head,btns,hls,tabs,grid); }
+      if(which==="profile"){ body.append(head,btns,tabs,grid); }
       else if(which==="home"){
         var stories=el("div","igstories"); ["내 스토리","yubamabm","jubini","chaeyeon4"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
         body.append(stories); posts.forEach(function(p){body.append(card(p));});
@@ -104,7 +105,14 @@
         video.poster="assets/videos/instagram-reel-poster.jpg";
         video.controls=true;
         video.playsInline=true;
-        video.preload="metadata";
+        video.autoplay=true;
+        video.muted=true;
+        video.loop=true;
+        video.preload="auto";
+        video.setAttribute("autoplay", "");
+        video.setAttribute("muted", "");
+        video.setAttribute("loop", "");
+        video.play().catch(function(){});
         video.setAttribute("aria-label","릴스 영상 재생");
         reel.append(video);
         var caption=el("div","igreel-caption");
