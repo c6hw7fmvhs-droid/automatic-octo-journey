@@ -31,7 +31,8 @@
   function allComments(p) { return (Array.isArray(p.comments) ? p.comments : []).concat(Array.isArray(st.comments[p.id]) ? st.comments[p.id] : []); }
   function slides(p) { var a = Array.isArray(p.images) && p.images.length ? p.images : [p.img || ""]; return a.map(function (x) { return { img: x, color: p.color }; }); }
   function sorted() { return (SP.data.posts || []).filter(function (p) { return p && p.id && !isNaN(new Date(p.ts)); }).sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); }); }
-  function prof() { return SP.data.profile || {}; }
+  function prof() { var n = (SP.profile && SP.profile.getName ? SP.profile.getName() : "");
+    return Object.assign({}, SP.data.profile || {}, {user:n, username:n}); }
 
   function fmtN(n) { return n >= 10000 ? String(Math.round(n / 1000) / 10).replace(/\.0$/, "") + "만" : String(n); }
   function card(p) {
@@ -92,7 +93,7 @@
       body.innerHTML="";
       if(which==="profile"){ body.append(head,btns,hls,tabs,grid); }
       else if(which==="home"){
-        var stories=el("div","igstories"); ["내 스토리","yuushi_","sakuya_","riku_"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
+        var stories=el("div","igstories"); ["내 스토리","yubamabm","jubini","chaeyeon4"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
         body.append(stories); posts.forEach(function(p){body.append(card(p));});
       } else if(which==="reels"){
         var rh=el("div","igmodehead","릴스"); body.append(rh); posts.forEach(function(p){var r=el("button","igreel");SP.pic(r,slides(p)[0]);r.append(el("b","",p.user),el("span","",p.caption||""));r.onclick=function(){openPost(p);};body.append(r);});
