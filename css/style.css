@@ -701,3 +701,9 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 .kakao-room .profile-5{background-color:#d8d1f5!important}
 .kakao-room .profile-6{background-color:#f1cbd8!important}
 .kakao-room .profile-7{background-color:#c9d9ee!important}
+
+/* Instagram Reels: uploaded video with tap-to-play controls */
+.igreel-player{width:100%;padding:0 12px;box-sizing:border-box;}
+.igreel-video{display:block;width:100%;max-height:calc(100% - 170px);aspect-ratio:9/16;object-fit:contain;background:#111;border-radius:8px;}
+.igreel-caption{display:flex;flex-direction:column;gap:5px;padding:12px 16px 18px;font-size:13px;color:var(--text,#111);}
+.igreel-caption b{font-weight:700;}
