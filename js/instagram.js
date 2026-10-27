@@ -88,7 +88,7 @@
     body.append(head, btns, hls, tabs, grid);
     var nav = el("div", "ignav"), navItems = [];
     ["home", "reels", "send", "search"].forEach(function (n) { var item=ic(n); item.setAttribute("role","button"); item.tabIndex=0; navItems.push(item); nav.append(item); });
-    var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
+    var me = el("span", "igi on"), mini = el("span", "mini person-mini"); SP.pic(mini, { img: "", color: "#dfe2e8" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
     function mode(which){
       body.innerHTML="";
       if(which==="profile"){ body.append(head,btns,hls,tabs,grid); }
