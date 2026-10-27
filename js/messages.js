@@ -68,8 +68,8 @@
       .sort(function (a, b) { return new Date(b.last.ts) - new Date(a.last.ts); })
       .forEach(function (it) {
         var row = el("button", "row" + (unreadOf(it.ch.id) ? " unread" : "")), top = el("div", "rowtop");
-        top.append(el("b", "", it.ch.name), el("span", "rowtime", listLabel(it.last.ts) + "  ›"));
-        row.append(top, el("div", "rowprev", pv(it.last)));
+        top.append(el("b", "", it.ch.name));
+        row.append(top);
         row.onclick = function () { if (it.ch.id === "jiwoo") openChat(it.ch.id); };
         ul.append(row);
       });
@@ -84,8 +84,8 @@
       ["+82 010-8282-배달의신","주문 상품이 문 앞에 배달되었습니다. 좋은 하루 보내세요.","2026. 10. 14."]
     ].forEach(function (item) {
       var row = el("button", "row readonly-row"), top = el("div", "rowtop");
-      top.append(el("b", "", item[0]), el("span", "rowtime", item[2] + "  ›"));
-      row.append(top, el("div", "rowprev", item[1]));
+      top.append(el("b", "", item[0]));
+      row.append(top);
       row.onclick = function () { return; };
       ul.append(row);
     });

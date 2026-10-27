@@ -19,11 +19,13 @@
     var host=$('#kakao-list');host.innerHTML='';
     names.forEach(function(item,i){
       var b=document.createElement('button');b.className='kakao-room'+(i===0?' jiwoo-room':' disabled-room');
-      var groupRoom = /단톡|단체|가족/.test(item[0]);
+      var groupRoom = /단톡|단체|가족|2026 총학/.test(item[0]);
+      if(item[0]==='가족단톡방' || item[0]==='2026 총학') b.classList.add('same-group-avatar');
       b.innerHTML=(groupRoom
         ? '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>'
         : '<div class="kakao-avatar"></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
       b.querySelector('b').textContent=item[0];
+      if(item[0]==='가족단톡방' || item[0]==='2026 총학'){var count=document.createElement('small');count.className='kakao-room-count';count.textContent=item[0]==='가족단톡방'?'4':'12';b.querySelector('b').appendChild(count);}
       if(i===0){var pin=document.createElement('span');pin.className='kakao-pin';pin.textContent='📌';b.querySelector('b').appendChild(pin);}
       b.querySelector('span').textContent=item[1];b.querySelector('time').textContent=item[2];
       if(item[3]) b.onclick=openChat; else {b.disabled=false;b.setAttribute('aria-disabled','true');b.onclick=function(e){e.preventDefault();};}

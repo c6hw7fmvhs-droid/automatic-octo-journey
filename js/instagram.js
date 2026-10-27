@@ -66,8 +66,9 @@
     nm.innerHTML = S.lock; nm.append(document.createTextNode(" " + (P.user || "") + " ⌄"));
     top.append(ic("plus"), nm, ic("menu"));
     var body = el("div", "body"), head = el("div", "ighead"), ring = el("div", "ring");
-    var av = el("div", "igav", P.avatar ? "" : String(P.user || "?").charAt(0).toUpperCase());
-    SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); ring.append(av, el("i", "plusb", "+"));
+    var av = el("div", "igav", "");
+    if (P.avatar) { SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); } else { av.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="13" fill="#858c99"/><path d="M8 59c1-15 10-23 24-23s23 8 24 23" fill="#858c99"/></svg>'; }
+    ring.append(av, el("i", "plusb", "+"));
     var stats = el("div", "stats");
     [["게시물", posts.length], ["팔로워", P.followers || 0], ["팔로잉", P.following || 0]].forEach(function (s) {
       var d = el("div"); d.append(el("b", "", fmtN(s[1])), el("span", "", s[0])); stats.append(d);
