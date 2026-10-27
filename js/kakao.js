@@ -19,7 +19,7 @@
     var host=$('#kakao-list');host.innerHTML='';
     names.forEach(function(item,i){
       var b=document.createElement('button');b.className='kakao-room'+(i===0?' jiwoo-room':' disabled-room');
-      var groupRoom = /단톡|단체|가족|총학/.test(item[0]);
+      var groupRoom = /단톡|단체|가족/.test(item[0]);
       b.innerHTML=(groupRoom
         ? '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>'
         : '<div class="kakao-avatar"></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';

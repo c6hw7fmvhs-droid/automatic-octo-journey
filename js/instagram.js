@@ -66,7 +66,7 @@
     nm.innerHTML = S.lock; nm.append(document.createTextNode(" " + (P.user || "") + " ⌄"));
     top.append(ic("plus"), nm, ic("menu"));
     var body = el("div", "body"), head = el("div", "ighead"), ring = el("div", "ring");
-    var av = el("div", "igav", "");
+    var av = el("div", "igav", P.avatar ? "" : String(P.user || "?").charAt(0).toUpperCase());
     SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); ring.append(av, el("i", "plusb", "+"));
     var stats = el("div", "stats");
     [["게시물", posts.length], ["팔로워", P.followers || 0], ["팔로잉", P.following || 0]].forEach(function (s) {
@@ -88,7 +88,7 @@
     body.append(head, btns, hls, tabs, grid);
     var nav = el("div", "ignav"), navItems = [];
     ["home", "reels", "send", "search"].forEach(function (n) { var item=ic(n); item.setAttribute("role","button"); item.tabIndex=0; navItems.push(item); nav.append(item); });
-    var me = el("span", "igi on"), mini = el("span", "mini person-mini"); SP.pic(mini, { img: "", color: "#dfe2e8" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
+    var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
     function mode(which){
       body.innerHTML="";
       if(which==="profile"){ body.append(head,btns,hls,tabs,grid); }
