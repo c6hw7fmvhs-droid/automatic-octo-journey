@@ -530,3 +530,70 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 .hlc{width:50px;height:50px}
 .igtabs span{min-height:36px}
 @media(max-width:420px){#phone{--ic:min(12vw,46px)}.welcome-card{width:100%;padding:24px 18px}}
+
+
+/* User-approved final refinements: only the specified details are changed. */
+/* Slightly smaller battery indicator; preserve status-bar layout and phone frame. */
+#statusbar .batt{
+  min-width:23px !important;
+  width:23px;
+  height:14px !important;
+  padding:0 3px !important;
+  font-size:9px !important;
+  border-radius:5px !important;
+  line-height:14px;
+}
+#statusbar .batt::after{
+  right:-3px;
+  top:4px !important;
+  width:2px;
+  height:6px !important;
+}
+/* Instagram bottom dock: compact controls and no oversized selected tab. */
+.ignav{
+  height:58px;
+  margin:4px 12px 3px !important;
+  padding:4px 8px !important;
+  gap:6px;
+  border-radius:30px;
+  align-items:center;
+}
+.ignav .igi{
+  flex:0 1 38px;
+  width:38px !important;
+  min-width:0;
+  height:38px !important;
+  padding:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.ignav .igi svg{
+  width:25px !important;
+  height:25px !important;
+}
+.ignav .igi.on{
+  flex:0 0 70px;
+  width:70px !important;
+  height:50px !important;
+  border-radius:26px !important;
+  outline:0 !important;
+  outline-offset:0 !important;
+}
+/* Both group chats use precisely the same four-square avatar design. */
+.kakao-group-avatar{
+  background:#fff !important;
+  grid-template-columns:repeat(2,1fr) !important;
+  grid-template-rows:repeat(2,1fr) !important;
+}
+.kakao-group-avatar i,
+.kakao-group-avatar i:nth-child(1),
+.kakao-group-avatar i:nth-child(2),
+.kakao-group-avatar i:nth-child(3),
+.kakao-group-avatar i:nth-child(4){
+  background:#b6a9ed !important;
+}
+.kakao-group-avatar i:nth-child(2),
+.kakao-group-avatar i:nth-child(3){
+  background:#a7ddd5 !important;
+}
