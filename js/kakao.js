@@ -4,7 +4,7 @@
   var history=[{from:'them',text:'일어났어?',time:'12:00'}], currentName='이지우';
   var names=[
     ['이지우','일어났어?','12:00',true],
-    ['2026 종학','과제 공지 확인 부탁드립니다','11:42',false],
+    ['2026 총학','과제 공지 확인 부탁드립니다','11:42',false],
     ['서연언니','오늘 뭐 해?','10:58',false],
     ['유빈이','ㅋㅋㅋㅋ 사진 보냈어','09:30',false],
     ['카카오페이','결제가 완료되었어요.','08:12',false],
@@ -19,8 +19,13 @@
     var host=$('#kakao-list');host.innerHTML='';
     names.forEach(function(item,i){
       var b=document.createElement('button');b.className='kakao-room'+(i===0?' jiwoo-room':' disabled-room');
-      b.innerHTML='<div class="kakao-avatar"></div><div class="kakao-room-main"><b></b><span></span></div><time></time>';
-      b.querySelector('b').textContent=item[0];b.querySelector('span').textContent=item[1];b.querySelector('time').textContent=item[2];
+      var groupRoom = /단톡|단체|가족/.test(item[0]);
+      b.innerHTML=(groupRoom
+        ? '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>'
+        : '<div class="kakao-avatar"></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
+      b.querySelector('b').textContent=item[0];
+      if(i===0){var pin=document.createElement('span');pin.className='kakao-pin';pin.textContent='📌';b.querySelector('b').appendChild(pin);}
+      b.querySelector('span').textContent=item[1];b.querySelector('time').textContent=item[2];
       if(item[3]) b.onclick=openChat; else {b.disabled=false;b.setAttribute('aria-disabled','true');b.onclick=function(e){e.preventDefault();};}
       host.append(b);
     });

@@ -101,7 +101,39 @@
       } else if(which==="search"){
         var sh=el("div","igsearchwrap"), input=el("input","igsearch");input.placeholder="검색";sh.append(input);var results=el("div","tgrid");function filter(){results.innerHTML="";posts.filter(function(p){return !input.value||((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(input.value.toLowerCase());}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});}input.addEventListener("input",filter);filter();body.append(sh,results);setTimeout(function(){input.focus();},50);
       } else if(which==="send"){
-        var dh=el("div","igmodehead","메시지");body.append(dh);var row=el("button","igdmrow");row.append(el("span","mini","♥"),el("b","","이지우"),el("span","","메시지 보기 ›"));row.onclick=function(){var panel=el("div","igdm");panel.append(el("h3","","이지우"));var messages=["일어났어?","오늘 뭐 해?","밥 먹었어?"];messages.forEach(function(t){panel.append(el("p","igdm-bubble",t));});var form=el("form","igdmform"),inp=el("input");inp.placeholder="메시지 보내기";var send=el("button","","전송");form.append(inp,send);form.onsubmit=function(e){e.preventDefault();if(inp.value.trim()){panel.append(el("p","igdm-mine",inp.value.trim()));inp.value="";}};panel.append(form);body.innerHTML="";body.append(panel);};body.append(row);
+        var dh=el("div","igmodehead","메시지");
+        var dmWrap=el("div","igdm-list");
+        var search=el("div","igdm-search");search.append(el("span","","⌕"),el("span","","검색"));
+        var chips=el("div","igdm-chips");
+        ["홀딱 반함...","🔖 최근 저장 2회"].forEach(function(t){chips.append(el("span","igdm-chip",t));});
+        var stories=el("div","igdm-stories");
+        ["내 메모","yubamabm","jubini","chaeyeon4"].forEach(function(n){
+          var st=el("div","igdm-story"),av=el("div","igdm-avatar");
+          st.append(av,el("span","",n));stories.append(st);
+        });
+        var title=el("div","igdm-section-title","메시지");
+        dmWrap.append(search,chips,stories,title);
+        [
+          {name:"이지우",preview:"방금 일어났어...",time:"방금",open:true},
+          {name:"주빈",preview:"",time:"",open:false},
+          {name:"채연",preview:"",time:"",open:false}
+        ].forEach(function(item){
+          var row=el("button","igdm-item"),av=el("div","igdm-avatar"),info=el("div");
+          info.append(el("b","",item.name),el("small","",item.preview));
+          row.append(av,info);
+          if(item.open)row.append(el("span","igdm-unread"));
+          row.onclick=function(){
+            if(!item.open)return;
+            var panel=el("div","igdm");panel.append(el("h3","",item.name));
+            ["일어났어?","오늘 뭐 해?","밥 먹었어?"].forEach(function(t){panel.append(el("p","igdm-bubble",t));});
+            var form=el("form","igdmform"),inp=el("input");inp.placeholder="메시지 보내기";
+            var send=el("button","","전송");form.append(inp,send);
+            form.onsubmit=function(e){e.preventDefault();if(inp.value.trim()){panel.append(el("p","igdm-mine",inp.value.trim()));inp.value="";}};
+            body.innerHTML="";body.append(el("div","igmodehead","‹　"+item.name),panel);
+          };
+          dmWrap.append(row);
+        });
+        body.append(dh,dmWrap);
       }
       navItems.forEach(function(n,i){n.classList.toggle("on",(which==="home"&&i===0)||(which==="reels"&&i===1)||(which==="send"&&i===2)||(which==="search"&&i===3)||(which==="profile"&&i===4));});
     }
