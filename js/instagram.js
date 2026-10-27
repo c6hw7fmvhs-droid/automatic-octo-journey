@@ -1,0 +1,115 @@
+// Instagram 앱: 프로필 화면, 게시물 상세(사진 넘기기), 좋아요, 댓글. 상태는 localStorage "ig"에 저장.
+(function () {
+  window.SP = window.SP || {};
+  var st = { liked: {}, comments: {} }, open = {}, idx = {}, det, postBody;
+  function sv(inner, extra) { return '<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ' + (extra || "") + ">" + inner + "</svg>"; }
+  var S = {
+    plus: sv('<path d="M12 4v16M4 12h16"/>', 'stroke-width="2.4"'),
+    menu: sv('<path d="M3 6h18M3 12h18M3 18h18"/>', 'stroke-width="2.4"'),
+    lock: sv('<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', 'stroke-width="2.4"'),
+    home: sv('<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'),
+    reels: sv('<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M10 8.5l5 3.5-5 3.5z"/>'),
+    send: sv('<path d="M21 3L3 10.5l7 3 3 7z"/><path d="M10 13.5L21 3"/>'),
+    search: sv('<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>'),
+    add: sv('<circle cx="10" cy="8" r="4"/><path d="M3 20c.5-4 3.5-6 7-6M18 8v6M15 11h6"/>'),
+    grid: '<svg viewBox="0 0 24 24" fill="#111">' + [0, 1, 2].map(function (r) { return [0, 1, 2].map(function (c) { return '<rect x="' + (3 + c * 7) + '" y="' + (3 + r * 7) + '" width="4.5" height="4.5" rx="1"/>'; }).join(""); }).join("") + "</svg>",
+    repost: sv('<path d="M17 3l3 3-3 3M4 11V9a3 3 0 0 1 3-3h13M7 21l-3-3 3-3M20 13v2a3 3 0 0 1-3 3H4"/>').replace(/#111/g, "#8e8e93"),
+    tag: sv('<rect x="4" y="3" width="16" height="18" rx="4"/><circle cx="12" cy="10" r="3"/><path d="M6.5 19c.8-3 3-4 5.5-4s4.7 1 5.5 4"/>').replace(/#111/g, "#8e8e93"),
+    multi: '<svg viewBox="0 0 24 24" fill="#fff"><rect x="8" y="3" width="13" height="13" rx="3"/><rect x="3" y="8" width="13" height="13" rx="3" opacity=".8"/></svg>'
+  };
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function ic(name, cls) { var e = el("span", cls || "igi"); e.innerHTML = S[name]; return e; }
+  function load() {
+    var s = SP.storage.get("ig", null);
+    if (s && typeof s === "object") {
+      if (s.liked && typeof s.liked === "object") st.liked = s.liked;
+      if (s.comments && typeof s.comments === "object") st.comments = s.comments;
+    }
+  }
+  function save() { SP.storage.set("ig", st); }
+  function dlabel(ts) { var d = new Date(ts); return isNaN(d) ? "" : (d.getMonth() + 1) + "월 " + d.getDate() + "일"; }
+  function allComments(p) { return (Array.isArray(p.comments) ? p.comments : []).concat(Array.isArray(st.comments[p.id]) ? st.comments[p.id] : []); }
+  function slides(p) { var a = Array.isArray(p.images) && p.images.length ? p.images : [p.img || ""]; return a.map(function (x) { return { img: x, color: p.color }; }); }
+  function sorted() { return (SP.data.posts || []).filter(function (p) { return p && p.id && !isNaN(new Date(p.ts)); }).sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); }); }
+  function prof() { return SP.data.profile || {}; }
+
+  function fmtN(n) { return n >= 10000 ? String(Math.round(n / 1000) / 10).replace(/\.0$/, "") + "만" : String(n); }
+  function card(p) {
+    var P = prof(), c = el("article", "post"), h = el("div", "ph"), av = el("div", "av", P.avatar ? "" : String(p.user || "?").charAt(0).toUpperCase());
+    SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); h.append(av, el("b", "", p.user));
+    var sl = slides(p), car = el("div", "car"), wrap = el("div", "carwrap"), cnt = null;
+    sl.forEach(function (s) { var d = el("div", "slide"); SP.pic(d, s); car.append(d); });
+    wrap.append(car);
+    if (sl.length > 1) {
+      cnt = el("span", "carcnt", ((idx[p.id] || 0) + 1) + "/" + sl.length); wrap.append(cnt);
+      car.addEventListener("scroll", function () { var i = Math.round(car.scrollLeft / (car.clientWidth || 1)); idx[p.id] = i; cnt.textContent = (i + 1) + "/" + sl.length; });
+    }
+    setTimeout(function () { car.scrollLeft = (idx[p.id] || 0) * car.clientWidth; }, 0);
+    var liked = !!st.liked[p.id], act = el("div", "pact");
+    var lk = el("button", "ico" + (liked ? " on" : ""), liked ? "♥" : "♡"); lk.setAttribute("aria-label", "좋아요");
+    lk.onclick = function () { if (st.liked[p.id]) delete st.liked[p.id]; else st.liked[p.id] = true; save(); c.replaceWith(card(p)); };
+    act.append(lk);
+    var n = (p.likes || 0) + (liked ? 1 : 0);
+    c.append(h, wrap, act);
+    if (n > 0) c.append(el("div", "likes", "좋아요 " + n + "개"));
+    var cap = el("div", "cap"); cap.append(el("b", "", p.user), document.createTextNode(" " + (p.caption || ""))); c.append(cap);
+    c.append(el("div", "pdate", dlabel(p.ts)));
+    return c;
+  }
+  function openPost(p) { postBody.innerHTML = ""; postBody.append(card(p)); det.hidden = false; }
+
+  function build() {
+    var root = document.getElementById("instagram"); root.innerHTML = "";
+    var P = prof(), posts = sorted();
+    var view = el("div", "view"), top = el("div", "igtop"), nm = el("span", "igname");
+    nm.innerHTML = S.lock; nm.append(document.createTextNode(" " + (P.user || "") + " ⌄"));
+    top.append(ic("plus"), nm, ic("menu"));
+    var body = el("div", "body"), head = el("div", "ighead"), ring = el("div", "ring");
+    var av = el("div", "igav", P.avatar ? "" : String(P.user || "?").charAt(0).toUpperCase());
+    SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); ring.append(av, el("i", "plusb", "+"));
+    var stats = el("div", "stats");
+    [["게시물", posts.length], ["팔로워", P.followers || 0], ["팔로잉", P.following || 0]].forEach(function (s) {
+      var d = el("div"); d.append(el("b", "", fmtN(s[1])), el("span", "", s[0])); stats.append(d);
+    });
+    head.append(ring, stats);
+    var btns = el("div", "igbtns"), add = el("span", "igbtn sm"); add.innerHTML = S.add;
+    btns.append(el("span", "igbtn", "프로필 편집"), el("span", "igbtn", "프로필 공유"), add);
+    var hls = el("div", "hls"), nw = el("div", "hl"); nw.append(el("div", "hlc", "+"), el("span", "", "New")); hls.append(nw);
+    (P.highlights || []).forEach(function (h) { var d = el("div", "hl"), cc = el("div", "hlc"); SP.pic(cc, h); d.append(cc, el("span", "", h.label || "")); hls.append(d); });
+    var tabs = el("div", "igtabs");
+    [["grid", "on"], ["repost", ""], ["tag", ""]].forEach(function (t) { var s = el("span", t[1]); s.innerHTML = S[t[0]]; tabs.append(s); });
+    var grid = el("div", "tgrid");
+    posts.forEach(function (p) {
+      var t = el("button", "tile"), sl = slides(p); SP.pic(t, sl[0]); t.setAttribute("aria-label", "게시물");
+      if (sl.length > 1) { var m = el("span", "multi"); m.innerHTML = S.multi; t.append(m); }
+      t.onclick = function () { openPost(p); }; grid.append(t);
+    });
+    body.append(head, btns, hls, tabs, grid);
+    var nav = el("div", "ignav"), navItems = [];
+    ["home", "reels", "send", "search"].forEach(function (n) { var item=ic(n); item.setAttribute("role","button"); item.tabIndex=0; navItems.push(item); nav.append(item); });
+    var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
+    function mode(which){
+      body.innerHTML="";
+      if(which==="profile"){ body.append(head,btns,hls,tabs,grid); }
+      else if(which==="home"){
+        var stories=el("div","igstories"); ["내 스토리","yuushi_","sakuya_","riku_"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
+        body.append(stories); posts.forEach(function(p){body.append(card(p));});
+      } else if(which==="reels"){
+        var rh=el("div","igmodehead","릴스"); body.append(rh); posts.forEach(function(p){var r=el("button","igreel");SP.pic(r,slides(p)[0]);r.append(el("b","",p.user),el("span","",p.caption||""));r.onclick=function(){openPost(p);};body.append(r);});
+        if(!posts.length)body.append(el("p","igempty","아직 볼 릴스가 없어."));
+      } else if(which==="search"){
+        var sh=el("div","igsearchwrap"), input=el("input","igsearch");input.placeholder="검색";sh.append(input);var results=el("div","tgrid");function filter(){results.innerHTML="";posts.filter(function(p){return !input.value||((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(input.value.toLowerCase());}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});}input.addEventListener("input",filter);filter();body.append(sh,results);setTimeout(function(){input.focus();},50);
+      } else if(which==="send"){
+        var dh=el("div","igmodehead","메시지");body.append(dh);var row=el("button","igdmrow");row.append(el("span","mini","♥"),el("b","","이지우"),el("span","","메시지 보기 ›"));row.onclick=function(){var panel=el("div","igdm");panel.append(el("h3","","이지우"));var messages=["일어났어?","오늘 뭐 해?","밥 먹었어?"];messages.forEach(function(t){panel.append(el("p","igdm-bubble",t));});var form=el("form","igdmform"),inp=el("input");inp.placeholder="메시지 보내기";var send=el("button","","전송");form.append(inp,send);form.onsubmit=function(e){e.preventDefault();if(inp.value.trim()){panel.append(el("p","igdm-mine",inp.value.trim()));inp.value="";}};panel.append(form);body.innerHTML="";body.append(panel);};body.append(row);
+      }
+      navItems.forEach(function(n,i){n.classList.toggle("on",(which==="home"&&i===0)||(which==="reels"&&i===1)||(which==="send"&&i===2)||(which==="search"&&i===3)||(which==="profile"&&i===4));});
+    }
+    navItems.forEach(function(n,i){var names=["home","reels","send","search","profile"];n.onclick=function(){mode(names[i]);};n.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();mode(names[i]);}};});
+    view.append(top, body, nav);
+    det = el("div", "detail"); det.hidden = true;
+    var tb = el("div", "topbtns"), bk = el("button", "pill", "‹ 프로필"); bk.onclick = function () { det.hidden = true; };
+    tb.append(bk); postBody = el("div", "body"); det.append(tb, postBody);
+    root.append(view, det);
+  }
+  SP.instagram = { init: function () { load(); build(); }, open: function () { if (det) det.hidden = true; } };
+})();
