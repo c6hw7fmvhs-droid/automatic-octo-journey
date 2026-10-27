@@ -336,3 +336,78 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 #msg-list .row:first-child:before{content:"";position:absolute;left:18px;top:14px;width:52px;height:52px;border-radius:18px;background:url("../assets/images/jiwoo-profile.jpg") center 28%/cover no-repeat}
 #msg-list .readonly-row{cursor:default}
 #home-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+
+/* iPhone 16 proportions and independent wallpapers */
+#phone{
+  width:min(calc(100vw - 24px), calc((100dvh - 32px) * .462));
+  height:min(calc(100dvh - 32px), calc((100vw - 24px) / .462));
+  max-width:390px;
+  border:7px solid #242428;
+  border-radius:clamp(34px, 8vw, 52px);
+  box-shadow:0 0 0 2px #5c5c62, 0 22px 56px rgba(0,0,0,.25);
+}
+#lock{
+  background-image:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.16)),url("../assets/images/wallpaper-lock.jpg") !important;
+  background-size:cover !important;background-position:center !important;
+}
+#home{
+  background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.16)),url("../assets/images/wallpaper-home.jpg") !important;
+  background-size:cover !important;background-position:center !important;
+}
+.welcome-mark{display:none!important}
+/* Keep the actual photo only on Jiwoo's room and messages */
+.kakao-avatar{
+  background-image:none!important;
+  background-color:#eef0f4!important;
+  border-radius:50%!important;
+  position:relative;
+  color:transparent!important;
+}
+.kakao-avatar::before{
+  content:"";position:absolute;width:34%;height:34%;border-radius:50%;
+  background:#9299a7;top:20%;left:33%;
+}
+.kakao-avatar::after{
+  content:"";position:absolute;width:62%;height:34%;border-radius:50% 50% 35% 35%;
+  background:#9299a7;bottom:7%;left:19%;
+}
+.kakao-room.jiwoo-room > .kakao-avatar,
+.kakao-msg.them .kakao-avatar{
+  background-image:url("../assets/images/jiwoo-profile.jpg")!important;
+  background-size:cover!important;background-position:center 28%!important;
+}
+.kakao-room.jiwoo-room > .kakao-avatar::before,
+.kakao-room.jiwoo-room > .kakao-avatar::after,
+.kakao-msg.them .kakao-avatar::before,
+.kakao-msg.them .kakao-avatar::after{display:none}
+.kakao-group-avatar{
+  width:58px;height:58px;flex:none;display:grid;grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;gap:2px;padding:1px;border-radius:16px;overflow:hidden;background:#fff;
+}
+.kakao-group-avatar i{display:block;position:relative;background:#b6a9ed;border-radius:7px}
+.kakao-group-avatar i:nth-child(2),.kakao-group-avatar i:nth-child(3){background:#a7ddd5}
+.kakao-group-avatar i:before{content:"";position:absolute;left:35%;top:17%;width:30%;height:30%;border-radius:50%;background:#fff;opacity:.95}
+.kakao-group-avatar i:after{content:"";position:absolute;left:20%;bottom:13%;width:60%;height:31%;border-radius:50% 50% 30% 30%;background:#fff;opacity:.95}
+.kakao-pin{display:inline-block!important;font-size:12px!important;color:#929292!important;margin-left:6px;vertical-align:2px}
+.kakao-room-main b{display:flex;align-items:center;gap:0}
+.kakao-room.disabled-room .kakao-avatar{background-image:none!important}
+/* Instagram DM list inspired by the supplied reference */
+.igdm-list{padding:0 16px 16px;overflow:auto}
+.igdm-search{height:42px;border-radius:24px;background:#f0f1f5;color:#777;padding:0 16px;display:flex;align-items:center;gap:10px;margin:10px 0 12px}
+.igdm-chips{display:flex;gap:10px;margin:0 0 18px;overflow:hidden}
+.igdm-chip{white-space:nowrap;border-radius:22px;background:#f7f7f9;padding:9px 14px;font-size:13px;color:#555}
+.igdm-stories{display:flex;gap:18px;overflow:hidden;padding:4px 0 18px}
+.igdm-story{width:70px;flex:none;text-align:center;font-size:12px;color:#666}
+.igdm-story .igdm-avatar{margin:0 auto 7px}
+.igdm-avatar{width:58px;height:58px;border-radius:50%;background:#eef0f4;position:relative;overflow:hidden;flex:none}
+.igdm-avatar:before{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:#9299a7;left:35%;top:19%}
+.igdm-avatar:after{content:"";position:absolute;width:58%;height:33%;border-radius:50% 50% 30% 30%;background:#9299a7;left:21%;bottom:7%}
+.igdm-section-title{font-size:18px;font-weight:700;margin:4px 0 8px}
+.igdm-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 0;min-height:82px}
+.igdm-item b{display:block;font-size:15px;font-weight:600;margin-bottom:4px}
+.igdm-item small{display:block;color:#888;font-size:13px}
+.igdm-unread{width:9px;height:9px;border-radius:50%;background:#5365ef;margin-left:auto;flex:none}
+@media(max-width:420px){
+ #phone{width:min(calc(100vw - 24px),calc((100dvh - 32px)*.462));height:min(calc(100dvh - 32px),calc((100vw - 24px)/.462));border-width:6px;border-radius:38px}
+}
