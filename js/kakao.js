@@ -23,10 +23,12 @@
       if(item[0]==='가족단톡방' || item[0]==='2026 총학') b.classList.add('same-group-avatar');
       b.innerHTML=(groupRoom
         ? '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>'
-        : '<div class="kakao-avatar"></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
+        : '<div class="kakao-avatar profile-'+i+'"></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
+      b.dataset.room = item[0];
       b.querySelector('b').textContent=item[0];
       if(item[0]==='가족단톡방' || item[0]==='2026 총학'){var count=document.createElement('small');count.className='kakao-room-count';count.textContent=item[0]==='가족단톡방'?'4':'12';b.querySelector('b').appendChild(count);}
-      if(i===0){var pin=document.createElement('span');pin.className='kakao-pin';pin.textContent='📌';b.querySelector('b').appendChild(pin);}
+      if(i===0){var pin=document.createElement('span');pin.className='kakao-pin';pin.setAttribute('aria-label','고정된 채팅방');pin.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 1h6v2l-1 2v2l2 2v1H4V9l2-2V5L5 3zM8 10v5"/></svg>';b.querySelector('b').appendChild(pin);}
+      if(item[0]==='카카오페이'){b.querySelector('.kakao-avatar').classList.add('kakao-pay-avatar');}
       b.querySelector('span').textContent=item[1];b.querySelector('time').textContent=item[2];
       if(item[3]) b.onclick=openChat; else {b.disabled=false;b.setAttribute('aria-disabled','true');b.onclick=function(e){e.preventDefault();};}
       host.append(b);
