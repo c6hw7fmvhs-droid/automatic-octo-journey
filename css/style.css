@@ -2,16 +2,16 @@
 html,body{margin:0;height:100%;background:#e8e8ed;overflow:hidden;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-text-size-adjust:100%}
 button,textarea,input{font:inherit;color:inherit}
 button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding:0}
-#phone{position:fixed;inset:clamp(8px,2.3vh,24px) auto;left:50%;transform:translateX(-50%);width:min(calc(100vw - 18px),430px);height:calc(100dvh - clamp(16px,4.6vh,48px));max-width:430px;overflow:hidden;background:#000;border:8px solid #202024;border-radius:clamp(34px,7vw,54px);box-shadow:0 0 0 2px #5b5b61,0 18px 50px rgba(0,0,0,.28);--fg:#fff;--bg:#000;--ic:min(14vw,58px)}
+#phone{position:fixed;inset:clamp(8px,2.3vh,24px) auto;left:50%;transform:translateX(-50%);width:min(calc(100vw - 18px),430px);height:calc(100dvh - clamp(16px,4.6vh,48px));max-width:430px;overflow:hidden;background:#000;border:8px solid #202024;border-radius:clamp(34px,7vw,54px);box-shadow:0 0 0 2px #5b5b61,0 18px 50px rgba(0,0,0,.28);--fg:#fff;--bg:#000;--ic:min(17.5vw,72px)}
 #phone[data-theme=dark]{--fg:#000;--bg:#fff}
 
-#statusbar{position:absolute;top:0;left:0;right:0;height:48px;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:5px 28px 0 32px;color:var(--fg);font-weight:600;font-size:14px;pointer-events:none}
-.island{position:absolute;left:50%;top:11px;width:104px;height:29px;margin-left:-52px;border-radius:20px;background:#000}
+#statusbar{position:absolute;top:0;left:0;right:0;height:54px;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:6px 32px 0 38px;color:var(--fg);font-weight:600;font-size:17px;pointer-events:none}
+.island{position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000}
 .sb-right{display:flex;align-items:center;gap:6px}
-.sig,.wifi{width:17px;height:12px;fill:currentColor}
+.sig,.wifi{width:20px;height:14px;fill:currentColor}
 .sig .dim{opacity:.35}
-.batt{position:relative;background:var(--fg);color:var(--bg);border-radius:9px;min-width:29px;height:18px;padding:0 5px;display:grid;place-items:center;font-size:11px;font-weight:700;margin-right:3px}
-.batt::after{content:"";position:absolute;right:-3px;top:6px;width:2px;height:6px;border-radius:1px;background:var(--fg);opacity:.4}
+.batt{position:relative;background:var(--fg);color:var(--bg);border-radius:9px;min-width:34px;height:22px;padding:0 6px;display:grid;place-items:center;font-size:14px;font-weight:700;margin-right:3px}
+.batt::after{content:"";position:absolute;right:-3px;top:7px;width:2px;height:8px;border-radius:1px;background:var(--fg);opacity:.4}
 
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;animation:in .22s ease-out}
 .screen[hidden]{display:none}
@@ -28,10 +28,10 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 .lock-hint{margin-top:auto;padding-bottom:24px;font-size:15px;opacity:.8}
 
 #home{padding-top:78px}
-#home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 0;padding:0 16px;justify-items:center}
-.app-icon{display:flex;flex-direction:column;align-items:center;gap:5px;color:#fff;font-size:10px;width:100%;min-height:38px}
+#home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 0;padding:0 14px;justify-items:center}
+.app-icon{display:flex;flex-direction:column;align-items:center;gap:7px;color:#fff;font-size:12px;width:100%;min-height:44px}
 .app-icon:active .ic{transform:scale(.92)}
-#dock{margin:auto 12px 24px;padding:9px 8px;border-radius:32px;background:rgba(255,255,255,.22);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);display:grid;grid-template-columns:repeat(4,1fr);justify-items:center}
+#dock{margin:auto 12px 24px;padding:12px 8px;border-radius:38px;background:rgba(255,255,255,.22);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);display:grid;grid-template-columns:repeat(4,1fr);justify-items:center}
 .ic{width:var(--ic);height:var(--ic);border-radius:22%;overflow:hidden;display:grid;place-items:center;transition:transform .12s}
 .ic svg{width:72%;height:72%}
 .ic-photos svg,.ic-safari svg,.ic-clock svg{width:86%;height:86%}
@@ -412,97 +412,121 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
  #phone{width:min(calc(100vw - 24px),calc((100dvh - 32px)*.462));height:min(calc(100dvh - 32px),calc((100vw - 24px)/.462));border-width:6px;border-radius:38px}
 }
 
-/* Fine sizing pass based on the user's reference screenshots.
-   Keep the outer phone frame and existing content/photos unchanged. */
-#statusbar{height:42px;padding:5px 25px 0 27px;font-size:13px;gap:4px}
-#statusbar .island,.island{top:9px;width:94px;height:27px;margin-left:-47px;border-radius:16px}
-#statusbar .sig,#statusbar .wifi{width:15px;height:11px}
-#statusbar .sb-right{gap:4px}
-#statusbar .batt{min-width:27px;height:17px;padding:0 4px;border-radius:6px;font-size:10px;margin-right:2px}
-#statusbar .batt::after{top:5px;height:6px}
-
-/* Welcome card: compact and centered inside the existing phone screen. */
-#welcome{padding:18px}
-.welcome-card{width:min(100%,286px);max-width:286px;padding:22px 18px;border-radius:23px}
-.welcome-card h1{font-size:22px;letter-spacing:-.6px}
-.welcome-copy{margin:8px 0 18px;font-size:12px;line-height:1.5}
-#welcome-form{gap:8px}
-#welcome-form label{font-size:11px}
-#welcome-name{height:40px;padding:0 12px;border-radius:11px;font-size:14px}
-#welcome-form button{height:40px;margin-top:3px;border-radius:11px;font-size:14px}
-.welcome-foot{margin-top:12px;font-size:10px}
-
-/* KakaoTalk list: retain all existing rows and profile assets, only reduce UI scale. */
-.kakao-app{padding-top:42px}
-.kakao-header{height:52px;padding:0 16px}
-.kakao-header h1{font-size:23px}
-.kakao-header div{font-size:20px}
-.kakao-tabs{gap:6px;padding:4px 13px 12px}
-.kakao-tabs span{padding:7px 13px;font-size:12px;border-radius:20px}
-.kakao-room{gap:10px;padding:9px 14px}
-.kakao-avatar{width:43px;height:43px;border-radius:15px;font-size:18px}
-.kakao-room-main b{font-size:14px;margin-bottom:3px}
-.kakao-room-main span{font-size:11px}
-.kakao-room time{font-size:10px}
-.kakao-bottom{height:48px;font-size:18px}
-
-/* Messages list: no photos or avatar space; keep the pre-existing names/previews. */
-#msg-list .row:first-child{padding-left:20px!important;min-height:64px!important}
-#msg-list .row:first-child:before{display:none!important;content:none!important}
-#msg-list .row{padding-top:10px;padding-bottom:10px}
-#msg-list .rowtop b{font-size:14px}
-#msg-list .rowtime{font-size:12px}
-#msg-list .rowprev{font-size:12px;line-height:1.3}
-#messages .big{font-size:29px;margin:5px 16px 8px}
-#messages .topbtns{padding:4px 14px}
-#messages .pill{min-height:36px;min-width:36px;padding:0 12px;font-size:14px}
-#messages .searchpill{min-height:36px;font-size:14px;padding:0 12px}
-
-/* Instagram profile: scale the profile header and stats, not the photos. */
-.igtop{padding:4px 14px 2px;min-height:40px}
-.igi{width:27px;height:27px}
-.igi svg{width:23px;height:23px}
-.igname{font-size:17px;gap:3px}
-.igname svg{width:15px;height:15px}
+/* Approved refinements: keep the outer iPhone frame unchanged. */
+#phone{--ic:min(13.5vw,56px)}
+#home-grid{gap:18px 0;padding:0 12px}
+.app-icon{gap:5px;font-size:10px;min-height:38px}
+#dock{margin: auto 10px 22px;padding:9px 6px;gap:3px;border-radius:30px}
+#dock .ic{width:var(--ic);height:var(--ic)}
+#statusbar{font-size:14px;padding:6px 26px 0 30px;height:48px}
+.island{top:10px;width:106px;height:30px;margin-left:-53px}
+.sig,.wifi{width:17px;height:12px}
+.batt{min-width:29px;height:18px;font-size:11px;border-radius:7px;padding:0 5px}
+.batt::after{top:5px;height:7px}
+/* Same user-provided photograph on lock and home screens. */
+#lock,#home{background-image:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.16)),url('../assets/images/approved-wallpaper.jpg') !important;background-size:cover!important;background-position:center 30%!important;background-repeat:no-repeat!important}
+/* First-run card: centered, comfortably sized, with modest edge spacing. */
+#welcome{padding:16px;align-items:center;justify-content:center}
+.welcome-card{width:100%;max-width:360px;padding:28px 22px;border-radius:25px}
+.welcome-card h1{font-size:25px}
+.welcome-copy{margin:9px 0 22px;font-size:14px}
+#welcome-name{height:46px;font-size:15px}
+#welcome-form button{height:46px}
+/* Compact KakaoTalk list, preserving the existing chat names and previews. */
+.kakao-app{padding-top:46px}
+.kakao-header{height:54px;padding:0 18px}
+.kakao-header h1{font-size:24px}
+.kakao-header div{font-size:21px}
+.kakao-tabs{gap:6px;padding:5px 14px 12px}
+.kakao-tabs span{padding:8px 14px;font-size:13px}
+.kakao-room{gap:10px;padding:9px 15px}
+.kakao-avatar,.kakao-group-avatar{width:44px;height:44px}
+.kakao-avatar{border-radius:16px}
+.kakao-room-main b{font-size:15px;margin-bottom:3px}
+.kakao-room-main span{font-size:12px}
+.kakao-room time{font-size:11px}
+.kakao-room-count{display:inline-block!important;margin-left:5px;color:#8d8d8d;font-size:10px;font-weight:500;line-height:1;vertical-align:middle}
+.kakao-group-avatar{border-radius:12px;gap:2px}
+.kakao-group-avatar i{border-radius:5px}
+.kakao-bottom{height:50px;font-size:19px}
+/* Messages list: names or phone numbers only; no profile photos, previews, or search bar. */
+#msg-list .row{padding:13px 20px;min-height:48px;background:linear-gradient(#e5e5ea,#e5e5ea) right bottom/calc(100% - 20px) 1px no-repeat}
+#msg-list .row:first-child{padding-left:20px;min-height:48px}
+#msg-list .row:first-child:before{display:none!important}
+#msg-list .rowtop{justify-content:flex-start}
+#msg-list .rowtop b{font-size:16px;font-weight:600}
+#msg-list .rowtime,#msg-list .rowprev{display:none!important}
+#msg-list .row{display:block}
+/* Instagram profile: reduce the profile block without changing post images/content. */
+.igtop{min-height:42px;padding:4px 14px}
+.igname{font-size:18px}
+.igi{width:28px;height:28px}
+.igi svg{width:24px;height:24px}
 .ighead{gap:14px;padding:6px 14px}
-.ring{width:70px;height:70px;padding:2px}
-.igav{border-width:2px;font-size:25px}
-.plusb{width:21px;height:21px;font-size:14px}
+.ring{width:72px;height:72px;padding:2px}
+.igav{font-size:24px}
+.igav svg{width:100%;height:100%;display:block}
+.plusb{width:21px;height:21px;font-size:15px}
 .stats b{font-size:16px}
-.stats span{font-size:11px}
+.stats span{font-size:12px}
 .igbtns{gap:6px;padding:8px 14px}
-.igbtn{min-height:32px;border-radius:9px;font-size:12px}
+.igbtn{min-height:34px;font-size:13px;border-radius:10px}
 .igbtn.sm{width:36px}
-.igbtn.sm svg{width:18px;height:18px}
 .hls{gap:12px;padding:4px 14px 10px}
+.hlc{width:54px;height:54px;font-size:27px}
 .hl{font-size:11px}
-.hlc{width:52px;height:52px;font-size:26px;margin-bottom:3px}
+.igtabs span{min-height:38px}
+.igtabs svg{width:22px;height:22px}
+.ignav{margin:4px 12px 3px;padding:4px 6px}
+.ignav .igi{width:40px;height:38px}
+.ignav .igi.on{width:58px}
+.mini{width:27px;height:27px}
+/* Instagram DM list keeps its existing entries and images, only spacing is compacted. */
+.igdm-list{padding:0 14px 12px}
+.igdm-search{height:36px;margin:8px 0 10px}
+.igdm-chip{padding:7px 12px;font-size:12px}
+.igdm-stories{gap:12px;padding:3px 0 14px}
+.igdm-story{width:58px;font-size:11px}
+.igdm-avatar{width:48px;height:48px}
+.igdm-section-title{font-size:16px;margin:3px 0 6px}
+.igdm-item{gap:10px;padding:9px 0;min-height:68px}
+.igdm-item b{font-size:14px;margin-bottom:3px}
+.igdm-item small{font-size:12px}
+@media(max-width:420px){#phone{--ic:min(13.5vw,56px)}.welcome-card{max-width:360px;padding:26px 20px}}
+
+
+/* Structure-checked refinements: inner UI only; do not change #phone frame dimensions. */
+#phone{--ic:min(12vw,48px)}
+#home-grid{gap:16px 0;padding:0 12px}
+.app-icon{gap:4px;font-size:10px;min-height:34px}
+#dock{margin: auto 10px 20px;padding:8px 6px;gap:2px}
+#dock .ic{width:var(--ic);height:var(--ic)}
+#statusbar{font-size:13px;padding:6px 24px 0 28px;height:46px}
+#statusbar .sig,#statusbar .wifi{width:16px;height:11px}
+#statusbar .batt{min-width:27px;height:17px;font-size:10px;padding:0 4px}
+#statusbar .island{top:9px;width:100px;height:28px;margin-left:-50px}
+/* Keep name entry centered and readable, without changing the outer phone. */
+#welcome{padding:16px;align-items:center;justify-content:center}
+.welcome-card{width:min(100%,350px);padding:26px 20px;border-radius:24px}
+.welcome-card h1{font-size:24px}
+.welcome-copy{font-size:14px;margin:9px 0 20px}
+#welcome-name,#welcome-form button{height:44px;font-size:14px}
+/* Message list rows are text-only; no avatars, preview, timestamps, or search. */
+#msg-list .row{display:block;padding:12px 20px;min-height:46px;background:linear-gradient(#e5e5ea,#e5e5ea) right bottom/calc(100% - 20px) 1px no-repeat}
+#msg-list .row:before,#msg-list .row .avatar,#msg-list .row .rowtime,#msg-list .row .rowprev{display:none!important}
+#msg-list .rowtop{justify-content:flex-start}
+#msg-list .rowtop b{font-size:15px;font-weight:600}
+/* Compact Instagram profile chrome only; post images and data remain untouched. */
+.igtop{min-height:40px;padding:4px 13px}
+.igname{font-size:17px}
+.igi{width:26px;height:26px}
+.igi svg{width:22px;height:22px}
+.ighead{gap:12px;padding:6px 13px}
+.ring{width:68px;height:68px;padding:2px}
+.stats b{font-size:15px}
+.stats span{font-size:11px}
+.igbtns{gap:6px;padding:7px 13px}
+.igbtn{min-height:32px;font-size:12px}
+.hlc{width:50px;height:50px}
 .igtabs span{min-height:36px}
-.igtabs svg{width:21px;height:21px}
-.igstories{gap:10px;padding:9px 12px}
-.igstory{gap:4px;min-width:50px;font-size:10px}
-.igstory .mini{width:42px;height:42px}
-.igmodehead{font-size:20px;padding:13px}
-.igdmrow{gap:9px;padding:11px}
-.igdm{padding:14px}
-
-@media(max-width:420px){
-  #statusbar{padding-left:24px;padding-right:22px;font-size:12px}
-  #statusbar .island,.island{width:88px;height:26px;margin-left:-44px}
-  .kakao-room{padding:8px 12px}
-  .kakao-avatar{width:40px;height:40px}
-}
-
-
-/* v7: fix home-screen icons that overflowed the dock on narrow mobile viewports.
-   Keep the outer phone frame dimensions unchanged. */
-#phone{--ic:clamp(34px, 10vw, 42px)}
-#home{padding-top:70px}
-#home-grid{gap:14px 0;padding:0 12px;grid-template-columns:repeat(4,minmax(0,1fr))}
-.app-icon{min-width:0;gap:4px;font-size:10px;min-height:32px}
-.app-icon .ic{width:var(--ic);height:var(--ic);max-width:100%;border-radius:22%}
-#dock{width:calc(100% - 18px);margin: auto 9px 18px;padding:7px 5px;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;box-sizing:border-box}
-#dock .app-icon{width:100%;min-width:0}
-#dock .app-icon .ic{width:var(--ic);height:var(--ic)}
-#dock .app-icon .label{font-size:9px}
-.bdg{top:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:10px;line-height:16px}
+@media(max-width:420px){#phone{--ic:min(12vw,46px)}.welcome-card{width:100%;padding:24px 18px}}
