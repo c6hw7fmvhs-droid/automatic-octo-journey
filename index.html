@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Story Phone</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="phone" data-theme="light">
+  <section id="welcome" aria-label="시작하기">
+    <div class="welcome-card">
+      
+      <h1>어떻게 불러 줄까?</h1>
+      <p class="welcome-copy">지우가 너를 부를 이름을 알려 줘.</p>
+      <form id="welcome-form" autocomplete="off">
+        <label for="welcome-name">이름 또는 별명</label>
+        <input id="welcome-name" name="name" maxlength="20" placeholder="이름을 입력해 줘" required>
+        <button type="submit">시작하기</button>
+      </form>
+      <p class="welcome-foot">새로고침하면 처음부터 다시 시작해.</p>
+    </div>
+  </section>
+  <div id="statusbar">
+    <span id="sb-time"></span><i class="island"></i>
+    <span class="sb-right">
+      <svg class="sig" viewBox="0 0 20 14"><rect x="0" y="9" width="3.5" height="5" rx="1"/><rect x="5.5" y="6" width="3.5" height="8" rx="1"/><rect x="11" y="3" width="3.5" height="11" rx="1"/><rect x="16.5" y="0" width="3.5" height="14" rx="1" class="dim"/></svg>
+      <svg class="wifi" viewBox="0 0 20 14"><circle cx="10" cy="11.8" r="1.7"/><path d="M5.6 8.2a6.2 6.2 0 0 1 8.8 0M2.4 5a10.6 10.6 0 0 1 15.2 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <b class="batt">97</b>
+    </span>
+  </div>
+
+  <section id="lock" class="screen">
+    <div class="lock-top"><div id="lock-date"></div><div id="lock-time"></div></div>
+    <div id="notifs"></div>
+    <div class="lock-hint">위로 스와이프(또는 클릭)하여 열기</div>
+  </section>
+
+  <section id="home" class="screen" hidden>
+    <div id="home-grid"></div>
+    <div id="dock"></div>
+  </section>
+
+  <section id="messages" class="screen app" hidden>
+    <div id="msg-listview" class="view">
+      <div class="topbtns"><button class="pill" id="msg-home">‹ 홈</button><span class="pill round" aria-hidden="true">≡</span></div>
+      <div class="body"><h1 class="big">메시지</h1><div id="msg-list"></div></div>
+    </div>
+    <div id="msg-chatview" class="view" hidden>
+      <div class="topbtns"><button class="pill round" id="msg-back" aria-label="뒤로">‹</button><span class="pill namepill" id="chat-name"></span><span class="spacer"></span></div>
+      <div id="chat-body" class="body"></div>
+      <form id="msg-form" autocomplete="off">
+        <label class="attach" aria-label="사진 보내기">+<input type="file" id="msg-file" accept="image/*" hidden></label>
+        <div class="inwrap"><textarea id="msg-input" rows="1" maxlength="500" placeholder="문자 메시지" enterkeyhint="send"></textarea><button type="button" id="msg-clear" aria-label="입력 취소" hidden>×</button></div>
+        <button type="submit" id="msg-send" aria-label="전송">↑</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="camera-app" class="screen" hidden>
+    <video id="cam-video" playsinline muted autoplay></video>
+    <div id="cam-msg" hidden></div>
+    <div id="cam-flash"></div>
+    <div class="cam-bar">
+      <button id="cam-thumb" aria-label="마지막 사진"></button>
+      <button id="cam-shutter" aria-label="사진 찍기"><span></span></button>
+      <button id="cam-flip" aria-label="카메라 전환">⟲</button>
+    </div>
+    <input type="file" id="cam-file" accept="image/*" capture="environment" hidden>
+    <div id="cam-view" hidden>
+      <div class="topbtns"><button class="pill" id="cv-close">닫기</button><span class="pill" id="cv-count"></span><button class="pill" id="cv-del">삭제</button></div>
+      <img id="cv-img" alt="찍은 사진">
+      <div class="cv-nav"><button id="cv-prev" aria-label="이전">‹</button><button id="cv-next" aria-label="다음">›</button></div>
+    </div>
+  </section>
+
+  <section id="calendar-app" class="screen app" hidden>
+    <div class="topbtns"><button class="pill" id="cal-home">‹ 홈</button><button class="pill" id="cal-today">오늘</button></div>
+    <div class="body">
+      <div class="calhead"><button class="pill round" id="cal-prev" aria-label="이전 달">‹</button><h1 id="cal-title"></h1><button class="pill round" id="cal-next" aria-label="다음 달">›</button></div>
+      <div class="calwk"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+      <div id="cal-grid"></div>
+      <div id="cal-events"></div>
+    </div>
+  </section>
+
+  <section id="photos" class="screen app" hidden>
+    <div class="body"><h1 class="big">보관함</h1><div id="photo-list"></div></div>
+    <div id="photo-detail" class="detail" hidden>
+      <div class="topbtns"><button class="pill" id="pd-close">‹ 보관함</button></div>
+      <div id="pd-pic"></div><div id="pd-info"></div>
+    </div>
+  </section>
+
+  <section id="instagram" class="screen app" hidden></section>
+
+  <section id="kakao" class="screen app kakao-app" hidden>
+    <div id="kakao-listview" class="kakao-view">
+      <header class="kakao-header"><h1>채팅</h1><div>⌕　＋　⚙</div></header>
+      <div class="kakao-tabs"><span class="active">전체</span><span>안읽음</span><span>통화</span><span>☰</span></div>
+      <div id="kakao-list" class="kakao-list"></div>
+      <nav class="kakao-bottom"><span>●</span><span class="active">●</span><span>▶</span><span>▣</span><span>•••</span></nav>
+    </div>
+    <div id="kakao-chatview" class="kakao-view" hidden>
+      <header class="kakao-chat-header"><button id="kakao-back">‹</button><b id="kakao-chat-title">이지우</b><span>⌕　☎　☰</span></header>
+      <div id="kakao-chat-body" class="kakao-chat-body"></div>
+      <div id="kakao-suggestions" class="kakao-suggestions"></div>
+      <form id="kakao-form"><button type="button" class="kakao-plus">＋</button><input id="kakao-input" placeholder="메시지 입력" autocomplete="off"><button type="submit" class="kakao-send">↑</button></form>
+    </div>
+  </section>
+
+  <section id="phone-app" class="screen app" hidden>
+    <div class="topbtns"><button class="pill" id="call-home">‹ 홈</button><span class="pill" aria-hidden="true">편집</span></div>
+    <div class="body"><h1 class="big">최근 통화</h1><div id="call-list"></div></div>
+    <div class="tabbar" aria-hidden="true"><span>즐겨찾기</span><span class="on">최근 통화</span><span>연락처</span><span>키패드</span></div>
+  </section>
+
+  <button id="homebar" aria-label="홈 화면" hidden><span></span></button>
+</div>
+
+<script src="data/characters.js"></script>
+<script src="data/conversations.js"></script>
+<script src="data/config.js"></script>
+<script src="data/posts.js"></script>
+<script src="data/photos.js"></script>
+<script src="data/calls.js"></script>
+<script src="data/notifications.js"></script>
+<script src="data/calendar.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/events.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/replies.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/messages.js"></script>
+<script src="js/instagram.js"></script>
+<script src="js/kakao.js"></script>
+<script src="js/photos.js"></script>
+<script src="js/phone.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
