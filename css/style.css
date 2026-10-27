@@ -412,38 +412,83 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
  #phone{width:min(calc(100vw - 24px),calc((100dvh - 32px)*.462));height:min(calc(100dvh - 32px),calc((100vw - 24px)/.462));border-width:6px;border-radius:38px}
 }
 
+/* Fine sizing pass based on the user's reference screenshots.
+   Keep the outer phone frame and existing content/photos unchanged. */
+#statusbar{height:42px;padding:5px 25px 0 27px;font-size:13px;gap:4px}
+#statusbar .island,.island{top:9px;width:94px;height:27px;margin-left:-47px;border-radius:16px}
+#statusbar .sig,#statusbar .wifi{width:15px;height:11px}
+#statusbar .sb-right{gap:4px}
+#statusbar .batt{min-width:27px;height:17px;padding:0 4px;border-radius:6px;font-size:10px;margin-right:2px}
+#statusbar .batt::after{top:5px;height:6px}
 
-/* Refinements based on the preferred v3 layout */
-#phone{--ic:min(14.5vw,58px);}
-#home{padding-top:70px}
-#home-grid{gap:19px 0;padding:0 12px}
-.app-icon{gap:5px;font-size:10px;min-height:38px}
-#dock{margin: auto 12px 20px;padding:9px 7px;border-radius:30px}
-#statusbar{font-size:15px;padding-left:30px;padding-right:27px;height:49px}
-.island{width:104px;height:30px;top:10px;margin-left:-52px}
-.lock-top{padding-top:100px}
-#lock-date{font-size:18px}
-#lock-time{font-size:clamp(76px,23vw,100px)}
-.lock-hint{font-size:12px;padding-bottom:20px}
-.welcome-card{max-width:300px;padding:24px 20px;border-radius:24px}
-.welcome-card h1{font-size:23px}
-.welcome-copy{font-size:12px;margin:8px 0 20px}
-#welcome-name{height:42px;font-size:14px;padding:0 12px}
-#welcome-form button{height:42px;font-size:14px}
-#msg-list .row:first-child{padding-left:20px;min-height:0}
-#msg-list .row:first-child:before{display:none}
-#lock,#home{background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.16)),url("../assets/images/wallpaper-lock.jpg")!important;background-size:cover!important;background-position:center!important}
-/* Shared family/2026 group icon; other Kakao profiles use the same pastel palette */
-.kakao-room.jiwoo-room>.kakao-avatar,.kakao-msg.them .kakao-avatar{background-image:url("../assets/images/jiwoo-profile.jpg")!important;background-size:cover!important;background-position:center 28%!important}
-.kakao-room:not(.jiwoo-room)>.kakao-avatar{background-color:#a7ddd5!important}
-.kakao-room:not(.jiwoo-room)>.kakao-avatar:before,.kakao-room:not(.jiwoo-room)>.kakao-avatar:after{background:#fff!important}
-.kakao-room:nth-child(3n)>.kakao-avatar{background-color:#b6a9ed!important}
-.kakao-room:nth-child(4n)>.kakao-avatar{background-color:#a7ddd5!important}
-.kakao-group-avatar{background:#fff!important}
-.kakao-group-avatar i:nth-child(1),.kakao-group-avatar i:nth-child(4){background:#b6a9ed!important}
-.kakao-group-avatar i:nth-child(2),.kakao-group-avatar i:nth-child(3){background:#a7ddd5!important}
-.kakao-pin{filter:grayscale(1);opacity:.7}
-.igav,.person-mini{position:relative;overflow:hidden;background:#e3e5ea!important}
-.igav:before,.person-mini:before{content:"";position:absolute;left:36%;top:20%;width:28%;height:28%;border-radius:50%;background:#8d94a2}
-.igav:after,.person-mini:after{content:"";position:absolute;left:21%;bottom:8%;width:58%;height:36%;border-radius:50% 50% 28% 28%;background:#8d94a2}
-@media(max-width:420px){#phone{--ic:min(14.5vw,54px);border-width:6px;border-radius:38px}#home-grid{gap:17px 0}.app-icon{font-size:10px}}
+/* Welcome card: compact and centered inside the existing phone screen. */
+#welcome{padding:18px}
+.welcome-card{width:min(100%,286px);max-width:286px;padding:22px 18px;border-radius:23px}
+.welcome-card h1{font-size:22px;letter-spacing:-.6px}
+.welcome-copy{margin:8px 0 18px;font-size:12px;line-height:1.5}
+#welcome-form{gap:8px}
+#welcome-form label{font-size:11px}
+#welcome-name{height:40px;padding:0 12px;border-radius:11px;font-size:14px}
+#welcome-form button{height:40px;margin-top:3px;border-radius:11px;font-size:14px}
+.welcome-foot{margin-top:12px;font-size:10px}
+
+/* KakaoTalk list: retain all existing rows and profile assets, only reduce UI scale. */
+.kakao-app{padding-top:42px}
+.kakao-header{height:52px;padding:0 16px}
+.kakao-header h1{font-size:23px}
+.kakao-header div{font-size:20px}
+.kakao-tabs{gap:6px;padding:4px 13px 12px}
+.kakao-tabs span{padding:7px 13px;font-size:12px;border-radius:20px}
+.kakao-room{gap:10px;padding:9px 14px}
+.kakao-avatar{width:43px;height:43px;border-radius:15px;font-size:18px}
+.kakao-room-main b{font-size:14px;margin-bottom:3px}
+.kakao-room-main span{font-size:11px}
+.kakao-room time{font-size:10px}
+.kakao-bottom{height:48px;font-size:18px}
+
+/* Messages list: no photos or avatar space; keep the pre-existing names/previews. */
+#msg-list .row:first-child{padding-left:20px!important;min-height:64px!important}
+#msg-list .row:first-child:before{display:none!important;content:none!important}
+#msg-list .row{padding-top:10px;padding-bottom:10px}
+#msg-list .rowtop b{font-size:14px}
+#msg-list .rowtime{font-size:12px}
+#msg-list .rowprev{font-size:12px;line-height:1.3}
+#messages .big{font-size:29px;margin:5px 16px 8px}
+#messages .topbtns{padding:4px 14px}
+#messages .pill{min-height:36px;min-width:36px;padding:0 12px;font-size:14px}
+#messages .searchpill{min-height:36px;font-size:14px;padding:0 12px}
+
+/* Instagram profile: scale the profile header and stats, not the photos. */
+.igtop{padding:4px 14px 2px;min-height:40px}
+.igi{width:27px;height:27px}
+.igi svg{width:23px;height:23px}
+.igname{font-size:17px;gap:3px}
+.igname svg{width:15px;height:15px}
+.ighead{gap:14px;padding:6px 14px}
+.ring{width:70px;height:70px;padding:2px}
+.igav{border-width:2px;font-size:25px}
+.plusb{width:21px;height:21px;font-size:14px}
+.stats b{font-size:16px}
+.stats span{font-size:11px}
+.igbtns{gap:6px;padding:8px 14px}
+.igbtn{min-height:32px;border-radius:9px;font-size:12px}
+.igbtn.sm{width:36px}
+.igbtn.sm svg{width:18px;height:18px}
+.hls{gap:12px;padding:4px 14px 10px}
+.hl{font-size:11px}
+.hlc{width:52px;height:52px;font-size:26px;margin-bottom:3px}
+.igtabs span{min-height:36px}
+.igtabs svg{width:21px;height:21px}
+.igstories{gap:10px;padding:9px 12px}
+.igstory{gap:4px;min-width:50px;font-size:10px}
+.igstory .mini{width:42px;height:42px}
+.igmodehead{font-size:20px;padding:13px}
+.igdmrow{gap:9px;padding:11px}
+.igdm{padding:14px}
+
+@media(max-width:420px){
+  #statusbar{padding-left:24px;padding-right:22px;font-size:12px}
+  #statusbar .island,.island{width:88px;height:26px;margin-left:-44px}
+  .kakao-room{padding:8px 12px}
+  .kakao-avatar{width:40px;height:40px}
+}
