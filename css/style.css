@@ -597,3 +597,107 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 .kakao-group-avatar i:nth-child(3){
   background:#a7ddd5 !important;
 }
+
+/* Refinements requested from visual references */
+#statusbar .batt{transform:scale(.82);transform-origin:right center;margin-left:-3px}
+#statusbar .sig,#statusbar .wifi{width:18px;height:13px}
+#lock .lock-top{padding-top:82px!important}
+#lock-date{font-size:21px}
+#lock-time{font-size:clamp(78px,27vw,108px)}
+
+/* Calendar: compact native iOS-inspired month view */
+#calendar-app{padding-top:54px;padding-bottom:calc(env(safe-area-inset-bottom) + 24px)}
+.cal-toolbar{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex:none}
+.cal-year,.cal-tools{height:38px;border:1px solid #e2e2e5;border-radius:24px;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:0 2px 10px #00000008}
+.cal-year{padding:0 14px;gap:9px;font-size:15px}
+.cal-year span{font-size:25px;line-height:1}
+.cal-tools{gap:0;padding:0 5px}
+.cal-tools button{width:38px;height:34px;font-size:23px;line-height:1}
+.cal-body{padding:0;display:flex;flex-direction:column}
+.cal-monthline{display:flex;align-items:center;justify-content:space-between;padding:2px 18px 8px}
+.cal-monthline h1{font-size:34px;letter-spacing:-1.2px;margin:0;font-weight:750}
+.cal-monthnav{display:flex;gap:8px}
+.cal-monthnav button{width:30px;height:30px;border-radius:50%;background:#f4f4f6;font-size:24px;line-height:1}
+.calhead{display:none!important}
+.calwk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));height:30px;align-items:center;border-bottom:1px solid #e5e5e8;color:#888;text-align:center;font-size:12px}
+#cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
+.cday{height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-bottom:1px solid #ededf0;border-radius:0!important;font-size:17px;color:#111;position:relative}
+.cday.sun{color:#8e8e93}
+.cday.other{color:#c5c5ca;background:#fff}
+.cday .n{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-weight:550}
+.cday.today .n,.cday.sel .n{background:#ff4b49;color:#fff}
+.cday i{position:absolute;bottom:4px;width:5px;height:5px;border-radius:50%;background:#f5c878}
+#cal-events{flex:1;min-height:100px;padding:0 18px 20px;overflow:auto;display:flex;flex-direction:column;justify-content:flex-start}
+#cal-events h2{font-size:0;color:#8e8e93;font-weight:600;margin:0;padding:0}
+#cal-events .noevt{margin:auto;text-align:center;color:#8e8e93;font-size:18px;font-weight:600;padding:34px 0}
+.evt{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0f0f2}
+.ebar{width:3px;align-self:stretch;border-radius:3px}
+.etext b{font-size:15px;font-weight:600}
+.etext span{font-size:12px;color:#888}
+
+/* KakaoTalk list and chat scale */
+.kakao-app{padding-top:54px;padding-bottom:calc(env(safe-area-inset-bottom) + 22px)}
+.kakao-header{height:52px;padding:0 18px}
+.kakao-header h1{font-size:25px}
+.kakao-header div{font-size:21px}
+.kakao-tabs{gap:7px;padding:4px 14px 12px}
+.kakao-tabs span{padding:8px 14px;font-size:13px;border-radius:22px}
+.kakao-room{gap:10px;padding:8px 16px;min-height:72px}
+.kakao-avatar,.kakao-group-avatar{width:46px;height:46px}
+.kakao-avatar{border-radius:50%!important}
+.kakao-group-avatar{gap:2px;border-radius:10px;padding:1px}
+.kakao-group-avatar i{border-radius:5px}
+.kakao-room-main b{font-size:15px;margin-bottom:3px;line-height:1.2}
+.kakao-room-main span{font-size:12px}
+.kakao-room time{font-size:11px}
+.kakao-room-count{font-size:11px!important;margin-left:5px;color:#888;font-weight:400}
+.kakao-bottom{height:48px;font-size:19px;flex:none}
+.kakao-pin{width:13px;height:14px;margin-left:5px;display:inline-flex!important;align-items:center;vertical-align:middle}
+.kakao-pin svg{width:13px;height:13px;fill:#999;stroke:#999;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.kakao-room .profile-2{background-color:#b4e1dc!important}
+.kakao-room .profile-3{background-color:#e9c8a9!important}
+.kakao-room .profile-4{background-color:#fee500!important}
+.kakao-room .profile-5{background-color:#d8d1f5!important}
+.kakao-room .profile-6{background-color:#f1cbd8!important}
+.kakao-room .profile-7{background-color:#c9d9ee!important}
+.kakao-room .kakao-pay-avatar{background-image:url('../assets/images/kakaopay-profile.jpeg')!important;background-size:cover!important;background-position:center!important;border-radius:14px!important}
+.kakao-room .kakao-pay-avatar:before,.kakao-room .kakao-pay-avatar:after{display:none}
+.kakao-chat-header{height:46px;padding:0 12px;gap:9px;flex:none}
+.kakao-chat-header button{font-size:25px;line-height:1;min-width:25px}
+.kakao-chat-header b{font-size:16px}
+.kakao-chat-tools{display:flex;align-items:center;gap:13px}
+.kakao-chat-tools button{font-size:21px;line-height:1;min-width:22px;display:grid;place-items:center}
+.kakao-chat-tools button svg{width:21px;height:21px;fill:#111}
+.kakao-chat-body{padding:12px 10px;gap:8px}
+.kakao-date{font-size:11px;padding:4px 10px;margin:8px 0 12px}
+.kakao-msg{max-width:84%;gap:2px}
+.kakao-msg .kakao-avatar{width:29px;height:29px;min-width:29px;border-radius:10px!important;margin-right:4px}
+.kakao-msg.them{grid-template-columns:29px auto;column-gap:6px}
+.kakao-bubble{padding:7px 11px;border-radius:15px;font-size:14px;line-height:1.35}
+.kakao-time{font-size:10px;padding:0 3px}
+.kakao-suggestions{padding:0 8px 7px;gap:6px}
+.kakao-suggestion{padding:7px 10px;font-size:11px;border-radius:18px;box-shadow:0 2px 7px #7d96a433;white-space:nowrap}
+#kakao-form{display:flex;align-items:center;gap:7px;padding:7px 9px calc(7px + env(safe-area-inset-bottom));background:#fff;flex:none}
+.kakao-plus{font-size:23px;color:#555;width:24px;flex:none}
+#kakao-input{flex:1;min-width:0;border:0;outline:0;border-radius:24px;background:#f4f4f5;padding:11px 13px;font-size:14px;height:42px}
+.kakao-emoji{width:25px;flex:none;font-size:19px;color:#888}
+.kakao-send{width:40px;height:40px;border-radius:50%;background:#fee500;font-size:23px;color:#111;flex:none}
+@media(max-width:420px){
+ .cal-monthline h1{font-size:31px}
+ .cday{height:45px;font-size:16px}
+ .kakao-room{min-height:66px;padding:7px 14px}
+ .kakao-avatar,.kakao-group-avatar{width:42px;height:42px}
+ .kakao-msg .kakao-avatar{width:27px;height:27px;min-width:27px}
+ .kakao-msg.them{grid-template-columns:27px auto}
+ .kakao-bubble{font-size:13px;padding:7px 10px}
+}
+.cal-bottom{height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 20px 4px;background:#fff}
+.cal-bottom button{height:36px;min-width:58px;padding:0 14px;border:1px solid #e5e5e8;border-radius:22px;background:#fff;font-size:14px}
+.cal-bottom div{display:flex;gap:8px}
+.cal-bottom div button{min-width:38px;width:38px;padding:0;font-size:20px}
+.kakao-room .profile-2{background-color:#b4e1dc!important}
+.kakao-room .profile-3{background-color:#e9c8a9!important}
+.kakao-room .profile-4{background-color:#fee500!important}
+.kakao-room .profile-5{background-color:#d8d1f5!important}
+.kakao-room .profile-6{background-color:#f1cbd8!important}
+.kakao-room .profile-7{background-color:#c9d9ee!important}
