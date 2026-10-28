@@ -165,7 +165,7 @@ SP.storage.reset();
     }
     SP.messages.onChange = badge;
     badge(SP.messages.unread());
-    buildNotifs();
+document.getElementById("notifs").replaceChildren();
 
     var y0 = null, lock = document.getElementById("lock");
     lock.onclick = function () { SP.nav.show("home"); };
