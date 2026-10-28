@@ -14,16 +14,18 @@
     phone: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>',
     messages: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 4C6.8 4 3 7.2 3 11.2c0 2.2 1.2 4.2 3.2 5.5-.2 1.1-.8 2.1-1.6 2.8 1.6-.1 3-.7 4-1.5.8.2 1.6.3 2.4.3 5.2 0 9-3.2 9-7.2S17.2 4 12 4z"/></svg>',
     mail: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>',
-    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="#fff"/></svg>'
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="#fff"/></svg>',
+    kakao: '<svg viewBox="0 0 100 100"><path fill="#3b1e1e" d="M50 20C28 20 11 34 11 51c0 11 7 21 18 26l-5 14 20-10c2 .3 4 .5 6 .5 22 0 39-13.5 39-30.5S72 20 50 20z"/><text x="50" y="57" fill="#ffe812" font-size="19" font-weight="900" text-anchor="middle" font-family="Arial,sans-serif">TALK</text></svg>'
   };
   var GRID = [
     { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모" },
     { id: "photos", label: "사진" }, { id: "safari", label: "Safari" },
-    { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정" }, { id: "clock", label: "시계" }
+    { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정" }, { id: "clock", label: "시계" },
+    { id: "instagram", label: "Instagram", screen: "instagram" }
   ];
   var DOCK = [
     { id: "phone", label: "전화", screen: "phone-app", mod: "phone" }, { id: "messages", label: "메시지", screen: "messages" },
-    { id: "mail", label: "메일" }, { id: "instagram", label: "Instagram", screen: "instagram" }
+    { id: "mail", label: "메일" }, { id: "kakao", label: "카카오톡" }
   ];
 
   function iconHtml(id) {
