@@ -21,9 +21,15 @@
       var b=document.createElement('button');b.className='kakao-room'+(i===0?' jiwoo-room':' disabled-room');
       var groupRoom = /단톡|단체|가족|2026 총학/.test(item[0]);
       if(item[0]==='가족단톡방' || item[0]==='2026 총학') b.classList.add('same-group-avatar');
-      b.innerHTML=(groupRoom
-        ? '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>'
-        : '<div class="kakao-avatar profile-'+i+'"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="16" r="8"/><path d="M8 40c0-9 6-14 16-14s16 5 16 14v2H8z"/></svg></div>')+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
+      var avatarMarkup;
+      if (groupRoom) {
+        avatarMarkup = '<div class="kakao-group-avatar"><i></i><i></i><i></i><i></i></div>';
+      } else if (item[0] === '이지우') {
+        avatarMarkup = '<div class="kakao-avatar profile-'+i+' jiwoo-photo" aria-label="이지우 프로필"><img src="assets/images/jiwoo-profile.jpg" alt=""></div>';
+      } else {
+        avatarMarkup = '<div class="kakao-avatar profile-'+i+'"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="16" r="8"/><path d="M8 40c0-9 6-14 16-14s16 5 16 14v2H8z"/></svg></div>';
+      }
+      b.innerHTML=avatarMarkup+'<div class="kakao-room-main"><b></b><span></span></div><time></time>';
       b.dataset.room = item[0];
       b.querySelector('b').textContent=item[0];
       if(item[0]==='가족단톡방' || item[0]==='2026 총학'){var count=document.createElement('small');count.className='kakao-room-count';count.textContent=item[0]==='가족단톡방'?'4':'12';b.querySelector('b').appendChild(count);}
