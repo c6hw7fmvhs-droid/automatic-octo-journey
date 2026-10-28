@@ -118,7 +118,7 @@
       window.visualViewport.addEventListener("resize", fitPhone);
       window.visualViewport.addEventListener("scroll", fitPhone);
     }
-    if (/[?&]reset=1/.test(location.search)) SP.storage.reset();
+SP.storage.reset();
     tick();
     setInterval(tick, 5000);
     build(document.getElementById("home-grid"), GRID, true);
