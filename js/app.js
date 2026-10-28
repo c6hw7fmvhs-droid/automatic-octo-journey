@@ -70,8 +70,12 @@
 
   function fitPhone() {
     var phone = document.getElementById("phone");
-    if (!phone) return;
-    var scale = Math.min(1, (window.innerWidth - 28) / 419, (window.innerHeight - 28) / 878);
+    var stage = document.getElementById("stage");
+    if (!phone || !stage) return;
+    /* Fit the complete phone, including its bezel and shadow, inside the visible viewport. */
+    var availableWidth = Math.max(240, stage.clientWidth - 40);
+    var availableHeight = Math.max(360, stage.clientHeight - 56);
+    var scale = Math.min(1, availableWidth / 419, availableHeight / 878);
     phone.style.transform = "scale(" + Math.max(0.2, scale) + ")";
   }
 
