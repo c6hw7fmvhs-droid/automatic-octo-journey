@@ -251,7 +251,7 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 .etext span{font-size:14px;color:#8e8e93}
 
 
-/* 정원이의 아이폰 디자인 통합: 프레임과 화면 전환만 조정하고 앱 기능/데이터는 기존 모듈을 유지합니다. */
+/* 디자인 적용: 정원이의 아이폰 HTML의 프레임·배경·홈 화면 비율만 반영 */
 html,body{width:100%;height:100%;min-height:100%;background:#0b0b0e;overflow:hidden}
 #stage{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;background:#0b0b0e}
 #phone{position:relative;inset:auto;width:393px;height:852px;max-width:none;max-height:none;flex:none;margin:0;overflow:hidden;border-radius:48px;background:#000;box-shadow:0 0 0 11px #1a1a1f,0 0 0 13px #3a3a42,0 30px 80px #000;transform-origin:center center;--fg:#fff;--bg:#000;--ic:68px}
@@ -276,38 +276,4 @@ html,body{width:100%;height:100%;min-height:100%;background:#0b0b0e;overflow:hid
 .cam-bar{bottom:44px}
 #cam-view{padding-bottom:34px}
 .detail{padding-bottom:34px}
-@media(max-width:420px),(max-height:880px){
-  #phone{--ic:68px}
-}
-
-/* 새 HTML의 메일·메모·Safari 화면 스타일 */
-.extra-head{height:54px;flex:none;display:flex;align-items:center;gap:10px;padding:5px 14px;border-bottom:1px solid #0000000d;background:#f7f7f8;z-index:1}
-.extra-head>b{font-size:18px;flex:1;text-align:center;margin-right:44px}
-.extra-head .pill{min-height:36px;min-width:42px;padding:0 12px;color:#007aff;background:#fff;box-shadow:0 1px 5px #00000012;font-size:14px}
-.extra-body{padding-bottom:36px}
-.extra-row{width:100%;display:block;text-align:left;padding:13px 18px;border-bottom:1px solid #0000000f;background:#fff}
-.extra-row:active,.note-row:active,.safari-query:active{background:#eee}
-.extra-rowtop{display:flex;justify-content:space-between;gap:12px;font-size:15px}
-.extra-rowtop small,.extra-preview,.mail-meta,.note-date{color:#8e8e93;font-size:13px}
-.extra-row strong{display:block;font-size:15px;margin:3px 0;font-weight:600}
-.extra-preview{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
-.mail-detail{padding:22px 20px}.mail-detail h2{font-size:22px;margin:0 0 12px}.mail-detail p{white-space:pre-line;line-height:1.65;font-size:16px;margin-top:18px}
-.note-count{padding:0 24px 10px;color:#8e8e93;font-size:14px;background:#f2f2f7}
-.note-month{padding:16px 24px 8px;font-size:22px;background:#f2f2f7}
-.note-list{margin:0 16px 10px;border-radius:22px;background:#fff;overflow:hidden}
-.note-row{display:block;width:100%;text-align:left;padding:13px 18px;border-bottom:1px solid #0000000d;background:#fff}
-.note-row:last-child{border-bottom:0}.note-row b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.note-row small{display:block;margin-top:4px;color:#8e8e93;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.note-detail{background:#fff;padding:12px 24px}.note-detail h2{font-size:27px;margin:18px 0}.note-detail p{white-space:pre-line;font-size:17px;line-height:1.7}
-.note-date{padding-top:12px;text-align:center}
-#safari-app{background:#f2f2f7}
-.safari-top{display:flex;align-items:center;padding:6px 18px;height:60px;flex:none}
-.safari-top .pill{min-height:38px;color:#007aff}
-.safari-title{font-size:28px;margin:24px 22px 18px}
-.safari-favs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 16px;min-height:110px}
-.safari-fav{white-space:pre-line;text-align:center;font-size:12px;line-height:1.4;padding-top:8px}
-.safari-empty{grid-column:1/-1;color:#8e8e93;font-size:14px;padding:20px 0}
-.safari-search{position:absolute;left:12px;right:12px;bottom:36px;border-radius:28px;background:#fff;padding:17px 20px;text-align:left;color:#8e8e93;box-shadow:0 3px 18px #0002}
-.safari-history{margin:18px 18px 110px;background:#fff;border-radius:18px;overflow:hidden}
-.safari-query{display:block;width:100%;padding:13px 15px;text-align:left;background:#fff;border-bottom:1px solid #0000000d;font-size:14px}
-.safari-input{margin:10px 12px 8px;width:calc(100% - 24px);padding:14px 18px;border:0;border-radius:24px;background:#fff;font-size:16px;outline:none}
-.safari-hint{color:#8e8e93;font-size:13px;padding:8px 22px}
+@media(max-width:420px),(max-height:880px){#phone{--ic:68px}}
