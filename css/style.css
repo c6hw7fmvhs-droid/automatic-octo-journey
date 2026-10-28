@@ -798,25 +798,37 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 #messages #msg-chatview .topbtns .namepill{font-size:15px!important}
 
 
-/* Scoped update: Instagram search screen and KakaoTalk sponsored card only. */
-#instagram .view.ig-search-active>.igtop{display:none!important}
-#instagram .igsearchwrap{display:flex;align-items:center;gap:9px;padding:12px 14px 10px;position:relative}
-#instagram .igsearch-icon{position:absolute;left:28px;z-index:1;width:20px;height:20px;display:grid;place-items:center;color:#69717d;pointer-events:none}
-#instagram .igsearch-icon svg{width:19px;height:19px;stroke:#69717d;stroke-width:2.2}
-#instagram .igsearch{box-sizing:border-box;min-width:0;flex:1;height:44px;border:0;border-radius:24px;background:#f0f1f5;padding:0 16px 0 42px;font-size:15px;color:#111;outline:none}
-#instagram .igsearch-cancel{flex:none;border:0;background:transparent;color:#222;font-size:14px;padding:8px 2px}
-#instagram .ig-recent{padding:12px 16px;min-height:70px}
-#instagram .ig-recent-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px}
-#instagram .ig-recent-head b{font-weight:650}
-#instagram .ig-recent-all{border:0;background:transparent;color:#5368e8;font-size:13px;padding:4px 0}
-#instagram .ig-recent-empty{min-height:16px}
-#instagram .ig-search-results[hidden],#instagram .ig-recent[hidden]{display:none!important}
-#instagram .ig-search-results .igempty{grid-column:1/-1;padding:20px 2px;color:#888;font-size:14px}
-.kakao-ad-card{position:relative;flex:none;display:flex;align-items:center;justify-content:space-between;gap:6px;margin:0 14px 12px;padding:12px 12px;min-height:88px;box-sizing:border-box;border-radius:20px;background:#f2f2f3;color:#171717;overflow:hidden}
-.kakao-ad-copy,.kakao-ad-price{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1;text-align:center}
-.kakao-ad-brand{font-size:11px;letter-spacing:.2px;font-weight:750}
-.kakao-ad-copy strong,.kakao-ad-price strong{font-size:13px;font-weight:750;white-space:nowrap}
-.kakao-ad-copy span,.kakao-ad-price span{font-size:11px;color:#858585;white-space:nowrap}
-.kakao-ad-product{width:64px;height:68px;flex:none}
-.kakao-ad-label{position:absolute;top:7px;right:7px;border:1px solid #c7c7c9;border-radius:14px;background:rgba(255,255,255,.75);color:#929296;padding:1px 6px;font-size:9px;font-weight:650;line-height:1.5}
-@media (max-width:360px){.kakao-ad-card{margin-left:10px;margin-right:10px;padding:10px 8px;gap:3px}.kakao-ad-product{width:52px;height:60px}.kakao-ad-copy strong,.kakao-ad-price strong{font-size:11px}.kakao-ad-copy span,.kakao-ad-price span{font-size:10px}}
+/* Instagram search: empty recent-search view, with no post grid until a query is entered. */
+#instagram .igsearchwrap{padding:10px 14px 8px!important}
+#instagram .igsearchfield{height:38px;display:flex;align-items:center;gap:8px;background:#efeff4;border-radius:11px;padding:0 11px}
+#instagram .igsearch-icon{display:inline-flex;width:17px;height:17px;flex:none;color:#8e8e93}
+#instagram .igsearch-icon svg{width:17px;height:17px;stroke:#8e8e93;stroke-width:2}
+#instagram .igsearch{height:100%;flex:1;min-width:0;background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;font-size:14px!important;color:#111;outline:none}
+#instagram .igsearch::placeholder{color:#8e8e93}
+#instagram .ig-recent-searches{padding:10px 16px}
+#instagram .ig-recent-heading{display:flex;align-items:center;justify-content:space-between;margin:5px 0 16px}
+#instagram .ig-recent-heading b{font-size:15px;font-weight:650;color:#111}
+#instagram .ig-recent-heading button{border:0;background:transparent;color:#0095f6;font-size:13px;padding:3px 0}
+#instagram .ig-recent-list{display:flex;flex-direction:column;gap:0}
+#instagram .ig-recent-empty{font-size:13px;color:#8e8e93;padding:12px 0}
+#instagram .ig-recent-item{display:flex;align-items:center;gap:12px;text-align:left;background:transparent;border:0;padding:10px 0;color:#222;font-size:14px}
+#instagram .ig-recent-icon{width:17px;height:17px;color:#8e8e93}
+#instagram .ig-recent-icon svg{width:17px;height:17px;stroke:#8e8e93;stroke-width:2}
+/* KakaoTalk ad card between filters and chat list. */
+.kakao-ad{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 14px 8px;padding:11px 32px 11px 13px;min-height:86px;box-sizing:border-box;border-radius:13px;background:#f5f5f6;flex:none;overflow:hidden}
+.kakao-ad-copy{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.kakao-ad-brand{font-size:10px;color:#85858b}
+.kakao-ad-copy b{font-size:13px;line-height:1.25;color:#242424;font-weight:650}
+.kakao-ad-copy>span:not(.kakao-ad-brand){font-size:10px;color:#777;white-space:nowrap}
+.kakao-ad-copy strong{font-size:11px;color:#333;margin-top:1px}
+.kakao-ad-product{width:67px;height:67px;flex:none;display:grid;place-items:center}
+.kakao-ad-product svg{width:100%;height:100%}
+.kakao-ad-label{position:absolute;right:9px;bottom:7px;color:#999;font-size:9px;letter-spacing:.3px}
+.kakao-bottom svg{fill:none!important;stroke:currentColor!important;stroke-width:1.7!important}
+.kakao-bottom span:first-child{color:#a4a4aa!important}
+.kakao-bottom span:nth-child(2){color:#222!important}
+.kakao-bottom span:nth-child(2) svg{fill:#222!important;stroke:#222!important}
+.kakao-bottom span:nth-child(3),.kakao-bottom span:nth-child(4),.kakao-bottom span:nth-child(5){color:#a4a4aa!important}
+.kakao-bottom span:nth-child(3) svg{fill:none!important;stroke:currentColor!important}
+.kakao-bottom span:nth-child(3) svg path:last-child{fill:currentColor!important;stroke:none!important}
+.kakao-bottom .more-notice{position:absolute;width:5px;height:5px;border-radius:50%;background:#f28b22;top:3px;right:2px}
