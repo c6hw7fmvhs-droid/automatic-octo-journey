@@ -111,19 +111,7 @@
         var caption=el("div","igreel-caption"); caption.append(el("b","","Stonelee"),el("span","","릴스")); reel.append(actions,caption);
         body.append(rh,reel);
       } else if(which==="search"){
-        var sh=el("div","igsearchwrap"), searchField=el("div","igsearchfield"), searchIcon=ic("search","igsearch-icon"), input=el("input","igsearch");
-        input.placeholder="검색"; input.setAttribute("aria-label","검색"); searchField.append(searchIcon,input); sh.append(searchField);
-        var recent=el("section","ig-recent-searches"), recentHead=el("div","ig-recent-heading"), recentTitle=el("b","","최근 검색"), clearRecent=el("button","","모두 보기");
-        clearRecent.type="button"; clearRecent.onclick=function(){recentList.innerHTML="";}; recentHead.append(recentTitle,clearRecent);
-        var recentList=el("div","ig-recent-list"); recent.append(recentHead,recentList); body.append(sh,recent);
-        input.addEventListener("input",function(){
-          var q=input.value.trim(); recentList.innerHTML="";
-          if(!q)return;
-          var matches=posts.filter(function(p){return ((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(q.toLowerCase());}).slice(0,6);
-          matches.forEach(function(p){var row=el("button","ig-recent-item"), icon=ic("search","ig-recent-icon");row.append(icon,el("span","",p.user||p.caption||"검색 결과"));row.onclick=function(){openPost(p);};recentList.append(row);});
-          if(!matches.length)recentList.append(el("div","ig-recent-empty","검색 결과가 없습니다."));
-        });
-        setTimeout(function(){input.focus();},50);
+        var sh=el("div","igsearchwrap"), input=el("input","igsearch");input.placeholder="검색";sh.append(input);var results=el("div","tgrid");function filter(){results.innerHTML="";posts.filter(function(p){return !input.value||((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(input.value.toLowerCase());}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});}input.addEventListener("input",filter);filter();body.append(sh,results);setTimeout(function(){input.focus();},50);
       } else if(which==="send"){
         var dh=el("div","igmodehead","메시지");
         var dmWrap=el("div","igdm-list");
