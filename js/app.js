@@ -167,17 +167,41 @@ SP.storage.reset();
     badge(SP.messages.unread());
 document.getElementById("notifs").replaceChildren();
 
-    var y0 = null, lock = document.getElementById("lock");
-    lock.onclick = function () { SP.nav.show("home"); };
-    lock.addEventListener("touchstart", function (e) {
-      y0 = e.touches[0].clientY;
-    }, { passive: true });
-    lock.addEventListener("touchend", function (e) {
-      if (y0 != null && y0 - e.changedTouches[0].clientY > 60) SP.nav.show("home");
-      y0 = null;
-    });
-    document.getElementById("homebar").onclick = function () { SP.nav.show("home"); };
+
+var y0 = null;
+var lock = document.getElementById("lock");
+var unlocking = false;
+
+lock.onclick = null;
+
+lock.addEventListener("touchstart", function (e) {
+  y0 = e.touches[0].clientY;
+  unlocking = false;
+}, { passive: true });
+
+lock.addEventListener("touchend", function (e) {
+  if (y0 !== null && y0 - e.changedTouches[0].clientY > 60) {
+    unlocking = true;
+    SP.nav.show("home");
   }
+  y0 = null;
+}, { passive: true });
+
+lock.addEventListener("mousedown", function (e) {
+  y0 = e.clientY;
+}, { passive: true });
+
+lock.addEventListener("mouseup", function (e) {
+  if (y0 !== null && y0 - e.clientY > 60) {
+    SP.nav.show("home");
+  }
+  y0 = null;
+}, { passive: true });
+
+document.getElementById("homebar").onclick = function () {
+  SP.nav.show("home");
+};
+
 
   document.addEventListener("DOMContentLoaded", start);
 })();
