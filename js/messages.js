@@ -45,10 +45,6 @@
       var base = seeded ? (SP.data.conversations[ch.id] || []) : convs[ch.id];
       convs[ch.id] = base.filter(valid).map(function (m, i) {
         var x = Object.assign({}, m);
-        if (seeded && ch.id === "jiwoo" && x.from === "them" && typeof x.text === "string" && /^하윤아/.test(x.text)) {
-          var userName = SP.profile && SP.profile.getName ? SP.profile.getName() : "";
-          if (userName) x.text = x.text.replace(/^하윤아/, userName + "아");
-        }
         if (!x.id) x.id = ch.id + ":" + i;
         if (!x.type) x.type = HASURL.test(x.text || "") ? "link" : "text";
         if (!x.origin) x.origin = seeded ? "seed" : "live";   // seed: 기존 기록, live: 앱에서 새로 생긴 대화
@@ -68,31 +64,11 @@
       .sort(function (a, b) { return new Date(b.last.ts) - new Date(a.last.ts); })
       .forEach(function (it) {
         var row = el("button", "row" + (unreadOf(it.ch.id) ? " unread" : "")), top = el("div", "rowtop");
-        top.append(el("b", "", it.ch.name));
-        var time = el("span", "rowtime", it.last && it.last.ts ? new Date(it.last.ts).toLocaleTimeString("ko-KR", {hour:"2-digit", minute:"2-digit", hour12:true}) : "");
-        top.append(time);
-        var previewText = it.last && (it.last.text || it.last.content || it.last.message) || "메시지";
-        row.append(top, el("div", "rowprev", String(previewText).replace(/\s+/g," ").trim()));
+        top.append(el("b", "", it.ch.name), el("span", "rowtime", listLabel(it.last.ts) + "  ›"));
+        row.append(top, el("div", "rowprev", pv(it.last)));
         row.onclick = function () { openChat(it.ch.id); };
         ul.append(row);
       });
-    [
-      ["+82 010-8282-배달기사","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","오후 8:03"],
-      ["+82 010-8282-배달간다","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","오전 11:40"],
-      ["+82 010-8282-배달달인","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","어제"],
-      ["+82 010-8282-배달왔다","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","화요일"],
-      ["+82 010-8282-배달천사","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","월요일"],
-      ["+82 010-8282-총알배송","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","일요일"],
-      ["+82 010-8282-퀵퀵배달","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","2026. 10. 16."],
-      ["+82 010-8282-배달의신","고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.","2026. 10. 14."]
-    ].forEach(function (item) {
-      var row = el("button", "row readonly-row"), top = el("div", "rowtop");
-      top.append(el("b", "", item[0]), el("span", "rowtime", item[2]));
-      row.append(top, el("div", "rowprev", item[1]));
-      row.classList.remove("readonly-row");
-      row.onclick = function () { openDeliveryChat(item[0], item[2]); };
-      ul.append(row);
-    });
   }
   function addText(box, text) {
     String(text).split(/((?:https?:\/\/|www\.)\S+)/g).forEach(function (part, i) {
@@ -121,13 +97,6 @@
 
   function renderChat() {
     var box = $("#chat-body"); box.innerHTML = "";
-    if (current && current.indexOf("delivery:") === 0) {
-      var name = current.slice(9);
-      box.append(el("div", "sep", "10월 24일 (토) 오후 8:03"));
-      var wrap = el("div", "mw them"), bubbleBox = el("div", "bubble");
-      bubbleBox.textContent = "고객님께서 주문하신 상품이 문 앞(또는 요청하신 장소)에 배달되었습니다. 감사합니다.";
-      wrap.append(bubbleBox, el("div", "mtime", "오후 8:03")); box.append(wrap); return;
-    }
     var list = convs[current] || [], prev = 0, lastMine = -1;
     list.forEach(function (m, i) { if (m.from === "me") lastMine = i; });
     list.forEach(function (m, i) {
@@ -162,12 +131,6 @@
     $("#msg-listview").hidden = true; $("#msg-chatview").hidden = false;
     $("#msg-input").value = drafts[id] || ""; syncInput(); renderChat();
   }
-  function openDeliveryChat(name, time) {
-    current = "delivery:" + name;
-    $("#chat-name").textContent = name;
-    $("#msg-listview").hidden = true; $("#msg-chatview").hidden = false;
-    $("#msg-input").value = ""; syncInput(); renderChat();
-  }
   function showList() {
     current = null; $("#msg-chatview").hidden = true; $("#msg-listview").hidden = false; renderList();
   }
@@ -190,7 +153,7 @@
 
   function send() {
     var inp = $("#msg-input"), text = inp.value.trim();
-    if (!text || !current || current.indexOf("delivery:") === 0) return; // 배달 안내 대화는 읽기 전용
+    if (!text || !current) return;                   // 빈 메시지 차단
     inp.value = ""; delete drafts[current]; saveDrafts(); syncInput();
     sendMsg({ type: HASURL.test(text) ? "link" : "text", text: text });
   }
@@ -248,21 +211,10 @@
       msgs.forEach(function (m) { if (m.status !== "failed") m.status = readLabel(); });
       save(); renderIf(id);
     }, 600 + Math.random() * 400);
-    // 지우를 부르는 단독 메시지는 첫 답장/스토리 키워드/일반 답장보다 우선 처리합니다.
-    // 예: "지우야", "이지우", "야", "지우아" 또는 끝에 문장부호가 붙은 형태.
-    var callOnly = ch && ch.name === "이지우" && msgs.length > 0 && msgs.every(function (m) {
-      if (m.type === "photo") return false;
-      var t = String(m.text || "").trim().toLowerCase().replace(/[\s,.!?~…ㅋㅎㅠㅜ]+$/g, "").trim();
-      return /^(?:야+|이지우(?:야|아)?|지우(?:야|아)?)$/i.test(t);
-    });
-    if (callOnly) {
-      res = { parts: [ ["응?", "왜 불러?", "왜?", "무슨 일 있어?"][Math.floor(Math.random() * 4)] ] };
-    } else {
-      if (ch.firstReply && !b.first) { b.first = true; res = { parts: ch.firstReply.parts.slice() }; }
-      else res = scripted(ch, msgs);
-      if (!res && ch.persona && SP.ai && SP.ai.ready) { askAI(ch, id, msgs, b); return; }   // AI 자유 대화
-      if (!res) res = ruleReply(ch, id, msgs, b);                                           // 규칙 기반 답장
-    }
+    if (ch.firstReply && !b.first) { b.first = true; res = { parts: ch.firstReply.parts.slice() }; }
+    else res = scripted(ch, msgs);
+    if (!res && ch.persona && SP.ai && SP.ai.ready) { askAI(ch, id, msgs, b); return; }   // AI 자유 대화
+    if (!res) res = ruleReply(ch, id, msgs, b);                                           // 규칙 기반 답장
     if (!res || !res.parts.length) { finishPlay(id); return; }                            // 읽고 답장하지 않음
     play(ch, res.parts, 0, false);
   }

@@ -16,8 +16,7 @@
     sad: /우울|슬퍼|속상|짜증|화나|눈물|외로/, where: /어디(야|있|갔|냐|니|에)/,
     food: /밥|먹었|먹을|점심|저녁|아침|배고|배불|야식|뭐\s?먹|맛있/, howru: /뭐\s?해|뭐하|뭐\s?했|잘\s?지내|어떻게\s?지내|오늘\s?어때|요즘\s?어때/,
     laugh: /ㅋㅋ|ㅎㅎ|웃기|웃겨/, agree: /^(응+|웅+|ㅇㅇ+|ㅇㅋ|넹|네+|그래+|알겠어|알았어|오케이|ok|okay|그렇구나)[\s.!~]*$/i,
-    dismiss: /됐어|몰라|상관없|신경\s?쓰지|귀찮|냅둬|알아서/, Q: /[?？]|뭐|왜|어떻게|무슨|누구|언제|몇|어디|할까|볼까/,
-    compliment: /예쁘|귀엽|멋있|잘했|최고|대단|잘생|좋은 사람|고생했/, invite: /같이|놀러|데이트|만나자|보러 가|갈래|갈까|하자/, work: /학교|수업|과제|공부|시험|알바|회사|일하|출근|퇴근/, media: /영화|드라마|애니|게임|노래|음악|책|만화|유튜브/, reassurance: /괜찮아\??$|괜찮을까|내 편|옆에 있어|믿어도|싫어하지|사랑해\??$/
+    dismiss: /됐어|몰라|상관없|신경\s?쓰지|귀찮|냅둬|알아서/, Q: /[?？]|뭐|왜|어떻게|무슨|누구|언제|몇|어디|할까|볼까/
   };
   function rand(a) { return a[Math.floor(Math.random() * a.length)]; }
   function fmt(s, v) { return s.replace(/\{(\w+)\}/g, function (_, k) { return v[k] != null ? v[k] : ""; }).replace(/\s{2,}/g, " ").trim(); }
@@ -54,14 +53,8 @@
     var f = [], t = text;
     if (msgs.some(function (m) { return m.type === "photo"; })) f.push("photo");
     if (msgs.some(function (m) { return m.type === "link"; })) f.push("link");
-    // 구체적인 의도를 먼저 판별해 일반 질문 답장으로 빠지는 일을 줄입니다.
     if (RX.sorry.test(t)) f.push("sorry");
     if (RX.excuse.test(t)) f.push("excuse");
-    if (RX.reassurance.test(t)) f.push("reassurance");
-    if (RX.compliment.test(t)) f.push("compliment");
-    if (RX.invite.test(t)) f.push("invite");
-    if (RX.work.test(t)) f.push("work");
-    if (RX.media.test(t)) f.push("media");
     if (RX.bdwhen.test(t)) f.push("birthday_when"); else if (RX.bday.test(t)) f.push("birthday");
     if (L.plan) f.push("plan_set");
     if (L.like) f.push("like_set");
@@ -107,16 +100,8 @@
   // msgs: [{type, text}] / 반환: { parts:[...] } 또는 null(읽고 무응답)
   function compose(ch, msgs, b, recentTexts) {
     var text = msgs.map(function (m) { return m.text || ""; }).join(" ").toLowerCase().trim();
-    // 사용자가 지우를 부르면 일반 인사·질문 분류보다 먼저 짧게 반응합니다.
-    // 단독 호칭 또는 문장 첫머리의 "지우야/이지우/야" 등을 인식합니다.
-    if (ch && ch.name === "이지우" && /^(?:야+|이지우(?:야|아)?|지우(?:야|아)?)(?:[\s,.!?~ㅋㅎ]|$)/i.test(text)) {
-      return { parts: [rand(["응?", "왜 불러?", "왜?", "무슨 일 있어?"])] };
-    }
     var L = {}; msgs.forEach(function (m) { if (m.type !== "photo") { var r = learn((m.text || "").toLowerCase(), b); for (var k in r) L[k] = r[k]; } });
     var f = detect(msgs, text, b, L), plan = b.plans[0] || {};
-    // 한 메시지에 여러 표현이 섞여도 서로 어색한 답장이 이어지지 않도록 우선순위를 적용합니다.
-    var priority = ["sorry", "excuse", "sad", "reassurance", "love", "birthday_when", "birthday", "plan_set", "plan_has", "plan_none", "like_set", "dislike_set", "meal_set", "food_meal", "food_like", "food", "call", "where", "tired", "compliment", "invite", "work", "media", "thanks", "bye", "greet", "howru", "laugh", "photo", "link", "agree", "question", "general"];
-    f.sort(function (a, c) { return priority.indexOf(a) - priority.indexOf(c); });
     var v = { name: ch.call || "", like: L.like || b.likes[0] || "", dislike: L.dislike || "", meal: b.meal || "", when: plan.when || "", time_s: plan.time ? " " + plan.time : "" };
     if (f.length === 1 && f[0] === "agree" && Math.random() < 0.2) { updateMood(b, f, text); return null; }
     var parts = [], tries = 0;
@@ -128,14 +113,6 @@
       parts.push(fmt(rand(["참, {when}{time_s} 약속 안 잊었지?", "아 맞다 {when}{time_s} 약속 있는 거 알지?"]), v)); b.reminded++;
     }
     updateMood(b, f, text);
-    // 지우의 답장 일부에 사용자가 입력한 이름을 자연스럽게 넣습니다.
-    var userName = SP.profile && SP.profile.getName ? SP.profile.getName() : "";
-    if (parts.length && userName && ch.name === "이지우" && Math.random() < 0.35) {
-      var last = userName.charAt(userName.length - 1), code = last.charCodeAt(0), vocative = userName;
-      if (code >= 0xAC00 && code <= 0xD7A3) vocative += ((code - 0xAC00) % 28 === 0) ? "야" : "아";
-      else vocative += "아";
-      parts[0] = vocative + ", " + parts[0].charAt(0).toLowerCase() + parts[0].slice(1);
-    }
     return parts.length ? { parts: parts.slice(0, 3) } : null;
   }
   SP.replies = { compose: compose, learn: learn };

@@ -31,8 +31,7 @@
   function allComments(p) { return (Array.isArray(p.comments) ? p.comments : []).concat(Array.isArray(st.comments[p.id]) ? st.comments[p.id] : []); }
   function slides(p) { var a = Array.isArray(p.images) && p.images.length ? p.images : [p.img || ""]; return a.map(function (x) { return { img: x, color: p.color }; }); }
   function sorted() { return (SP.data.posts || []).filter(function (p) { return p && p.id && !isNaN(new Date(p.ts)); }).sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); }); }
-  function prof() { var n = (SP.profile && SP.profile.getName ? SP.profile.getName() : "");
-    return Object.assign({}, SP.data.profile || {}, {user:n, username:n}); }
+  function prof() { return SP.data.profile || {}; }
 
   function fmtN(n) { return n >= 10000 ? String(Math.round(n / 1000) / 10).replace(/\.0$/, "") + "만" : String(n); }
   function card(p) {
@@ -63,13 +62,11 @@
     var root = document.getElementById("instagram"); root.innerHTML = "";
     var P = prof(), posts = sorted();
     var view = el("div", "view"), top = el("div", "igtop"), nm = el("span", "igname");
-    nm.append(document.createTextNode(" " + (P.user || "")));
+    nm.innerHTML = S.lock; nm.append(document.createTextNode(" " + (P.user || "") + " ⌄"));
     top.append(ic("plus"), nm, ic("menu"));
     var body = el("div", "body"), head = el("div", "ighead"), ring = el("div", "ring");
-    var av = el("div", "igav", "");
-    av.style.background = "#eceef2";
-    av.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="22" r="12" fill="#858c99"/><path d="M9 58c1-14 10-22 23-22s22 8 23 22" fill="#858c99"/></svg>';
-    ring.append(av, el("i", "plusb", "+"));
+    var av = el("div", "igav", P.avatar ? "" : String(P.user || "?").charAt(0).toUpperCase());
+    SP.pic(av, { img: P.avatar, color: P.color || "#c7c7cc" }); ring.append(av, el("i", "plusb", "+"));
     var stats = el("div", "stats");
     [["게시물", posts.length], ["팔로워", P.followers || 0], ["팔로잉", P.following || 0]].forEach(function (s) {
       var d = el("div"); d.append(el("b", "", fmtN(s[1])), el("span", "", s[0])); stats.append(d);
@@ -87,69 +84,10 @@
       if (sl.length > 1) { var m = el("span", "multi"); m.innerHTML = S.multi; t.append(m); }
       t.onclick = function () { openPost(p); }; grid.append(t);
     });
-    body.append(head, btns, tabs, grid);
-    var nav = el("div", "ignav"), navItems = [];
-    ["home", "reels", "send", "search"].forEach(function (n) { var item=ic(n); item.setAttribute("role","button"); item.tabIndex=0; navItems.push(item); nav.append(item); });
-    var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
-    function mode(which){
-      body.innerHTML="";
-      if(which==="profile"){ body.append(head,btns,tabs,grid); }
-      else if(which==="home"){
-        var stories=el("div","igstories"); ["내 스토리","yubamabm","jubini","chaeyeon4"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
-        body.append(stories); posts.forEach(function(p){body.append(card(p));});
-      } else if(which==="reels"){
-        var rh=el("div","igmodehead reels-title","릴스");
-        var reel=el("div","igreel-player");
-        var video=el("video","igreel-video");
-        video.src="assets/videos/instagram-reel.mp4";
-        video.poster="assets/videos/instagram-reel-poster.jpg";
-        video.controls=false; video.playsInline=true; video.autoplay=true; video.muted=true; video.loop=true; video.preload="auto";
-        video.setAttribute("autoplay", ""); video.setAttribute("muted", ""); video.setAttribute("loop", "");
-        video.play().catch(function(){}); video.setAttribute("aria-label","릴스 영상 재생"); reel.append(video);
-        var actions=el("div","igreel-actions");
-        [{icon:"♡",label:"좋아요"},{icon:"○",label:"댓글"},{icon:"➤",label:"공유"},{icon:"▱",label:"저장"}].forEach(function(a){var b=el("button","igreel-action");b.innerHTML='<span>'+a.icon+'</span><small>'+a.label+'</small>';b.setAttribute("aria-label",a.label);b.onclick=function(){if(a.label==="좋아요"){b.classList.toggle("liked");b.querySelector("span").textContent=b.classList.contains("liked")?"♥":"♡";}};actions.append(b);});
-        var caption=el("div","igreel-caption"); caption.append(el("b","","Stonelee"),el("span","","릴스")); reel.append(actions,caption);
-        body.append(rh,reel);
-      } else if(which==="search"){
-        var sh=el("div","igsearchwrap"), input=el("input","igsearch");input.placeholder="검색";sh.append(input);var results=el("div","tgrid");function filter(){results.innerHTML="";posts.filter(function(p){return !input.value||((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(input.value.toLowerCase());}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});}input.addEventListener("input",filter);filter();body.append(sh,results);setTimeout(function(){input.focus();},50);
-      } else if(which==="send"){
-        var dh=el("div","igmodehead","메시지");
-        var dmWrap=el("div","igdm-list");
-        var search=el("div","igdm-search");search.append(el("span","","⌕"),el("span","","검색"));
-        var chips=el("div","igdm-chips");
-        ["홀딱 반함...","🔖 최근 저장 2회"].forEach(function(t){chips.append(el("span","igdm-chip",t));});
-        var stories=el("div","igdm-stories");
-        ["내 메모","yubamabm","jubini","chaeyeon4"].forEach(function(n){
-          var st=el("div","igdm-story"),av=el("div","igdm-avatar");
-          st.append(av,el("span","",n));stories.append(st);
-        });
-        var title=el("div","igdm-section-title","메시지");
-        dmWrap.append(search,chips,stories,title);
-        [
-          {name:"이지우",preview:"방금 일어났어...",time:"방금",open:true},
-          {name:"주빈",preview:"",time:"",open:false},
-          {name:"채연",preview:"",time:"",open:false}
-        ].forEach(function(item){
-          var row=el("button","igdm-item"),av=el("div","igdm-avatar"),info=el("div");
-          info.append(el("b","",item.name),el("small","",item.preview));
-          row.append(av,info);
-          if(item.open)row.append(el("span","igdm-unread"));
-          row.onclick=function(){
-            if(!item.open)return;
-            var panel=el("div","igdm");panel.append(el("h3","",item.name));
-            ["일어났어?","오늘 뭐 해?","밥 먹었어?"].forEach(function(t){panel.append(el("p","igdm-bubble",t));});
-            var form=el("form","igdmform"),inp=el("input");inp.placeholder="메시지 보내기";
-            var send=el("button","","전송");form.append(inp,send);
-            form.onsubmit=function(e){e.preventDefault();if(inp.value.trim()){panel.append(el("p","igdm-mine",inp.value.trim()));inp.value="";}};
-            body.innerHTML="";body.append(el("div","igmodehead","‹　"+item.name),panel);
-          };
-          dmWrap.append(row);
-        });
-        body.append(dh,dmWrap);
-      }
-      navItems.forEach(function(n,i){n.classList.toggle("on",(which==="home"&&i===0)||(which==="reels"&&i===1)||(which==="send"&&i===2)||(which==="search"&&i===3)||(which==="profile"&&i===4));});
-    }
-    navItems.forEach(function(n,i){var names=["home","reels","send","search","profile"];n.onclick=function(){mode(names[i]);};n.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();mode(names[i]);}};});
+    body.append(head, btns, hls, tabs, grid);
+    var nav = el("div", "ignav");
+    ["home", "reels", "send", "search"].forEach(function (n) { nav.append(ic(n)); });
+    var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); nav.append(me);
     view.append(top, body, nav);
     det = el("div", "detail"); det.hidden = true;
     var tb = el("div", "topbtns"), bk = el("button", "pill", "‹ 프로필"); bk.onclick = function () { det.hidden = true; };

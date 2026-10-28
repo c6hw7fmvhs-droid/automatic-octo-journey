@@ -1,10 +1,16 @@
-// 세션 메모리 저장소: 새로고침하거나 페이지를 다시 열면 모든 상태가 초기화됩니다.
+// localStorage 래퍼. 실패하거나 잘못된 JSON이어도 기본값을 돌려주어 앱이 멈추지 않습니다.
 (function () {
   window.SP = window.SP || {};
-  var values = Object.create(null);
+  var P = "storyphone:v1:";
   SP.storage = {
-    get: function (k, d) { return Object.prototype.hasOwnProperty.call(values, k) ? values[k] : d; },
-    set: function (k, v) { values[k] = v; return true; },
-    reset: function () { values = Object.create(null); }
+    get: function (k, d) {
+      try { var r = localStorage.getItem(P + k); return r == null ? d : JSON.parse(r); } catch (e) { return d; }
+    },
+    set: function (k, v) {
+      try { localStorage.setItem(P + k, JSON.stringify(v)); return true; } catch (e) { return false; }
+    },
+    reset: function () {
+      try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf(P) === 0) localStorage.removeItem(k); }); } catch (e) {}
+    }
   };
 })();

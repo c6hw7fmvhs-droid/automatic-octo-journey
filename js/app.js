@@ -14,17 +14,16 @@
     phone: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>',
     messages: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 4C6.8 4 3 7.2 3 11.2c0 2.2 1.2 4.2 3.2 5.5-.2 1.1-.8 2.1-1.6 2.8 1.6-.1 3-.7 4-1.5.8.2 1.6.3 2.4.3 5.2 0 9-3.2 9-7.2S17.2 4 12 4z"/></svg>',
     mail: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>',
-    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="#fff"/></svg>',
-    kakao: '<svg viewBox="0 0 24 24"><path fill="#3c1e1e" d="M12 3C6.5 3 2 6.5 2 10.8c0 2.8 1.8 5.2 4.6 6.6l-.9 3.5 4.1-2.4c.7.1 1.4.2 2.2.2 5.5 0 10-3.5 10-7.9S17.5 3 12 3z"/></svg>' 
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="#fff"/></svg>'
   };
   var GRID = [
-    { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모" },
-    { id: "photos", label: "사진" }, { id: "safari", label: "Safari" },
-    { id: "instagram", label: "Instagram", screen: "instagram", mod: "instagram" }, { id: "settings", label: "설정", mod: "settings" }, { id: "clock", label: "시계" }, { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }
+    { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모", screen: "notes-app", mod: "notes" },
+    { id: "photos", label: "사진", screen: "photos", mod: "photos" }, { id: "safari", label: "Safari", screen: "safari-app", mod: "safari" },
+    { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정" }, { id: "clock", label: "시계" }
   ];
   var DOCK = [
     { id: "phone", label: "전화", screen: "phone-app", mod: "phone" }, { id: "messages", label: "메시지", screen: "messages" },
-    { id: "mail", label: "메일" }, { id: "kakao", label: "카카오톡", screen: "kakao", mod: "kakao" }
+    { id: "mail", label: "메일", screen: "mail-app", mod: "mail" }, { id: "instagram", label: "Instagram", screen: "instagram" }
   ];
 
   function iconHtml(id) {
@@ -37,7 +36,6 @@
       var b = document.createElement("button"); b.className = "app-icon"; b.setAttribute("aria-label", a.label);
       b.innerHTML = iconHtml(a.id) + (labels ? "<span>" + a.label + "</span>" : "");
       b.onclick = function () {
-        if (a.id === "settings") { var oldName = SP.profile.getName(); var nextName = window.prompt("지우가 부를 이름을 입력해 줘.", oldName || ""); if (nextName != null && nextName.trim()) { SP.profile.setName(nextName.trim()); window.alert("이름을 저장했어."); } return; }
         if (!a.screen) return;
         SP.nav.show(a.screen);
         var m = SP[a.mod || a.screen];
@@ -52,9 +50,7 @@
     (SP.data.notifications || []).forEach(function (n) {
       var b = document.createElement("button"); b.className = "notif";
       b.innerHTML = '<div class="ic ic-' + n.app + '">' + (ICONS[n.app] || "") + '</div><div class="nt"><b></b><span class="nb"></span></div><span class="ntime"></span>';
-      b.querySelector("b").textContent = n.title;
-      var body = n.body;
-      b.querySelector(".nb").textContent = body; b.querySelector(".ntime").textContent = n.ts ? SP.fmt.label(n.ts) : n.time;
+      b.querySelector("b").textContent = n.title; b.querySelector(".nb").textContent = n.body; b.querySelector(".ntime").textContent = n.ts ? SP.fmt.label(n.ts) : n.time;
       b.onclick = function (e) {
         e.stopPropagation(); SP.nav.show(n.screen);
         var m = SP[n.mod || n.screen]; if (m && m.open) m.open(n.chat);
@@ -72,27 +68,23 @@
     document.getElementById("lock-date").textContent = (d.getMonth() + 1) + "월 " + d.getDate() + "일 " + WD[d.getDay()] + "요일";
   }
 
+  function fitPhone() {
+    var phone = document.getElementById("phone");
+    if (!phone) return;
+    // 393×852 본체와 13px 외곽 프레임을 화면 안에 맞춰 축소합니다.
+    var scale = Math.min((window.innerWidth - 30) / 419, (window.innerHeight - 30) / 878, 1.3);
+    phone.style.transform = "scale(" + Math.max(0.35, scale) + ")";
+  }
+
   function start() {
+    fitPhone();
+    window.addEventListener("resize", fitPhone);
     if (/[?&]reset=1/.test(location.search)) SP.storage.reset();
-    SP.profile = {
-      getName: function () { return SP.storage.get("user-name", ""); },
-      setName: function (name) { SP.storage.set("user-name", String(name || "").trim().slice(0, 20)); }
-    };
-    var welcome = document.getElementById("welcome"), welcomeName = document.getElementById("welcome-name");
-    var savedName = "";
-    welcome.hidden = false; document.getElementById("lock").hidden = true; document.getElementById("home").hidden = true;
-    document.getElementById("welcome-form").addEventListener("submit", function (e) {
-      e.preventDefault(); var name = welcomeName.value.trim(); if (!name) return;
-      SP.profile.setName(name);
-      var jiwoo = (SP.data.characters || []).filter(function(c){return c.id === "jiwoo";})[0];
-      if (jiwoo) { jiwoo.call = name; jiwoo.persona = String(jiwoo.persona || "").replace(/상대는 하윤이며/g, "상대는 " + name + "이며").replace(/하윤아/g, name + "아"); }
-      welcome.hidden = true; document.getElementById("lock").hidden = false;
-    });
     tick(); setInterval(tick, 5000);
     build(document.getElementById("home-grid"), GRID, true);
     build(document.getElementById("dock"), DOCK, false);
     try { SP.ai.init(); } catch (e) { console.error(e); }
-    ["messages", "instagram", "kakao", "phone", "camera", "calendar"].forEach(function (k) { try { SP[k].init(); } catch (e) { console.error(k, e); } });
+    ["messages", "instagram", "phone", "camera", "calendar", "photos", "mail", "notes", "safari"].forEach(function (k) { try { SP[k].init(); } catch (e) { console.error(k, e); } });
     var bn = document.createElement("button"), bt = null, lastB = {};
     bn.id = "banner"; bn.hidden = true;
     bn.innerHTML = '<div class="ic ic-messages">' + ICONS.messages + '</div><div class="nt"><b></b><span class="nb"></span></div>';
