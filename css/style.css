@@ -1,8 +1,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:#e8e8ed;overflow:hidden;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-text-size-adjust:100%}
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;-webkit-text-size-adjust:100%}
 button,textarea,input{font:inherit;color:inherit}
 button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding:0}
-#phone{position:fixed;inset:clamp(8px,2.3vh,24px) auto;left:50%;transform:translateX(-50%);width:min(calc(100vw - 18px),430px);height:calc(100dvh - clamp(16px,4.6vh,48px));max-width:430px;overflow:hidden;background:#000;border:8px solid #202024;border-radius:clamp(34px,7vw,54px);box-shadow:0 0 0 2px #5b5b61,0 18px 50px rgba(0,0,0,.28);--fg:#fff;--bg:#000;--ic:min(17.5vw,72px)}
+#phone{position:fixed;inset:0;max-width:480px;margin:0 auto;overflow:hidden;background:#000;--fg:#fff;--bg:#000;--ic:min(17.5vw,80px)}
 #phone[data-theme=dark]{--fg:#000;--bg:#fff}
 
 #statusbar{position:absolute;top:0;left:0;right:0;height:54px;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:6px 32px 0 38px;color:var(--fg);font-weight:600;font-size:17px;pointer-events:none}
@@ -18,9 +18,7 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 @keyframes in{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-#lock,#home{background-color:#222;background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff}
-#lock{background-image:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.18)),url("../assets/images/wallpaper-lock.jpg")}
-#home{background-image:linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.28)),url("../assets/images/wallpaper-home.jpg")}
+#lock,#home{background:radial-gradient(circle at 12% 2%,#7062d6 0,rgba(112,98,214,0) 48%),radial-gradient(circle at 95% 98%,#d07094 0,rgba(208,112,148,0) 42%),#1c1a3a;color:#fff}
 #lock{text-align:center;cursor:pointer}
 .lock-top{padding-top:116px}
 #lock-date{font-size:22px;font-weight:500}
@@ -253,603 +251,63 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 .etext span{font-size:14px;color:#8e8e93}
 
 
-/* 첫 실행 이름 입력 화면 */
-#welcome{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:28px;background:radial-gradient(circle at 10% 10%,rgba(125,108,224,.9),transparent 45%),radial-gradient(circle at 90% 90%,rgba(214,117,157,.75),transparent 42%),#19182f;color:#fff}
-#welcome[hidden]{display:none}
-.welcome-card{width:100%;max-width:340px;padding:30px 24px;border:1px solid rgba(255,255,255,.22);border-radius:28px;background:rgba(255,255,255,.1);box-shadow:0 20px 70px rgba(0,0,0,.18);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.welcome-mark{display:none!important}
-.welcome-eyebrow{margin:22px 0 8px;font-size:10px;letter-spacing:2.5px;opacity:.7}
-.welcome-card h1{margin:0;font-size:27px;letter-spacing:-1px}
-.welcome-copy{margin:10px 0 28px;font-size:14px;line-height:1.6;color:rgba(255,255,255,.8)}
-#welcome-form{display:flex;flex-direction:column;gap:10px}
-#welcome-form label{font-size:12px;color:rgba(255,255,255,.8)}
-#welcome-name{width:100%;height:48px;padding:0 14px;border:1px solid rgba(255,255,255,.28);border-radius:13px;outline:none;background:rgba(0,0,0,.14);color:#fff;font-size:16px}
-#welcome-name::placeholder{color:rgba(255,255,255,.48)}
-#welcome-name:focus{border-color:#fff}
-#welcome-form button{height:48px;margin-top:5px;border-radius:13px;background:#fff;color:#25213f;font-weight:700}
-.welcome-foot{margin:18px 0 0;text-align:center;font-size:11px;color:rgba(255,255,255,.62)}
-
-/* 사진 기반 잠금/홈 배경 */
-#lock,#home{background-image:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.12)),url('../assets/images/lock-wallpaper.jpg');background-size:cover;background-position:center 24%;background-repeat:no-repeat}
-#lock .lock-top{padding-top:112px;text-shadow:0 2px 14px rgba(0,0,0,.15)}
-#home{background-position:center 24%}
-.ic-kakao{background:#fee500}
-.ic-kakao svg{width:76%;height:76%}
-/* 카카오톡 */
-.kakao-app{background:#fff;color:#111;padding-top:54px}
-.kakao-view{display:flex;flex-direction:column;min-height:0;flex:1;background:#fff}
-.kakao-view[hidden]{display:none}
-.kakao-header{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 22px}
-.kakao-header h1{font-size:28px;font-weight:700;margin:0}
-.kakao-header div{font-size:25px;white-space:nowrap}
-.kakao-tabs{display:flex;gap:8px;padding:6px 18px 18px;overflow:auto}
-.kakao-tabs span{background:#f1f1f1;color:#555;border-radius:24px;padding:10px 18px;white-space:nowrap;font-size:15px}
-.kakao-tabs .active{background:#171717;color:#fff}
-.kakao-list{flex:1;overflow:auto}
-.kakao-room{width:100%;display:flex;align-items:center;gap:13px;text-align:left;padding:13px 20px;color:#111}
-.kakao-avatar{width:58px;height:58px;flex:none;border-radius:21px;background:#dbe5ef;display:grid;place-items:center;font-size:24px;color:#55718a}
-.kakao-room-main{flex:1;min-width:0}
-.kakao-room-main b{display:block;font-size:17px;font-weight:600;margin-bottom:5px}
-.kakao-room-main span{display:block;color:#888;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kakao-room time{align-self:flex-start;color:#888;font-size:13px}
-.kakao-bottom{height:62px;display:flex;align-items:center;justify-content:space-around;color:#aaa;border-top:1px solid #f3f3f3;font-size:22px}
-.kakao-bottom .active{color:#222}
-.kakao-chat-header{height:56px;display:flex;align-items:center;gap:15px;padding:0 18px;background:#afc5d6;flex:none}
-.kakao-chat-header button{font-size:34px;line-height:1}
-.kakao-chat-header b{font-size:18px;flex:1}
-.kakao-chat-header span{font-size:20px}
-.kakao-chat-body{flex:1;min-height:0;overflow:auto;background:#afc5d6;padding:18px 14px;display:flex;flex-direction:column;gap:10px}
-.kakao-date{align-self:center;border-radius:20px;background:rgba(80,100,115,.42);color:#fff;padding:5px 13px;font-size:12px;margin:12px 0}
-.kakao-msg{max-width:82%;display:flex;flex-direction:column;gap:3px}
-.kakao-msg.them{align-self:flex-start;align-items:flex-start}
-.kakao-msg.me{align-self:flex-end;align-items:flex-end}
-.kakao-bubble{padding:10px 14px;border-radius:17px;font-size:16px;line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere}
-.kakao-msg.them .kakao-bubble{background:#fff;border-top-left-radius:5px}
-.kakao-msg.me .kakao-bubble{background:#fee500;border-top-right-radius:5px}
-.kakao-time{font-size:11px;color:#61727d;padding:0 4px}
-.kakao-suggestions{background:#afc5d6;padding:0 12px 10px;display:flex;gap:8px;overflow-x:auto}
-.kakao-suggestions:empty{display:none}
-.kakao-suggestion{flex:none;background:#fff;border-radius:20px;padding:10px 14px;font-size:14px;box-shadow:0 2px 9px #7d96a455}
-#kakao-form{display:flex;align-items:center;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:#fff}
-.kakao-plus{font-size:27px;color:#888;width:28px}
-#kakao-input{flex:1;min-width:0;border:0;outline:0;border-radius:22px;background:#f4f4f4;padding:12px 15px;font-size:16px}
-.kakao-send{width:42px;height:42px;border-radius:50%;background:#fee500;font-size:24px;color:#111}
-.ignav .igi{cursor:pointer}.ignav .igi.on{outline:2px solid #ddd;outline-offset:3px;border-radius:50%}
-.igstories{display:flex;gap:14px;overflow:auto;padding:12px 14px}.igstory{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:62px;font-size:11px}.igstory .mini{width:54px;height:54px;border-radius:50%;background:#e7e7ed;display:grid;place-items:center}.igmodehead{font-size:24px;font-weight:700;padding:18px}.igreel{position:relative;width:100%;height:360px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;padding:20px;color:#fff;background:#777;background-size:cover;background-position:center}.igreel b,.igreel span{background:rgba(0,0,0,.38);padding:5px 8px;border-radius:6px}.igempty{padding:24px;color:#888}.igsearchwrap{padding:10px 14px}.igsearch{width:100%;border:0;border-radius:12px;background:#efeff4;padding:13px;font-size:16px;outline:none}.igdmrow{display:flex;align-items:center;gap:12px;padding:16px;text-align:left;width:100%}.igdmrow b{flex:1}.igdm{padding:18px}.igdm-bubble{background:#eee;border-radius:18px;padding:10px 14px;width:fit-content;max-width:85%}.igdm-mine{background:#dff3ff;border-radius:18px;padding:10px 14px;margin-left:auto;width:fit-content;max-width:85%}.igdmform{display:flex;gap:8px;margin-top:20px}.igdmform input{flex:1;min-width:0;border:1px solid #ddd;border-radius:20px;padding:10px}.igdmform button{background:#0095f6;color:#fff;border-radius:18px;padding:0 14px}
-
-/* User-provided photographic wallpapers and Jiwoo avatar */
-.kakao-avatar{background-image:url("../assets/images/jiwoo-profile.jpg");background-position:center 28%;background-size:cover;color:transparent!important;overflow:hidden}
-.kakao-msg.them{position:relative;padding-left:46px}
-.kakao-msg.them::before{display:none}
-.kakao-chat-body{background:#afc5d6}
-#msg-form{display:none!important}
-#msg-chatview.readonly #chat-body{padding-bottom:28px}
-@media(max-width:420px){#phone{width:calc(100vw - 16px);border-width:6px;border-radius:38px}.lock-top{padding-top:94px}#lock-time{font-size:clamp(72px,24vw,104px)}}
-
-.kakao-msg .kakao-avatar{width:36px;height:36px;min-width:36px;border-radius:13px;margin-right:8px}
-.kakao-msg.them{padding-left:0;display:grid;grid-template-columns:36px auto;column-gap:8px;align-items:start}
-.kakao-msg.them .kakao-bubble{grid-column:2;grid-row:1}
-.kakao-msg.them .kakao-time{grid-column:2;grid-row:2}
-.kakao-room.disabled-room{opacity:1}
-.kakao-room.disabled-room:active{background:transparent}
-#msg-list .row:first-child{position:relative;padding-left:82px;min-height:78px}
-#msg-list .row:first-child:before{content:"";position:absolute;left:18px;top:14px;width:52px;height:52px;border-radius:18px;background:url("../assets/images/jiwoo-profile.jpg") center 28%/cover no-repeat}
-#msg-list .readonly-row{cursor:default}
-#home-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-
-
-/* iPhone 16 proportions and independent wallpapers */
-#phone{
-  width:min(calc(100vw - 24px), calc((100dvh - 32px) * .462));
-  height:min(calc(100dvh - 32px), calc((100vw - 24px) / .462));
-  max-width:390px;
-  border:7px solid #242428;
-  border-radius:clamp(34px, 8vw, 52px);
-  box-shadow:0 0 0 2px #5c5c62, 0 22px 56px rgba(0,0,0,.25);
-}
-#lock{
-  background-image:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.16)),url("../assets/images/wallpaper-lock.jpg") !important;
-  background-size:cover !important;background-position:center !important;
-}
-#home{
-  background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.16)),url("../assets/images/wallpaper-home.jpg") !important;
-  background-size:cover !important;background-position:center !important;
-}
-.welcome-mark{display:none!important}
-/* Keep the actual photo only on Jiwoo's room and messages */
-.kakao-avatar{
-  background-image:none!important;
-  background-color:#eef0f4!important;
-  border-radius:50%!important;
-  position:relative;
-  color:transparent!important;
-}
-.kakao-avatar::before{
-  content:"";position:absolute;width:34%;height:34%;border-radius:50%;
-  background:#9299a7;top:20%;left:33%;
-}
-.kakao-avatar::after{
-  content:"";position:absolute;width:62%;height:34%;border-radius:50% 50% 35% 35%;
-  background:#9299a7;bottom:7%;left:19%;
-}
-.kakao-room.jiwoo-room > .kakao-avatar,
-.kakao-msg.them .kakao-avatar{
-  background-image:url("../assets/images/jiwoo-profile.jpg")!important;
-  background-size:cover!important;background-position:center 28%!important;
-}
-.kakao-room.jiwoo-room > .kakao-avatar::before,
-.kakao-room.jiwoo-room > .kakao-avatar::after,
-.kakao-msg.them .kakao-avatar::before,
-.kakao-msg.them .kakao-avatar::after{display:none}
-.kakao-group-avatar{
-  width:58px;height:58px;flex:none;display:grid;grid-template-columns:1fr 1fr;
-  grid-template-rows:1fr 1fr;gap:2px;padding:1px;border-radius:16px;overflow:hidden;background:#fff;
-}
-.kakao-group-avatar i{display:block;position:relative;background:#b6a9ed;border-radius:7px}
-.kakao-group-avatar i:nth-child(2),.kakao-group-avatar i:nth-child(3){background:#a7ddd5}
-.kakao-group-avatar i:before{content:"";position:absolute;left:35%;top:17%;width:30%;height:30%;border-radius:50%;background:#fff;opacity:.95}
-.kakao-group-avatar i:after{content:"";position:absolute;left:20%;bottom:13%;width:60%;height:31%;border-radius:50% 50% 30% 30%;background:#fff;opacity:.95}
-.kakao-pin{display:inline-block!important;font-size:12px!important;color:#929292!important;margin-left:6px;vertical-align:2px}
-.kakao-room-main b{display:flex;align-items:center;gap:0}
-.kakao-room.disabled-room .kakao-avatar{background-image:none!important}
-/* Instagram DM list inspired by the supplied reference */
-.igdm-list{padding:0 16px 16px;overflow:auto}
-.igdm-search{height:42px;border-radius:24px;background:#f0f1f5;color:#777;padding:0 16px;display:flex;align-items:center;gap:10px;margin:10px 0 12px}
-.igdm-chips{display:flex;gap:10px;margin:0 0 18px;overflow:hidden}
-.igdm-chip{white-space:nowrap;border-radius:22px;background:#f7f7f9;padding:9px 14px;font-size:13px;color:#555}
-.igdm-stories{display:flex;gap:18px;overflow:hidden;padding:4px 0 18px}
-.igdm-story{width:70px;flex:none;text-align:center;font-size:12px;color:#666}
-.igdm-story .igdm-avatar{margin:0 auto 7px}
-.igdm-avatar{width:58px;height:58px;border-radius:50%;background:#eef0f4;position:relative;overflow:hidden;flex:none}
-.igdm-avatar:before{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:#9299a7;left:35%;top:19%}
-.igdm-avatar:after{content:"";position:absolute;width:58%;height:33%;border-radius:50% 50% 30% 30%;background:#9299a7;left:21%;bottom:7%}
-.igdm-section-title{font-size:18px;font-weight:700;margin:4px 0 8px}
-.igdm-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 0;min-height:82px}
-.igdm-item b{display:block;font-size:15px;font-weight:600;margin-bottom:4px}
-.igdm-item small{display:block;color:#888;font-size:13px}
-.igdm-unread{width:9px;height:9px;border-radius:50%;background:#5365ef;margin-left:auto;flex:none}
-@media(max-width:420px){
- #phone{width:min(calc(100vw - 24px),calc((100dvh - 32px)*.462));height:min(calc(100dvh - 32px),calc((100vw - 24px)/.462));border-width:6px;border-radius:38px}
+/* 정원이의 아이폰 디자인 통합: 프레임과 화면 전환만 조정하고 앱 기능/데이터는 기존 모듈을 유지합니다. */
+html,body{width:100%;height:100%;min-height:100%;background:#0b0b0e;overflow:hidden}
+#stage{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;background:#0b0b0e}
+#phone{position:relative;inset:auto;width:393px;height:852px;max-width:none;max-height:none;flex:none;margin:0;overflow:hidden;border-radius:48px;background:#000;box-shadow:0 0 0 11px #1a1a1f,0 0 0 13px #3a3a42,0 30px 80px #000;transform-origin:center center;--fg:#fff;--bg:#000;--ic:68px}
+#phone[data-theme=dark]{--fg:#000;--bg:#fff}
+#statusbar{height:54px;padding:6px 34px 0 42px;font-size:16px}
+.island{width:120px;height:35px;margin-left:-60px}
+#lock,#home{background:radial-gradient(120% 70% at 20% 0,#6a5acd 0,transparent 60%),radial-gradient(100% 60% at 90% 100%,#ff7e9d 0,transparent 60%),#1d1b3a}
+.lock-top{padding-top:110px}
+#lock-time{font-size:88px;font-weight:600;letter-spacing:-2px}
+#lock-date{font-size:20px;margin-bottom:6px}
+#home{padding-top:70px}
+#home-grid{gap:22px 0;padding:0 18px}
+.app-icon{font-size:11px;gap:5px}
+.ic{border-radius:15px}
+#dock{height:96px;margin:0 14px 22px;padding:10px 8px;border-radius:34px;background:rgba(255,255,255,.25)}
+.app{padding-top:54px;padding-bottom:34px;border-radius:48px;overflow:hidden}
+#homebar{bottom:8px;height:18px;padding-top:5px;z-index:60}
+#homebar span{width:140px;height:5px}
+#banner{top:62px}
+#camera-app{border-radius:48px}
+#cam-video{height:calc(100% - 232px)}
+.cam-bar{bottom:44px}
+#cam-view{padding-bottom:34px}
+.detail{padding-bottom:34px}
+@media(max-width:420px),(max-height:880px){
+  #phone{--ic:68px}
 }
 
-/* Approved refinements: keep the outer iPhone frame unchanged. */
-#phone{--ic:min(13.5vw,56px)}
-#home-grid{gap:18px 0;padding:0 12px}
-.app-icon{gap:5px;font-size:10px;min-height:38px}
-#dock{margin: auto 10px 22px;padding:9px 6px;gap:3px;border-radius:30px}
-#dock .ic{width:var(--ic);height:var(--ic)}
-#statusbar{font-size:14px;padding:6px 26px 0 30px;height:48px}
-.island{top:10px;width:106px;height:30px;margin-left:-53px}
-.sig,.wifi{width:17px;height:12px}
-.batt{min-width:29px;height:18px;font-size:11px;border-radius:7px;padding:0 5px}
-.batt::after{top:5px;height:7px}
-/* Same user-provided photograph on lock and home screens. */
-#lock,#home{background-image:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,.16)),url('../assets/images/approved-wallpaper.jpg') !important;background-size:cover!important;background-position:center 30%!important;background-repeat:no-repeat!important}
-/* First-run card: centered, comfortably sized, with modest edge spacing. */
-#welcome{padding:16px;align-items:center;justify-content:center}
-.welcome-card{width:100%;max-width:360px;padding:28px 22px;border-radius:25px}
-.welcome-card h1{font-size:25px}
-.welcome-copy{margin:9px 0 22px;font-size:14px}
-#welcome-name{height:46px;font-size:15px}
-#welcome-form button{height:46px}
-/* Compact KakaoTalk list, preserving the existing chat names and previews. */
-.kakao-app{padding-top:46px}
-.kakao-header{height:54px;padding:0 18px}
-.kakao-header h1{font-size:24px}
-.kakao-header div{font-size:21px}
-.kakao-tabs{gap:6px;padding:5px 14px 12px}
-.kakao-tabs span{padding:8px 14px;font-size:13px}
-.kakao-room{gap:10px;padding:9px 15px}
-.kakao-avatar,.kakao-group-avatar{width:44px;height:44px}
-.kakao-avatar{border-radius:16px}
-.kakao-room-main b{font-size:15px;margin-bottom:3px}
-.kakao-room-main span{font-size:12px}
-.kakao-room time{font-size:11px}
-.kakao-room-count{display:inline-block!important;margin-left:5px;color:#8d8d8d;font-size:10px;font-weight:500;line-height:1;vertical-align:middle}
-.kakao-group-avatar{border-radius:12px;gap:2px}
-.kakao-group-avatar i{border-radius:5px}
-.kakao-bottom{height:50px;font-size:19px}
-/* Messages list: names or phone numbers only; no profile photos, previews, or search bar. */
-#msg-list .row{padding:13px 20px;min-height:48px;background:linear-gradient(#e5e5ea,#e5e5ea) right bottom/calc(100% - 20px) 1px no-repeat}
-#msg-list .row:first-child{padding-left:20px;min-height:48px}
-#msg-list .row:first-child:before{display:none!important}
-#msg-list .rowtop{justify-content:flex-start}
-#msg-list .rowtop b{font-size:16px;font-weight:600}
-#msg-list .rowtime,#msg-list .rowprev{display:none!important}
-#msg-list .row{display:block}
-/* Instagram profile: reduce the profile block without changing post images/content. */
-.igtop{min-height:42px;padding:4px 14px}
-.igname{font-size:18px}
-.igi{width:28px;height:28px}
-.igi svg{width:24px;height:24px}
-.ighead{gap:14px;padding:6px 14px}
-.ring{width:72px;height:72px;padding:2px}
-.igav{font-size:24px}
-.igav svg{width:100%;height:100%;display:block}
-.plusb{width:21px;height:21px;font-size:15px}
-.stats b{font-size:16px}
-.stats span{font-size:12px}
-.igbtns{gap:6px;padding:8px 14px}
-.igbtn{min-height:34px;font-size:13px;border-radius:10px}
-.igbtn.sm{width:36px}
-.hls{gap:12px;padding:4px 14px 10px}
-.hlc{width:54px;height:54px;font-size:27px}
-.hl{font-size:11px}
-.igtabs span{min-height:38px}
-.igtabs svg{width:22px;height:22px}
-.ignav{margin:4px 12px 3px;padding:4px 6px}
-.ignav .igi{width:40px;height:38px}
-.ignav .igi.on{width:58px}
-.mini{width:27px;height:27px}
-/* Instagram DM list keeps its existing entries and images, only spacing is compacted. */
-.igdm-list{padding:0 14px 12px}
-.igdm-search{height:36px;margin:8px 0 10px}
-.igdm-chip{padding:7px 12px;font-size:12px}
-.igdm-stories{gap:12px;padding:3px 0 14px}
-.igdm-story{width:58px;font-size:11px}
-.igdm-avatar{width:48px;height:48px}
-.igdm-section-title{font-size:16px;margin:3px 0 6px}
-.igdm-item{gap:10px;padding:9px 0;min-height:68px}
-.igdm-item b{font-size:14px;margin-bottom:3px}
-.igdm-item small{font-size:12px}
-@media(max-width:420px){#phone{--ic:min(13.5vw,56px)}.welcome-card{max-width:360px;padding:26px 20px}}
-
-
-/* Structure-checked refinements: inner UI only; do not change #phone frame dimensions. */
-#phone{--ic:min(12vw,48px)}
-#home-grid{gap:16px 0;padding:0 12px}
-.app-icon{gap:4px;font-size:10px;min-height:34px}
-#dock{margin: auto 10px 20px;padding:8px 6px;gap:2px}
-#dock .ic{width:var(--ic);height:var(--ic)}
-#statusbar{font-size:13px;padding:6px 24px 0 28px;height:46px}
-#statusbar .sig,#statusbar .wifi{width:16px;height:11px}
-#statusbar .batt{min-width:27px;height:17px;font-size:10px;padding:0 4px}
-#statusbar .island{top:9px;width:100px;height:28px;margin-left:-50px}
-/* Keep name entry centered and readable, without changing the outer phone. */
-#welcome{padding:16px;align-items:center;justify-content:center}
-.welcome-card{width:min(100%,350px);padding:26px 20px;border-radius:24px}
-.welcome-card h1{font-size:24px}
-.welcome-copy{font-size:14px;margin:9px 0 20px}
-#welcome-name,#welcome-form button{height:44px;font-size:14px}
-/* Message list rows are text-only; no avatars, preview, timestamps, or search. */
-#msg-list .row{display:block;padding:12px 20px;min-height:46px;background:linear-gradient(#e5e5ea,#e5e5ea) right bottom/calc(100% - 20px) 1px no-repeat}
-#msg-list .row:before,#msg-list .row .avatar,#msg-list .row .rowtime,#msg-list .row .rowprev{display:none!important}
-#msg-list .rowtop{justify-content:flex-start}
-#msg-list .rowtop b{font-size:15px;font-weight:600}
-/* Compact Instagram profile chrome only; post images and data remain untouched. */
-.igtop{min-height:40px;padding:4px 13px}
-.igname{font-size:17px}
-.igi{width:26px;height:26px}
-.igi svg{width:22px;height:22px}
-.ighead{gap:12px;padding:6px 13px}
-.ring{width:68px;height:68px;padding:2px}
-.stats b{font-size:15px}
-.stats span{font-size:11px}
-.igbtns{gap:6px;padding:7px 13px}
-.igbtn{min-height:32px;font-size:12px}
-.hlc{width:50px;height:50px}
-.igtabs span{min-height:36px}
-@media(max-width:420px){#phone{--ic:min(12vw,46px)}.welcome-card{width:100%;padding:24px 18px}}
-
-
-/* User-approved final refinements: only the specified details are changed. */
-/* Slightly smaller battery indicator; preserve status-bar layout and phone frame. */
-#statusbar .batt{
-  min-width:23px !important;
-  width:23px;
-  height:14px !important;
-  padding:0 3px !important;
-  font-size:9px !important;
-  border-radius:5px !important;
-  line-height:14px;
-}
-#statusbar .batt::after{
-  right:-3px;
-  top:4px !important;
-  width:2px;
-  height:6px !important;
-}
-/* Instagram bottom dock: compact controls and no oversized selected tab. */
-.ignav{
-  height:58px;
-  margin:4px 12px 3px !important;
-  padding:4px 8px !important;
-  gap:6px;
-  border-radius:30px;
-  align-items:center;
-}
-.ignav .igi{
-  flex:0 1 38px;
-  width:38px !important;
-  min-width:0;
-  height:38px !important;
-  padding:5px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.ignav .igi svg{
-  width:25px !important;
-  height:25px !important;
-}
-.ignav .igi.on{
-  flex:0 0 70px;
-  width:70px !important;
-  height:50px !important;
-  border-radius:26px !important;
-  outline:0 !important;
-  outline-offset:0 !important;
-}
-/* Both group chats use precisely the same four-square avatar design. */
-.kakao-group-avatar{
-  background:#fff !important;
-  grid-template-columns:repeat(2,1fr) !important;
-  grid-template-rows:repeat(2,1fr) !important;
-}
-.kakao-group-avatar i,
-.kakao-group-avatar i:nth-child(1),
-.kakao-group-avatar i:nth-child(2),
-.kakao-group-avatar i:nth-child(3),
-.kakao-group-avatar i:nth-child(4){
-  background:#b6a9ed !important;
-}
-.kakao-group-avatar i:nth-child(2),
-.kakao-group-avatar i:nth-child(3){
-  background:#a7ddd5 !important;
-}
-
-/* Refinements requested from visual references */
-#statusbar .batt{transform:scale(.82);transform-origin:right center;margin-left:-3px}
-#statusbar .sig,#statusbar .wifi{width:18px;height:13px}
-#lock .lock-top{padding-top:82px!important}
-#lock-date{font-size:21px}
-#lock-time{font-size:clamp(78px,27vw,108px)}
-
-/* Calendar: compact native iOS-inspired month view */
-#calendar-app{padding-top:54px;padding-bottom:calc(env(safe-area-inset-bottom) + 24px)}
-.cal-toolbar{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex:none}
-.cal-year,.cal-tools{height:38px;border:1px solid #e2e2e5;border-radius:24px;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:0 2px 10px #00000008}
-.cal-year{padding:0 14px;gap:9px;font-size:15px}
-.cal-year span{font-size:25px;line-height:1}
-.cal-tools{gap:0;padding:0 5px}
-.cal-tools button{width:38px;height:34px;font-size:23px;line-height:1}
-.cal-body{padding:0;display:flex;flex-direction:column}
-.cal-monthline{display:flex;align-items:center;justify-content:space-between;padding:2px 18px 8px}
-.cal-monthline h1{font-size:34px;letter-spacing:-1.2px;margin:0;font-weight:750}
-.cal-monthnav{display:flex;gap:8px}
-.cal-monthnav button{width:30px;height:30px;border-radius:50%;background:#f4f4f6;font-size:24px;line-height:1}
-.calhead{display:none!important}
-.calwk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));height:30px;align-items:center;border-bottom:1px solid #e5e5e8;color:#888;text-align:center;font-size:12px}
-#cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));}
-.cday{height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-bottom:1px solid #ededf0;border-radius:0!important;font-size:17px;color:#111;position:relative}
-.cday.sun{color:#8e8e93}
-.cday.other{color:#c5c5ca;background:#fff}
-.cday .n{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-weight:550}
-.cday.today .n,.cday.sel .n{background:#ff4b49;color:#fff}
-.cday i{position:absolute;bottom:4px;width:5px;height:5px;border-radius:50%;background:#f5c878}
-#cal-events{flex:1;min-height:100px;padding:0 18px 20px;overflow:auto;display:flex;flex-direction:column;justify-content:flex-start}
-#cal-events h2{font-size:0;color:#8e8e93;font-weight:600;margin:0;padding:0}
-#cal-events .noevt{margin:auto;text-align:center;color:#8e8e93;font-size:18px;font-weight:600;padding:34px 0}
-.evt{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #f0f0f2}
-.ebar{width:3px;align-self:stretch;border-radius:3px}
-.etext b{font-size:15px;font-weight:600}
-.etext span{font-size:12px;color:#888}
-
-/* KakaoTalk list and chat scale */
-.kakao-app{padding-top:54px;padding-bottom:calc(env(safe-area-inset-bottom) + 22px)}
-.kakao-header{height:52px;padding:0 18px}
-.kakao-header h1{font-size:25px}
-.kakao-header div{font-size:21px}
-.kakao-tabs{gap:7px;padding:4px 14px 12px}
-.kakao-tabs span{padding:8px 14px;font-size:13px;border-radius:22px}
-.kakao-room{gap:10px;padding:8px 16px;min-height:72px}
-.kakao-avatar,.kakao-group-avatar{width:46px;height:46px}
-.kakao-avatar{border-radius:50%!important}
-.kakao-group-avatar{gap:2px;border-radius:10px;padding:1px}
-.kakao-group-avatar i{border-radius:5px}
-.kakao-room-main b{font-size:15px;margin-bottom:3px;line-height:1.2}
-.kakao-room-main span{font-size:12px}
-.kakao-room time{font-size:11px}
-.kakao-room-count{font-size:11px!important;margin-left:5px;color:#888;font-weight:400}
-.kakao-bottom{height:48px;font-size:19px;flex:none}
-.kakao-pin{width:13px;height:14px;margin-left:5px;display:inline-flex!important;align-items:center;vertical-align:middle}
-.kakao-pin svg{width:13px;height:13px;fill:#999;stroke:#999;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-.kakao-room .profile-2{background-color:#b4e1dc!important}
-.kakao-room .profile-3{background-color:#e9c8a9!important}
-.kakao-room .profile-4{background-color:#fee500!important}
-.kakao-room .profile-5{background-color:#d8d1f5!important}
-.kakao-room .profile-6{background-color:#f1cbd8!important}
-.kakao-room .profile-7{background-color:#c9d9ee!important}
-.kakao-room .kakao-pay-avatar{background-image:url('../assets/images/kakaopay-profile.jpeg')!important;background-size:cover!important;background-position:center!important;border-radius:14px!important}
-.kakao-room .kakao-pay-avatar:before,.kakao-room .kakao-pay-avatar:after{display:none}
-.kakao-chat-header{height:46px;padding:0 12px;gap:9px;flex:none}
-.kakao-chat-header button{font-size:25px;line-height:1;min-width:25px}
-.kakao-chat-header b{font-size:16px}
-.kakao-chat-tools{display:flex;align-items:center;gap:13px}
-.kakao-chat-tools button{font-size:21px;line-height:1;min-width:22px;display:grid;place-items:center}
-.kakao-chat-tools button svg{width:21px;height:21px;fill:#111}
-.kakao-chat-body{padding:12px 10px;gap:8px}
-.kakao-date{font-size:11px;padding:4px 10px;margin:8px 0 12px}
-.kakao-msg{max-width:84%;gap:2px}
-.kakao-msg .kakao-avatar{width:29px;height:29px;min-width:29px;border-radius:10px!important;margin-right:4px}
-.kakao-msg.them{grid-template-columns:29px auto;column-gap:6px}
-.kakao-bubble{padding:7px 11px;border-radius:15px;font-size:14px;line-height:1.35}
-.kakao-time{font-size:10px;padding:0 3px}
-.kakao-suggestions{padding:0 8px 7px;gap:6px}
-.kakao-suggestion{padding:7px 10px;font-size:11px;border-radius:18px;box-shadow:0 2px 7px #7d96a433;white-space:nowrap}
-#kakao-form{display:flex;align-items:center;gap:7px;padding:7px 9px calc(7px + env(safe-area-inset-bottom));background:#fff;flex:none}
-.kakao-plus{font-size:23px;color:#555;width:24px;flex:none}
-#kakao-input{flex:1;min-width:0;border:0;outline:0;border-radius:24px;background:#f4f4f5;padding:11px 13px;font-size:14px;height:42px}
-.kakao-emoji{width:25px;flex:none;font-size:19px;color:#888}
-.kakao-send{width:40px;height:40px;border-radius:50%;background:#fee500;font-size:23px;color:#111;flex:none}
-@media(max-width:420px){
- .cal-monthline h1{font-size:31px}
- .cday{height:45px;font-size:16px}
- .kakao-room{min-height:66px;padding:7px 14px}
- .kakao-avatar,.kakao-group-avatar{width:42px;height:42px}
- .kakao-msg .kakao-avatar{width:27px;height:27px;min-width:27px}
- .kakao-msg.them{grid-template-columns:27px auto}
- .kakao-bubble{font-size:13px;padding:7px 10px}
-}
-.cal-bottom{height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 20px 4px;background:#fff}
-.cal-bottom button{height:36px;min-width:58px;padding:0 14px;border:1px solid #e5e5e8;border-radius:22px;background:#fff;font-size:14px}
-.cal-bottom div{display:flex;gap:8px}
-.cal-bottom div button{min-width:38px;width:38px;padding:0;font-size:20px}
-.kakao-room .profile-2{background-color:#b4e1dc!important}
-.kakao-room .profile-3{background-color:#e9c8a9!important}
-.kakao-room .profile-4{background-color:#fee500!important}
-.kakao-room .profile-5{background-color:#d8d1f5!important}
-.kakao-room .profile-6{background-color:#f1cbd8!important}
-.kakao-room .profile-7{background-color:#c9d9ee!important}
-
-/* Instagram Reels: uploaded video with tap-to-play controls */
-.igreel-player{width:100%;padding:0 12px;box-sizing:border-box;}
-.igreel-video{display:block;width:100%;max-height:calc(100% - 170px);aspect-ratio:9/16;object-fit:contain;background:#111;border-radius:8px;}
-.igreel-caption{display:flex;flex-direction:column;gap:5px;padding:12px 16px 18px;font-size:13px;color:var(--text,#111);}
-.igreel-caption b{font-weight:700;}
-
-/* Final refinements: compact shared app headers and improve list readability. */
-.topbtns{padding:6px 13px;gap:7px}
-.topbtns .pill{min-height:34px;min-width:34px;padding:0 13px;font-size:14px;border-radius:20px;box-shadow:0 2px 9px rgba(0,0,0,.10)}
-.topbtns .pill.round{min-width:34px;padding:0;font-size:16px}
-.topbtns .namepill{padding:0 14px}
-#phone-app .body{padding-top:2px}
-#phone-app .big{font-size:clamp(27px,7vw,34px);margin:8px 16px 14px;line-height:1.15}
-#phone-app .tabbar{margin:6px 12px 3px;padding:4px;gap:2px}
-#phone-app .tabbar span{padding:8px 7px;font-size:10px;white-space:nowrap;flex:1;text-align:center;line-height:1.2}
-#statusbar{padding-right:32px}
-#statusbar .sb-right{display:flex;align-items:center;gap:7px;flex:none;margin-right:2px}
-#statusbar .batt{flex:0 0 23px;margin-right:3px;transform:scale(.82);transform-origin:center}
-#statusbar .batt::after{right:-3px}
-/* Message list: compact rows with last-message preview and timestamp. */
-#msg-list .row{display:block;position:relative;padding:12px 18px 13px;min-height:67px;background:linear-gradient(#e5e5ea,#e5e5ea) right bottom/calc(100% - 18px) 1px no-repeat;text-align:left;width:100%}
-#msg-list .row:before{display:none!important}
-#msg-list .rowtop{display:flex;align-items:center;justify-content:space-between;gap:10px}
-#msg-list .rowtop b{font-size:14px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#msg-list .rowtime{display:block!important;flex:none;color:#929298;font-size:11px;font-weight:400}
-#msg-list .rowprev{display:-webkit-box!important;margin-top:4px;color:#929298;font-size:12px;line-height:1.35;white-space:normal;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-#msg-list .row .avatar{display:none!important}
-#msg-list .readonly-row{cursor:default}
-/* Instagram profile: neutral contained avatar, no lock or highlight strip. */
-.igav{background:#eceef2!important;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.igav svg{width:82%!important;height:82%!important;max-width:82%;max-height:82%}
-.ring{background:#fff;border:1px solid #dedee3;padding:3px}
-.ighead{align-items:center}
-.stats{gap:0}
-.stats>div{min-width:0}
-.stats b{font-size:14px!important}
-.stats span{font-size:10px!important}
-.hls{display:none!important}
-/* Compact buttons across app top bars without shrinking touch targets excessively. */
-.app>.topbtns .pill{min-height:32px;font-size:13px;padding-left:12px;padding-right:12px}
-.app>.topbtns .pill.round{min-width:32px}
-
-
-/* Final pass: Messages list and rounded iOS-style SMS bubbles */
-#msg-list .row{display:block!important;padding:12px 18px 13px!important;min-height:68px!important;text-align:left;background:linear-gradient(#e7e7eb,#e7e7eb) right bottom/calc(100% - 18px) 1px no-repeat!important}
-#msg-list .rowtop{display:flex!important;align-items:center;justify-content:space-between!important;gap:8px}
-#msg-list .rowtop b{font-size:14px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-#msg-list .rowtime{display:block!important;font-size:11px!important;color:#96969b!important;flex:none}
-#msg-list .rowprev{display:-webkit-box!important;margin-top:4px!important;font-size:12px!important;line-height:1.35!important;color:#929298!important;white-space:normal!important;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-#msg-list .row:before,#msg-list .row .avatar{display:none!important}
-#chat-body .bubble{border-radius:20px!important;padding:9px 13px!important;font-size:15px!important;line-height:1.35!important;max-width:100%;overflow-wrap:anywhere}
-#chat-body .mw.me .bubble{background:#087cff!important;color:#fff!important;border-bottom-right-radius:7px!important}
-#chat-body .mw.them .bubble{background:#e5e5ea!important;color:#111!important;border-bottom-left-radius:7px!important}
-#chat-body .mw{max-width:84%;margin:5px 0}
-#chat-body .sep{font-size:12px!important;color:#929298!important}
-/* KakaoTalk header, profile placeholders and bottom navigation */
-.kakao-header{height:52px!important;padding:0 18px!important;display:flex;align-items:center;justify-content:space-between}
-.kakao-header h1{font-size:22px!important;font-weight:650!important;margin:0}
-.kakao-head-icons{display:flex;align-items:center;gap:17px}
-.kakao-head-icons button{width:25px;height:28px;padding:0;border:0;background:transparent;display:grid;place-items:center;color:#171717}
-.kakao-head-icons svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.kakao-tabs{gap:8px!important;padding:5px 14px 12px!important;overflow-x:auto}
-.kakao-tabs span{font-size:12px!important;padding:8px 14px!important;border-radius:24px!important;white-space:nowrap}
-.kakao-tabs .active{background:#111!important;color:#fff!important}
-.kakao-tabs span:not(.active){background:#f1f1f2!important;color:#666!important}
-.kakao-room-main b{font-size:14px!important}.kakao-room-main span{font-size:12px!important;color:#888!important}
-.kakao-avatar{position:relative;overflow:hidden;border-radius:14px!important;display:grid;place-items:center}
-.kakao-avatar svg{width:100%;height:100%;display:block;fill:#f7f8f8}
-.kakao-room .profile-0{background:#d8d1f5!important}.kakao-room .profile-1{background:#b4e1dc!important}
-.kakao-room .profile-2{background:#b4e1dc!important}.kakao-room .profile-3{background:#e9c8a9!important}
-.kakao-room .profile-4{background:#fee500!important}.kakao-room .profile-5{background:#d8d1f5!important}
-.kakao-room .profile-6{background:#f1cbd8!important}.kakao-room .profile-7{background:#c9d9ee!important}
-.kakao-room .kakao-pay-avatar{background-image:url('../assets/images/kakaopay-profile.jpeg')!important;background-size:cover!important;background-position:center!important}
-.kakao-bottom{height:48px!important;display:flex;align-items:center;justify-content:space-around;padding:0 14px!important;flex:none}
-.kakao-bottom span{width:30px;height:30px;position:relative;display:grid;place-items:center;color:#aaa}
-.kakao-bottom svg{width:23px;height:23px;fill:currentColor;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.kakao-bottom .active{color:#111!important}.kakao-bottom .active i{position:absolute;top:-5px;right:-8px;background:#f04432;color:white;font-style:normal;font-size:9px;border-radius:12px;padding:2px 5px}
-/* Reels: edge-to-edge vertical video with right-side action rail and centered title */
-#instagram .igreel-player{position:relative!important;width:100%!important;height:calc(100% - 104px)!important;min-height:0!important;padding:0!important;box-sizing:border-box!important;overflow:hidden!important;background:#080808!important;border-radius:0!important}
-#instagram .igreel-video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;aspect-ratio:auto!important;object-fit:cover!important;border-radius:0!important;background:#080808!important}
-#instagram .reels-title{position:relative!important;text-align:center!important;font-size:17px!important;font-weight:700!important;height:38px!important;min-height:38px!important;padding:7px 0!important;z-index:2}
-#instagram .igreel-actions{position:absolute;right:9px;bottom:70px;z-index:4;display:flex;flex-direction:column;gap:15px;align-items:center}
-#instagram .igreel-action{border:0;background:transparent;color:#fff;text-shadow:0 1px 4px #000;padding:0;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:31px}
-#instagram .igreel-action span{font-size:28px;line-height:1.05;font-weight:400}
-#instagram .igreel-action small{font-size:10px;color:#fff}
-#instagram .igreel-action.liked span{color:#ff3158}
-#instagram .igreel-caption{position:absolute;left:12px;right:52px;bottom:17px;z-index:4;color:#fff;text-shadow:0 1px 4px #000;padding:0;font-size:12px;display:flex;flex-direction:column;gap:4px}
-#instagram .igreel-caption b{font-size:13px}
-/* Phone recent calls: preserve requested order and clearly mark missed calls */
-#call-list .crow{display:flex;align-items:center;gap:10px;padding:12px 8px;border-bottom:1px solid #e8e8eb;min-height:54px}
-#call-list .cname{font-size:14px!important}.cname.missed{color:#e53935!important}
-/* Compact message app heading to match the supplied iOS reference */
-#messages #msg-listview .body>.big{font-size:31px!important;line-height:1.15!important;margin:10px 18px 14px!important}
-#messages #msg-chatview .topbtns .namepill{font-size:15px!important}
-
-/* FIX: KakaoTalk chat-list profile avatars, matched to the supplied reference. */
-.kakao-room .kakao-avatar {
-  background-image: none !important;
-  background-size: cover !important;
-  background-position: center !important;
-  border-radius: 50% !important;
-  overflow: hidden;
-}
-.kakao-room.jiwoo-room > .kakao-avatar {
-  background-image: url('../assets/images/jiwoo-profile.jpg') !important;
-  background-position: center 28% !important;
-}
-.kakao-room.jiwoo-room > .kakao-avatar::before,
-.kakao-room.jiwoo-room > .kakao-avatar::after,
-.kakao-room .kakao-pay-avatar::before,
-.kakao-room .kakao-pay-avatar::after { display: none !important; }
-.kakao-room .profile-2 { background-color: #b4e1dc !important; }
-.kakao-room .profile-3 { background-color: #e9c8a9 !important; }
-.kakao-room .profile-4 { background-color: #fee500 !important; }
-.kakao-room .profile-5 { background-color: #d8d1f5 !important; }
-.kakao-room .profile-6 { background-color: #f1cbd8 !important; }
-.kakao-room .profile-7 { background-color: #c9d9ee !important; }
-.kakao-room .kakao-pay-avatar {
-  background-image: url('../assets/images/kakaopay-profile.jpeg') !important;
-  background-color: #fee500 !important;
-  background-size: cover !important;
-  background-position: center !important;
-  border-radius: 14px !important;
-}
-.kakao-room .same-group-avatar { border-radius: 10px !important; }
-
-
-/* Final KakaoTalk profile fix: prevent the generic SVG silhouette from covering real photos. */
-.kakao-room .kakao-avatar svg { fill: #9299a7 !important; }
-.kakao-room .kakao-avatar.jiwoo-photo { background: transparent !important; background-image: none !important; }
-.kakao-room .kakao-avatar.jiwoo-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; border-radius: 50%; }
-.kakao-room .kakao-avatar.jiwoo-photo::before,
-.kakao-room .kakao-avatar.jiwoo-photo::after { display: none !important; }
-.kakao-room .kakao-pay-avatar { background-image: none !important; background-color: #fee500 !important; border-radius: 14px !important; }
-.kakao-room .kakao-pay-avatar svg { display: none !important; }
-
-
-/* KakaoTalk chat-list preview: show Jiwoo's latest message inline beside the name, as in the reference. */
-#kakao-list .kakao-room.jiwoo-room .kakao-room-main {
-  display: flex !important; align-items: baseline !important; gap: 7px !important; min-width: 0 !important;
-}
-#kakao-list .kakao-room.jiwoo-room .kakao-room-main b {
-  display: inline-block !important; flex: 0 0 auto !important; margin: 0 !important; white-space: nowrap !important;
-}
-#kakao-list .kakao-room.jiwoo-room .kakao-room-main span {
-  display: inline-block !important; flex: 0 1 auto !important; min-width: 0 !important; max-width: 150px !important;
-  margin: 0 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important;
-  font-size: 13px !important; color: #999 !important;
-}
-#kakao-list .kakao-room.jiwoo-room { align-items: center !important; }
-#kakao-list .kakao-room.jiwoo-room time { margin-left: auto !important; flex: 0 0 auto !important; }
+/* 새 HTML의 메일·메모·Safari 화면 스타일 */
+.extra-head{height:54px;flex:none;display:flex;align-items:center;gap:10px;padding:5px 14px;border-bottom:1px solid #0000000d;background:#f7f7f8;z-index:1}
+.extra-head>b{font-size:18px;flex:1;text-align:center;margin-right:44px}
+.extra-head .pill{min-height:36px;min-width:42px;padding:0 12px;color:#007aff;background:#fff;box-shadow:0 1px 5px #00000012;font-size:14px}
+.extra-body{padding-bottom:36px}
+.extra-row{width:100%;display:block;text-align:left;padding:13px 18px;border-bottom:1px solid #0000000f;background:#fff}
+.extra-row:active,.note-row:active,.safari-query:active{background:#eee}
+.extra-rowtop{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.extra-rowtop small,.extra-preview,.mail-meta,.note-date{color:#8e8e93;font-size:13px}
+.extra-row strong{display:block;font-size:15px;margin:3px 0;font-weight:600}
+.extra-preview{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.mail-detail{padding:22px 20px}.mail-detail h2{font-size:22px;margin:0 0 12px}.mail-detail p{white-space:pre-line;line-height:1.65;font-size:16px;margin-top:18px}
+.note-count{padding:0 24px 10px;color:#8e8e93;font-size:14px;background:#f2f2f7}
+.note-month{padding:16px 24px 8px;font-size:22px;background:#f2f2f7}
+.note-list{margin:0 16px 10px;border-radius:22px;background:#fff;overflow:hidden}
+.note-row{display:block;width:100%;text-align:left;padding:13px 18px;border-bottom:1px solid #0000000d;background:#fff}
+.note-row:last-child{border-bottom:0}.note-row b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.note-row small{display:block;margin-top:4px;color:#8e8e93;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note-detail{background:#fff;padding:12px 24px}.note-detail h2{font-size:27px;margin:18px 0}.note-detail p{white-space:pre-line;font-size:17px;line-height:1.7}
+.note-date{padding-top:12px;text-align:center}
+#safari-app{background:#f2f2f7}
+.safari-top{display:flex;align-items:center;padding:6px 18px;height:60px;flex:none}
+.safari-top .pill{min-height:38px;color:#007aff}
+.safari-title{font-size:28px;margin:24px 22px 18px}
+.safari-favs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 16px;min-height:110px}
+.safari-fav{white-space:pre-line;text-align:center;font-size:12px;line-height:1.4;padding-top:8px}
+.safari-empty{grid-column:1/-1;color:#8e8e93;font-size:14px;padding:20px 0}
+.safari-search{position:absolute;left:12px;right:12px;bottom:36px;border-radius:28px;background:#fff;padding:17px 20px;text-align:left;color:#8e8e93;box-shadow:0 3px 18px #0002}
+.safari-history{margin:18px 18px 110px;background:#fff;border-radius:18px;overflow:hidden}
+.safari-query{display:block;width:100%;padding:13px 15px;text-align:left;background:#fff;border-bottom:1px solid #0000000d;font-size:14px}
+.safari-input{margin:10px 12px 8px;width:calc(100% - 24px);padding:14px 18px;border:0;border-radius:24px;background:#fff;font-size:16px;outline:none}
+.safari-hint{color:#8e8e93;font-size:13px;padding:8px 22px}
