@@ -68,16 +68,32 @@
     document.getElementById("lock-date").textContent = (d.getMonth() + 1) + "월 " + d.getDate() + "일 " + WD[d.getDay()] + "요일";
   }
 
-  function fitPhone() {
-    var phone = document.getElementById("phone");
-    var stage = document.getElementById("stage");
-    if (!phone || !stage) return;
-    /* Fit the complete phone, including its bezel and shadow, inside the visible viewport. */
-    var availableWidth = Math.max(240, stage.clientWidth - 40);
-    var availableHeight = Math.max(360, stage.clientHeight - 56);
-    var scale = Math.min(1, availableWidth / 419, availableHeight / 878);
-    phone.style.transform = "scale(" + Math.max(0.2, scale) + ")";
-  }
+
+function fitPhone() {
+  var phone = document.getElementById("phone");
+  if (!phone) return;
+
+  var vv = window.visualViewport;
+  var vw = vv ? vv.width : window.innerWidth;
+  var vh = vv ? vv.height : window.innerHeight;
+
+  var scale = Math.min(
+    (vw - 32) / 419,
+    (vh - 48) / 878,
+    1
+  );
+
+  phone.style.position = "absolute";
+  phone.style.width = "419px";
+  phone.style.height = "878px";
+  phone.style.left = "50%";
+  phone.style.top = "50%";
+  phone.style.margin = "0";
+  phone.style.transformOrigin = "center center";
+  phone.style.transform =
+    "translate(-50%, -50%) scale(" + Math.max(0.2, scale) + ")";
+}
+
 
   function start() {
     fitPhone();
