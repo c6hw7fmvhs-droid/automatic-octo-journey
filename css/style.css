@@ -796,3 +796,27 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
 /* Compact message app heading to match the supplied iOS reference */
 #messages #msg-listview .body>.big{font-size:31px!important;line-height:1.15!important;margin:10px 18px 14px!important}
 #messages #msg-chatview .topbtns .namepill{font-size:15px!important}
+
+
+/* Scoped update: Instagram search screen and KakaoTalk sponsored card only. */
+#instagram .view.ig-search-active>.igtop{display:none!important}
+#instagram .igsearchwrap{display:flex;align-items:center;gap:9px;padding:12px 14px 10px;position:relative}
+#instagram .igsearch-icon{position:absolute;left:28px;z-index:1;width:20px;height:20px;display:grid;place-items:center;color:#69717d;pointer-events:none}
+#instagram .igsearch-icon svg{width:19px;height:19px;stroke:#69717d;stroke-width:2.2}
+#instagram .igsearch{box-sizing:border-box;min-width:0;flex:1;height:44px;border:0;border-radius:24px;background:#f0f1f5;padding:0 16px 0 42px;font-size:15px;color:#111;outline:none}
+#instagram .igsearch-cancel{flex:none;border:0;background:transparent;color:#222;font-size:14px;padding:8px 2px}
+#instagram .ig-recent{padding:12px 16px;min-height:70px}
+#instagram .ig-recent-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px}
+#instagram .ig-recent-head b{font-weight:650}
+#instagram .ig-recent-all{border:0;background:transparent;color:#5368e8;font-size:13px;padding:4px 0}
+#instagram .ig-recent-empty{min-height:16px}
+#instagram .ig-search-results[hidden],#instagram .ig-recent[hidden]{display:none!important}
+#instagram .ig-search-results .igempty{grid-column:1/-1;padding:20px 2px;color:#888;font-size:14px}
+.kakao-ad-card{position:relative;flex:none;display:flex;align-items:center;justify-content:space-between;gap:6px;margin:0 14px 12px;padding:12px 12px;min-height:88px;box-sizing:border-box;border-radius:20px;background:#f2f2f3;color:#171717;overflow:hidden}
+.kakao-ad-copy,.kakao-ad-price{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;flex:1;text-align:center}
+.kakao-ad-brand{font-size:11px;letter-spacing:.2px;font-weight:750}
+.kakao-ad-copy strong,.kakao-ad-price strong{font-size:13px;font-weight:750;white-space:nowrap}
+.kakao-ad-copy span,.kakao-ad-price span{font-size:11px;color:#858585;white-space:nowrap}
+.kakao-ad-product{width:64px;height:68px;flex:none}
+.kakao-ad-label{position:absolute;top:7px;right:7px;border:1px solid #c7c7c9;border-radius:14px;background:rgba(255,255,255,.75);color:#929296;padding:1px 6px;font-size:9px;font-weight:650;line-height:1.5}
+@media (max-width:360px){.kakao-ad-card{margin-left:10px;margin-right:10px;padding:10px 8px;gap:3px}.kakao-ad-product{width:52px;height:60px}.kakao-ad-copy strong,.kakao-ad-price strong{font-size:11px}.kakao-ad-copy span,.kakao-ad-price span{font-size:10px}}
