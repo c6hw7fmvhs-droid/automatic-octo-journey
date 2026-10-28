@@ -112,6 +112,7 @@
   }
 
   function start() {
+    SP.nav.show("lock");
     fitPhone();
     window.addEventListener("resize", fitPhone);
     if (window.visualViewport) {
