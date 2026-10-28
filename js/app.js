@@ -92,7 +92,6 @@
   }
 
   function start() {
-    SP.nav.show("lock");
     fitPhone();
     window.addEventListener("resize", fitPhone);
     if (window.visualViewport) { window.visualViewport.addEventListener("resize", fitPhone); window.visualViewport.addEventListener("scroll", fitPhone); }
@@ -123,20 +122,9 @@
     SP.messages.onChange = badge; badge(SP.messages.unread());
     buildNotifs();
     var y0 = null, lock = document.getElementById("lock");
-    // 잠금 화면은 탭만으로 해제하지 않고 위로 스와이프할 때만 해제합니다.
-    lock.onclick = null;
-    lock.addEventListener("touchstart", function (e) {
-      if (e.touches && e.touches.length === 1) y0 = e.touches[0].clientY;
-    }, { passive: true });
-    lock.addEventListener("touchend", function (e) {
-      if (y0 !== null && e.changedTouches && e.changedTouches.length && y0 - e.changedTouches[0].clientY > 60) SP.nav.show("home");
-      y0 = null;
-    }, { passive: true });
-    lock.addEventListener("mousedown", function (e) { y0 = e.clientY; });
-    lock.addEventListener("mouseup", function (e) {
-      if (y0 !== null && y0 - e.clientY > 60) SP.nav.show("home");
-      y0 = null;
-    });
+    lock.onclick = function () { SP.nav.show("home"); };
+    lock.addEventListener("touchstart", function (e) { y0 = e.touches[0].clientY; }, { passive: true });
+    lock.addEventListener("touchend", function (e) { if (y0 != null && y0 - e.changedTouches[0].clientY > 60) SP.nav.show("home"); y0 = null; });
     document.getElementById("homebar").onclick = function () { SP.nav.show("home"); };
   }
   document.addEventListener("DOMContentLoaded", start);
