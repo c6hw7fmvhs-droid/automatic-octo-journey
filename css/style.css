@@ -827,3 +827,13 @@ button{border:0;background:none;cursor:pointer;touch-action:manipulation;padding
   border-radius: 14px !important;
 }
 .kakao-room .same-group-avatar { border-radius: 10px !important; }
+
+
+/* Final KakaoTalk profile fix: prevent the generic SVG silhouette from covering real photos. */
+.kakao-room .kakao-avatar svg { fill: #9299a7 !important; }
+.kakao-room .kakao-avatar.jiwoo-photo { background: transparent !important; background-image: none !important; }
+.kakao-room .kakao-avatar.jiwoo-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; border-radius: 50%; }
+.kakao-room .kakao-avatar.jiwoo-photo::before,
+.kakao-room .kakao-avatar.jiwoo-photo::after { display: none !important; }
+.kakao-room .kakao-pay-avatar { background-image: none !important; background-color: #fee500 !important; border-radius: 14px !important; }
+.kakao-room .kakao-pay-avatar svg { display: none !important; }
