@@ -68,36 +68,31 @@
     document.getElementById("lock-date").textContent = (d.getMonth() + 1) + "월 " + d.getDate() + "일 " + WD[d.getDay()] + "요일";
   }
 
+  function fitPhone() {
+    var phone = document.getElementById("phone");
+    var stage = document.getElementById("stage");
+    if (!phone || !stage) return;
 
-function fitPhone() {
-  var phone = document.getElementById("phone");
-  if (!phone) return;
+    /* Use the actually visible browser viewport, not document dimensions.
+       The outer bezel adds about 26px to the 393x852 phone. */
+    var vv = window.visualViewport;
+    var vw = vv ? vv.width : window.innerWidth;
+    var vh = vv ? vv.height : window.innerHeight;
+    var availableWidth = Math.max(160, vw - 48);
+    var availableHeight = Math.max(280, vh - 64);
+    var scale = Math.min(1, availableWidth / 419, availableHeight / 878);
 
-  var vv = window.visualViewport;
-  var vw = vv ? vv.width : window.innerWidth;
-  var vh = vv ? vv.height : window.innerHeight;
-
-  var scale = Math.min(
-    (vw - 32) / 419,
-    (vh - 48) / 878,
-    1
-  );
-
-  phone.style.position = "absolute";
-  phone.style.width = "419px";
-  phone.style.height = "878px";
-  phone.style.left = "50%";
-  phone.style.top = "50%";
-  phone.style.margin = "0";
-  phone.style.transformOrigin = "center center";
-  phone.style.transform =
-    "translate(-50%, -50%) scale(" + Math.max(0.2, scale) + ")";
-}
-
+    phone.style.position = "absolute";
+    phone.style.left = "50%";
+    phone.style.top = "50%";
+    phone.style.margin = "0";
+    phone.style.transform = "translate(-50%, -50%) scale(" + Math.max(0.2, scale) + ")";
+  }
 
   function start() {
     fitPhone();
     window.addEventListener("resize", fitPhone);
+    if (window.visualViewport) { window.visualViewport.addEventListener("resize", fitPhone); window.visualViewport.addEventListener("scroll", fitPhone); }
     if (/[?&]reset=1/.test(location.search)) SP.storage.reset();
     tick(); setInterval(tick, 5000);
     build(document.getElementById("home-grid"), GRID, true);
