@@ -93,6 +93,7 @@
     var me = el("span", "igi on"), mini = el("span", "mini"); SP.pic(mini, { img: P.avatar, color: P.color || "#c7c7cc" }); me.append(mini); me.setAttribute("role","button"); me.tabIndex=0; navItems.push(me); nav.append(me);
     function mode(which){
       body.innerHTML="";
+      view.classList.toggle("ig-search-active",which==="search");
       if(which==="profile"){ body.append(head,btns,tabs,grid); }
       else if(which==="home"){
         var stories=el("div","igstories"); ["내 스토리","yubamabm","jubini","chaeyeon4"].forEach(function(n){var st=el("div","igstory");st.append(el("span","mini",n.charAt(0)),el("small","",n));stories.append(st);});
@@ -111,7 +112,25 @@
         var caption=el("div","igreel-caption"); caption.append(el("b","","Stonelee"),el("span","","릴스")); reel.append(actions,caption);
         body.append(rh,reel);
       } else if(which==="search"){
-        var sh=el("div","igsearchwrap"), input=el("input","igsearch");input.placeholder="검색";sh.append(input);var results=el("div","tgrid");function filter(){results.innerHTML="";posts.filter(function(p){return !input.value||((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(input.value.toLowerCase());}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});}input.addEventListener("input",filter);filter();body.append(sh,results);setTimeout(function(){input.focus();},50);
+        view.classList.add("ig-search-active");
+        var sh=el("div","igsearchwrap"), searchIcon=ic("search","igsearch-icon"), input=el("input","igsearch"), cancel=el("button","igsearch-cancel","취소");
+        input.placeholder="검색";input.setAttribute("aria-label","검색");input.autocomplete="off";
+        sh.append(searchIcon,input,cancel);
+        var recent=el("div","ig-recent");
+        var recentHead=el("div","ig-recent-head");recentHead.append(el("b","","최근 검색"),el("button","ig-recent-all","모두 보기"));
+        var recentEmpty=el("div","ig-recent-empty");
+        var results=el("div","tgrid ig-search-results");
+        function filter(){
+          var q=input.value.trim().toLowerCase();results.innerHTML="";recent.hidden=!!q;results.hidden=!q;
+          if(!q)return;
+          posts.filter(function(p){return ((p.user||"")+" "+(p.caption||"")).toLowerCase().includes(q);}).forEach(function(p){var t=el("button","tile");SP.pic(t,slides(p)[0]);t.onclick=function(){openPost(p);};results.append(t);});
+          if(!results.children.length)results.append(el("p","igempty","검색 결과가 없습니다."));
+        }
+        recent.append(recentHead,recentEmpty);body.append(sh,recent,results);
+        input.addEventListener("input",filter);
+        cancel.onclick=function(){input.value="";filter();mode("home");};
+        recentHead.querySelector(".ig-recent-all").onclick=function(){recentEmpty.textContent="최근 검색 내역이 없습니다.";};
+        filter();setTimeout(function(){input.focus();},50);
       } else if(which==="send"){
         var dh=el("div","igmodehead","메시지");
         var dmWrap=el("div","igdm-list");
