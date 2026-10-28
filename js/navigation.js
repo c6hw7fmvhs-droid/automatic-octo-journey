@@ -1,7 +1,7 @@
 // 화면 전환과 공통 도구. 화면은 index.html의 <section class="screen"> 하나가 앱 하나입니다.
 (function () {
   window.SP = window.SP || {};
-  var cur = "lock", DARK = { messages: 1, photos: 1, instagram: 1, "phone-app": 1, "calendar-app": 1, "mail-app": 1, "notes-app": 1, "safari-app": 1 };
+  var cur = "lock", DARK = { messages: 1, photos: 1, instagram: 1, "phone-app": 1, "calendar-app": 1 };
   SP.nav = {
     show: function (id) {
       if (!document.getElementById(id)) return;

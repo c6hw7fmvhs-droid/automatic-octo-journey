@@ -17,13 +17,13 @@
     instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="#fff"/></svg>'
   };
   var GRID = [
-    { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모", screen: "notes-app", mod: "notes" },
-    { id: "photos", label: "사진", screen: "photos", mod: "photos" }, { id: "safari", label: "Safari", screen: "safari-app", mod: "safari" },
+    { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모" },
+    { id: "photos", label: "사진" }, { id: "safari", label: "Safari" },
     { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정" }, { id: "clock", label: "시계" }
   ];
   var DOCK = [
     { id: "phone", label: "전화", screen: "phone-app", mod: "phone" }, { id: "messages", label: "메시지", screen: "messages" },
-    { id: "mail", label: "메일", screen: "mail-app", mod: "mail" }, { id: "instagram", label: "Instagram", screen: "instagram" }
+    { id: "mail", label: "메일" }, { id: "instagram", label: "Instagram", screen: "instagram" }
   ];
 
   function iconHtml(id) {
@@ -71,9 +71,8 @@
   function fitPhone() {
     var phone = document.getElementById("phone");
     if (!phone) return;
-    // 393×852 본체와 13px 외곽 프레임을 화면 안에 맞춰 축소합니다.
-    var scale = Math.min((window.innerWidth - 30) / 419, (window.innerHeight - 30) / 878, 1.3);
-    phone.style.transform = "scale(" + Math.max(0.35, scale) + ")";
+    var scale = Math.min(1, (window.innerWidth - 28) / 419, (window.innerHeight - 28) / 878);
+    phone.style.transform = "scale(" + Math.max(0.2, scale) + ")";
   }
 
   function start() {
@@ -84,7 +83,7 @@
     build(document.getElementById("home-grid"), GRID, true);
     build(document.getElementById("dock"), DOCK, false);
     try { SP.ai.init(); } catch (e) { console.error(e); }
-    ["messages", "instagram", "phone", "camera", "calendar", "photos", "mail", "notes", "safari"].forEach(function (k) { try { SP[k].init(); } catch (e) { console.error(k, e); } });
+    ["messages", "instagram", "phone", "camera", "calendar"].forEach(function (k) { try { SP[k].init(); } catch (e) { console.error(k, e); } });
     var bn = document.createElement("button"), bt = null, lastB = {};
     bn.id = "banner"; bn.hidden = true;
     bn.innerHTML = '<div class="ic ic-messages">' + ICONS.messages + '</div><div class="nt"><b></b><span class="nb"></span></div>';
