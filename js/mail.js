@@ -1,0 +1,3 @@
+/* 메일 */
+R.mail=function(){A.innerHTML=hd('받은 편지함','home()')+`<div class="body">${D.mail.map((x,i)=>`<div class="row" onclick="mailOpen(${i})">${x.unread?'<div class="dot"></div>':''}<div class="m"><div class="n">${E(x.from)}<small>${E(x.time)}</small></div><div style="font-size:14px">${E(x.subj)}</div><div class="s">${E(x.body.replace(/\n/g,' '))}</div></div></div>`).join('')}</div>`};
+function mailOpen(i){const x=D.mail[i];x.unread=0;A.innerHTML=hd('메일','R.mail()')+`<div class="body"><div class="mail"><h2>${E(x.subj)}</h2><small style="color:#8e8e93">보낸 사람: ${E(x.from)} · ${E(x.time)}</small><p>${E(x.body)}</p></div></div>`}

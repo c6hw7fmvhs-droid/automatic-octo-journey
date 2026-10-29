@@ -1,131 +1,23 @@
-// 시작점: 시계, 잠금 해제, 홈 화면. 앱을 추가하려면 GRID/DOCK에 넣고 화면(section)과 JS를 만든 뒤 screen을 지정하세요.
-// screen이 없는 앱 아이콘은 눌러도 아무 일도 일어나지 않습니다.
-(function () {
-  window.SP = window.SP || {};
-  var WD = ["일", "월", "화", "수", "목", "금", "토"];
-  var petals = ["#f5c542", "#f0944d", "#ec5f6a", "#c565b8", "#7f78e0", "#4fa9e8", "#4ec6a4", "#8ed25a"];
-  var ICONS = {
-    notes: "<i></i><i></i>",
-    photos: '<svg viewBox="-50 -50 100 100">' + petals.map(function (c, i) { return '<ellipse cx="0" cy="-17" rx="12" ry="19" transform="rotate(' + i * 45 + ')" fill="' + c + '" fill-opacity=".8"/>'; }).join("") + "</svg>",
-    safari: '<svg viewBox="-50 -50 100 100"><circle r="40" fill="#2f8cf3"/><g transform="rotate(45)"><polygon points="0,-28 8,0 0,28 -8,0" fill="#fff"/><polygon points="0,-28 8,0 -8,0" fill="#ff453a"/></g></svg>',
-    camera: '<span class="lens"></span>',
-    settings: "⚙︎",
-    clock: '<svg viewBox="-50 -50 100 100"><circle r="44" fill="#fff" stroke="#e5e5ea" stroke-width="2"/><line x1="0" y1="0" x2="-8" y2="-24" stroke="#111" stroke-width="5" stroke-linecap="round"/><line x1="0" y1="0" x2="24" y2="8" stroke="#ff9500" stroke-width="3" stroke-linecap="round"/><circle r="4" fill="#111"/></svg>',
-    phone: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>',
-    messages: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 4C6.8 4 3 7.2 3 11.2c0 2.2 1.2 4.2 3.2 5.5-.2 1.1-.8 2.1-1.6 2.8 1.6-.1 3-.7 4-1.5.8.2 1.6.3 2.4.3 5.2 0 9-3.2 9-7.2S17.2 4 12 4z"/></svg>',
-    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>',
-    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="#fff"/></svg>',
-    kakao: '<svg viewBox="0 0 100 100"><path fill="#3b1e1e" d="M50 20C28 20 11 34 11 51c0 11 7 21 18 26l-5 14 20-10c2 .3 4 .5 6 .5 22 0 39-13.5 39-30.5S72 20 50 20z"/><text x="50" y="57" fill="#ffe812" font-size="19" font-weight="900" text-anchor="middle" font-family="Arial,sans-serif">TALK</text></svg>'
-  };
-  var GRID = [
-    { id: "calendar", label: "캘린더", screen: "calendar-app", mod: "calendar" }, { id: "notes", label: "메모" },
-    { id: "photos", label: "사진" }, { id: "safari", label: "Safari" },
-    { id: "camera", label: "카메라", screen: "camera-app", mod: "camera" }, { id: "settings", label: "설정" }, { id: "clock", label: "시계" },
-    { id: "instagram", label: "Instagram", screen: "instagram" }
-  ];
-  var DOCK = [
-    { id: "phone", label: "전화", screen: "phone-app", mod: "phone" }, { id: "messages", label: "메시지", screen: "messages" },
-    { id: "mail", label: "메일" }, { id: "kakao", label: "카카오톡" }
-  ];
-
-  function iconHtml(id) {
-    var d = SP.clock.now();
-    var inner = id === "calendar" ? "<small>" + WD[d.getDay()] + "요일</small><b>" + d.getDate() + "</b>" : ICONS[id];
-    return '<div class="ic ic-' + id + '">' + inner + "</div>";
-  }
-  function build(host, list, labels) {
-    list.forEach(function (a) {
-      var b = document.createElement("button"); b.className = "app-icon"; b.setAttribute("aria-label", a.label);
-      b.innerHTML = iconHtml(a.id) + (labels ? "<span>" + a.label + "</span>" : "");
-      b.onclick = function () {
-        if (!a.screen) return;
-        SP.nav.show(a.screen);
-        var m = SP[a.mod || a.screen];
-        if (m && m.open) m.open();
-      };
-      host.append(b);
-    });
-  }
-
-  function buildNotifs() {
-    var host = document.getElementById("notifs");
-    (SP.data.notifications || []).forEach(function (n) {
-      var b = document.createElement("button"); b.className = "notif";
-      b.innerHTML = '<div class="ic ic-' + n.app + '">' + (ICONS[n.app] || "") + '</div><div class="nt"><b></b><span class="nb"></span></div><span class="ntime"></span>';
-      b.querySelector("b").textContent = n.title; b.querySelector(".nb").textContent = n.body; b.querySelector(".ntime").textContent = n.ts ? SP.fmt.label(n.ts) : n.time;
-      b.onclick = function (e) {
-        e.stopPropagation(); SP.nav.show(n.screen);
-        var m = SP[n.mod || n.screen]; if (m && m.open) m.open(n.chat);
-      };
-      host.append(b);
-    });
-  }
-
-  function tick() {
-    var d = SP.clock.now(), t = (d.getHours() % 12 || 12) + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
-    document.getElementById("sb-time").textContent = t;
-    document.getElementById("lock-time").textContent = t;
-    var cs = document.querySelector(".ic-calendar small"), cb = document.querySelector(".ic-calendar b");
-    if (cs) { cs.textContent = WD[d.getDay()] + "요일"; cb.textContent = d.getDate(); }
-    document.getElementById("lock-date").textContent = (d.getMonth() + 1) + "월 " + d.getDate() + "일 " + WD[d.getDay()] + "요일";
-  }
-
-  function fitPhone() {
-    var phone = document.getElementById("phone");
-    var stage = document.getElementById("stage");
-    if (!phone || !stage) return;
-
-    /* Use the actually visible browser viewport, not document dimensions.
-       The outer bezel adds about 26px to the 393x852 phone. */
-    var vv = window.visualViewport;
-    var vw = vv ? vv.width : window.innerWidth;
-    var vh = vv ? vv.height : window.innerHeight;
-    var availableWidth = Math.max(160, vw - 48);
-    var availableHeight = Math.max(280, vh - 64);
-    var scale = Math.min(1, availableWidth / 419, availableHeight / 878);
-
-    phone.style.position = "absolute";
-    phone.style.left = "50%";
-    phone.style.top = "50%";
-    phone.style.margin = "0";
-    phone.style.transform = "translate(-50%, -50%) scale(" + Math.max(0.2, scale) + ")";
-  }
-
-  function start() {
-    fitPhone();
-    window.addEventListener("resize", fitPhone);
-    if (window.visualViewport) { window.visualViewport.addEventListener("resize", fitPhone); window.visualViewport.addEventListener("scroll", fitPhone); }
-    if (/[?&]reset=1/.test(location.search)) SP.storage.reset();
-    tick(); setInterval(tick, 5000);
-    build(document.getElementById("home-grid"), GRID, true);
-    build(document.getElementById("dock"), DOCK, false);
-    try { SP.ai.init(); } catch (e) { console.error(e); }
-    ["messages", "instagram", "phone", "camera", "calendar"].forEach(function (k) { try { SP[k].init(); } catch (e) { console.error(k, e); } });
-    var bn = document.createElement("button"), bt = null, lastB = {};
-    bn.id = "banner"; bn.hidden = true;
-    bn.innerHTML = '<div class="ic ic-messages">' + ICONS.messages + '</div><div class="nt"><b></b><span class="nb"></span></div>';
-    document.getElementById("phone").append(bn);
-    SP.banner = {
-      show: function (title, body, chat) {
-        var now = Date.now();
-        if (bn.hidden && lastB[chat] && now - lastB[chat] < 8000) return;   // 과도한 알림 방지: 같은 상대는 8초에 한 번만
-        lastB[chat] = now;
-        bn.querySelector("b").textContent = title; bn.querySelector(".nb").textContent = body; bn.hidden = false;
-        bn.onclick = function () { bn.hidden = true; SP.nav.show("messages"); SP.messages.open(chat); };
-        clearTimeout(bt); bt = setTimeout(function () { bn.hidden = true; }, 4000);
-      },
-      hide: function () { bn.hidden = true; }
-    };
-    var mb = document.querySelector('#dock .app-icon[aria-label="메시지"]'), bd = document.createElement("i");
-    bd.className = "bdg"; bd.hidden = true; mb.append(bd);
-    function badge(n) { bd.hidden = !n; bd.textContent = n > 99 ? "99+" : String(n); }
-    SP.messages.onChange = badge; badge(SP.messages.unread());
-    buildNotifs();
-    var y0 = null, lock = document.getElementById("lock");
-    lock.onclick = function () { SP.nav.show("home"); };
-    lock.addEventListener("touchstart", function (e) { y0 = e.touches[0].clientY; }, { passive: true });
-    lock.addEventListener("touchend", function (e) { if (y0 != null && y0 - e.changedTouches[0].clientY > 60) SP.nav.show("home"); y0 = null; });
-    document.getElementById("homebar").onclick = function () { SP.nav.show("home"); };
-  }
-  document.addEventListener("DOMContentLoaded", start);
-})();
+/* 공통 기능, 홈화면, 잠금화면 */
+const $=s=>document.querySelector(s),A=$('#app');
+let view={},tk=0,seen={},lockOn=true;
+const E=s=>N(s).replace(/</g,'&lt;');
+const apps=[["메시지","💬","#34c759","sms"],["카카오톡","💛","#fee500","kk"],["메일","✉️","#1e90ff","mail"],["캘린더","📅","#fff","cal"],["전화","📞","#34c759","ph"],["메모","📝","#ffd60a","note"],["사진","🌸","#fff","photo"],["Safari","🧭","#fff","safari"]];
+const dummy=[["카메라","cam"],["설정","set"],["시계","clock"],["Instagram","ig"]];
+function unreadOf(k){if(k=='ph')return D.missed|0;const l=k=='sms'||k=='kk'?D[k]:k=='mail'?D.mail:[];return l.reduce((a,x)=>a+(x.unread|0),0)}
+function badges(){document.querySelectorAll('.ic[data-k]').forEach(e=>{const n=unreadOf(e.dataset.k),b=e.querySelector('.bd');b.textContent=n;b.style.display=n?'grid':'none'})}
+function mk(a,dk){return `<div class="ic" data-k="${a[3]}" onclick="openApp('${a[3]}')"><i>${ICON[a[3]]}</i>${dk?'':a[0]}<span class="bd"></span></div>`}
+$('#grid').innerHTML=[apps[3],apps[5],apps[6],apps[7]].map(a=>mk(a)).join('')+dummy.map(d=>`<div class="ic"><i>${ICON[d[1]]}</i>${d[0]}</div>`).join('');
+$('#dock').innerHTML=[apps[4],apps[0],apps[2],apps[1]].map(a=>mk(a,1)).join('');
+function setDark(d){$('#sb').classList.toggle('dark',d);$('#ind').classList.toggle('dark',d)}
+function openApp(k){view={app:k};tk++;A.classList.add('on');R[k]();setDark(true)}
+function home(){tk++;view={};A.classList.remove('on');setDark(false);badges()}
+$('#ind').onclick=()=>lockOn?unlock():home();
+const hd=(t,back)=>`<div class="hd">${back?`<b onclick="${back}">‹ 뒤로</b>`:''}<span>${t}</span></div>`;
+const av=n=>`<div class="av">${E(n[0])}</div>`;
+const R={};
+function unlock(){if(!lockOn)return;lockOn=false;$('#lock').classList.add('up');setDark(false);setTimeout(startEvents,2500)}
+$('#lock').onclick=unlock;
+badges();
+function fit(){const v=window.visualViewport,w=v?v.width:innerWidth,h=v?v.height:innerHeight;$('#phone').style.setProperty('--s',Math.max(.2,Math.min((w-24)/419,(h-24)/878,1.4)))}
+addEventListener('resize',fit);addEventListener('orientationchange',fit);if(window.visualViewport)visualViewport.addEventListener('resize',fit);fit();
